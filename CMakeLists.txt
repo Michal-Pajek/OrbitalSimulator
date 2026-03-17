@@ -8,4 +8,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_executable(orbital_simulator
     app/main.cpp
+    "src/Application.cpp"
+)
+
+target_include_directories(orbital_simulator PRIVATE
+    include   
 )

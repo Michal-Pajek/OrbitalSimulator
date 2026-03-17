@@ -1,7 +1,7 @@
-#include <iostream>
+#include "Application.hpp"
 
 int main()
 {
-    std::cout << "Orbital Simulator\n";
-    return 0;
+	Application app{};
+	app.run();
 }
