@@ -9,7 +9,7 @@ Simulation::Simulation()
 
 void Simulation::run()
 {
-	constexpr double DT{ 1.0 };	//s
+	constexpr double DT{ 0.1 };	//s
 	constexpr unsigned int STEPS{ 200 };
 
 	std::cout << "TEST SIMULATION START\n";
