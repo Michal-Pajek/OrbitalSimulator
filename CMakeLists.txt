@@ -16,3 +16,30 @@ add_executable(orbital_simulator
 target_include_directories(orbital_simulator PRIVATE
     include   
 )
+
+enable_testing()
+
+include(FetchContent)
+
+FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
+)
+
+FetchContent_MakeAvailable(googletest)
+
+add_executable(orbital_tests
+    tests/Vector2DTests.cpp
+    src/math/Vector2D.cpp
+)
+
+target_include_directories(orbital_tests PRIVATE
+    include
+)
+
+target_link_libraries(orbital_tests PRIVATE
+    GTest::gtest_main
+)
+
+include(GoogleTest)
+gtest_discover_tests(orbital_tests)
