@@ -1,6 +1,7 @@
 #include "simulation/Body.hpp"
 #include <iostream>
 #include <cmath>
+#include "physics/Constants.hpp"
 
 void Body::calculateNextPosition(const double dt)
 {
@@ -25,8 +26,7 @@ void Body::debugPrint() const
 
 Vector2D getGravityForceBetween(const Body& a, const Body& b)
 {
-	constexpr double G_CONST{ 6.6743E-11 };
 	const auto positionDiff{ b.getPosition() - a.getPosition() };
 	const auto distance{ positionDiff.getLength() };
-	return G_CONST * a.getMass() * b.getMass() * positionDiff / pow(distance, 3.0);
+	return physics::G_CONST * a.getMass() * b.getMass() * positionDiff / pow(distance, 3.0);
 }

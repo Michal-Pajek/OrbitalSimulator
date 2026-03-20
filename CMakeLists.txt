@@ -31,6 +31,8 @@ FetchContent_MakeAvailable(googletest)
 add_executable(orbital_tests
     tests/Vector2DTests.cpp
     src/math/Vector2D.cpp
+    tests/BodyTests.cpp
+    src/simulation/Body
 )
 
 target_include_directories(orbital_tests PRIVATE
