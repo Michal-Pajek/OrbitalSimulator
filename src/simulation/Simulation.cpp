@@ -1,63 +1,73 @@
 #include "simulation/Simulation.hpp"
-#include <iostream>
+#include <stdexcept>
+#include <utility>
 
-Simulation::Simulation()
+Simulation::Simulation(const std::vector<Body>& bodies, const double dt) : m_bodies{ bodies }, m_dt{ dt }
 {
-	bodies.emplace_back("A", 1E15, Vector2D{ 0.0, 0.0 }, Vector2D{2.0, 0.0});
-	bodies.emplace_back("B", 5E14, Vector2D{ 100.0, 150.0 }, Vector2D{0.0, 10.0});
+	if (dt <= 0.0) {
+		throw std::invalid_argument("dt must be positive");
+	}
 }
 
-void Simulation::run()
+void Simulation::step()
 {
-	constexpr double DT{ 0.1 };	//s
-	constexpr unsigned int STEPS{ 200 };
+	resetForceForAllBodies();
+	calculateForcesBetweenBodies();
+	calculateNextStates();
+	applyStepForAllBodies();
+	m_time += m_dt;
+}
 
-	std::cout << "TEST SIMULATION START\n";
-	
-	for (unsigned int i{}; i < STEPS; ++i) {
-		step(DT);
+void Simulation::setBodies(const std::vector<Body>& bodies)
+{
+	m_bodies = bodies;
+	m_time = {};
+}
+
+void Simulation::setBodies(std::vector<Body>&& bodies)
+{
+	m_bodies = std::move(bodies);
+	m_time = {};
+}
+
+void Simulation::setDt(const double dt)
+{
+	if (dt <= 0.0) {
+		throw std::invalid_argument("dt must be positive");
 	}
+	m_dt = dt;
 }
 
 void Simulation::applyStepForAllBodies()
 {
-	for (auto& x : bodies) {
+	for (auto& x : m_bodies) {
 		x.applyStep();
-		x.debugPrint();
-	}
-}
-
-void Simulation::calculateNextStates(const double dt)
-{
-	for (auto& x : bodies) {
-		x.calculateAcceleration();
-		x.calculateNextPosition(dt);
 	}
 }
 
 void Simulation::calculateForcesBetweenBodies()
 {
-	const auto n{ bodies.size() };
+	const auto n{ m_bodies.size() };
 	for (size_t i{}; i < n; ++i) {
 		for (size_t j{ i + 1 }; j < n; ++j) {
-			const auto forceVec{ getGravityForceBetween(bodies[i], bodies[j]) };
-			bodies[i].increaseGravityForce(forceVec);
-			bodies[j].increaseGravityForce(-forceVec);
+			const auto forceVec{ getGravityForceBetween(m_bodies[i], m_bodies[j]) };
+			m_bodies[i].increaseGravityForce(forceVec);
+			m_bodies[j].increaseGravityForce(-forceVec);
 		}
+	}
+}
+
+void Simulation::calculateNextStates()
+{
+	for (auto& x : m_bodies) {
+		x.calculateAcceleration();
+		x.calculateNextPosition(m_dt);
 	}
 }
 
 void Simulation::resetForceForAllBodies()
 {
-	for (auto& x : bodies) {
+	for (auto& x : m_bodies) {
 		x.resetForce();
 	}
-}
-
-void Simulation::step(const double dt)
-{
-	resetForceForAllBodies();
-	calculateForcesBetweenBodies();
-	calculateNextStates(dt);
-	applyStepForAllBodies();
 }

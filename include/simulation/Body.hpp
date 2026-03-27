@@ -16,8 +16,8 @@ public:
 	const Vector2D& getPosition() const { return m_position; }
 	double getMass() const { return m_mass; }
 private:
-	const std::string m_name;
-	const double m_mass;
+	std::string m_name;
+	double m_mass;
 	Vector2D m_position;
 	Vector2D m_velocity;
 	Vector2D m_force{};
