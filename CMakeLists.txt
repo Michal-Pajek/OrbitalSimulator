@@ -30,9 +30,12 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 add_executable(orbital_tests
-    src/simulation/Body
+    src/simulation/Body.cpp
+    src/simulation/BodyStepState.cpp
+    src/simulation/Simulation.cpp
     src/math/Vector2D.cpp
     tests/BodyTests.cpp
+    tests/SimulationsTests.cpp
     tests/Vector2DTests.cpp)
 
 target_include_directories(orbital_tests PRIVATE

@@ -16,6 +16,9 @@ Simulation::Simulation(const std::vector<Body>& bodies, const double dt) : m_dt{
 
 void Simulation::step()
 {
+	if (m_bodyStepStates.empty()) {
+		throw std::logic_error("Cannot perform simulation step: no bodies in simulation");
+	}
 	resetForceForAllBodies();
 	calculateForcesBetweenBodies();
 	calculateNextStates();
