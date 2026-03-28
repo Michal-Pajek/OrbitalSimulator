@@ -1,12 +1,17 @@
 #include "simulation/Simulation.hpp"
 #include <stdexcept>
-#include <utility>
 
-Simulation::Simulation(const std::vector<Body>& bodies, const double dt) : m_bodies{ bodies }, m_dt{ dt }
+Simulation::Simulation(const std::vector<Body>& bodies)
+{
+	setBodies(bodies);
+}
+
+Simulation::Simulation(const std::vector<Body>& bodies, const double dt) : m_dt{ dt }
 {
 	if (dt <= 0.0) {
 		throw std::invalid_argument("dt must be positive");
 	}
+	setBodies(bodies);
 }
 
 void Simulation::step()
@@ -20,13 +25,11 @@ void Simulation::step()
 
 void Simulation::setBodies(const std::vector<Body>& bodies)
 {
-	m_bodies = bodies;
-	m_time = {};
-}
-
-void Simulation::setBodies(std::vector<Body>&& bodies)
-{
-	m_bodies = std::move(bodies);
+	m_bodyStepStates.clear();
+	m_bodyStepStates.reserve(bodies.size());
+	for (const auto& body : bodies) {
+		m_bodyStepStates.emplace_back(body);
+	}
 	m_time = {};
 }
 
@@ -38,28 +41,38 @@ void Simulation::setDt(const double dt)
 	m_dt = dt;
 }
 
+const Body& Simulation::getBody(const size_t idx) const
+{
+	if (idx >= m_bodyStepStates.size()) {
+		throw std::out_of_range("idx is out of m_bodyStepStates range");
+	}
+	return m_bodyStepStates[idx].getBody();
+}
+
 void Simulation::applyStepForAllBodies()
 {
-	for (auto& x : m_bodies) {
+	for (auto& x : m_bodyStepStates) {
 		x.applyStep();
 	}
 }
 
 void Simulation::calculateForcesBetweenBodies()
 {
-	const auto n{ m_bodies.size() };
+	const auto n{ m_bodyStepStates.size() };
 	for (size_t i{}; i < n; ++i) {
+		auto& stepStateA{ m_bodyStepStates[i] };
 		for (size_t j{ i + 1 }; j < n; ++j) {
-			const auto forceVec{ getGravityForceBetween(m_bodies[i], m_bodies[j]) };
-			m_bodies[i].increaseGravityForce(forceVec);
-			m_bodies[j].increaseGravityForce(-forceVec);
+			auto& stepStateB{ m_bodyStepStates[j] };
+			const auto forceVec{ getGravityForceBetween(stepStateA.getBody(), stepStateB.getBody())};
+			stepStateA.increaseGravityForce(forceVec);
+			stepStateB.increaseGravityForce(-forceVec);
 		}
 	}
 }
 
 void Simulation::calculateNextStates()
 {
-	for (auto& x : m_bodies) {
+	for (auto& x : m_bodyStepStates) {
 		x.calculateAcceleration();
 		x.calculateNextPosition(m_dt);
 	}
@@ -67,7 +80,7 @@ void Simulation::calculateNextStates()
 
 void Simulation::resetForceForAllBodies()
 {
-	for (auto& x : m_bodies) {
+	for (auto& x : m_bodyStepStates) {
 		x.resetForce();
 	}
 }

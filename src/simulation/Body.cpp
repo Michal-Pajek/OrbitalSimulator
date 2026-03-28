@@ -1,32 +1,20 @@
 #include "simulation/Body.hpp"
-#include <iostream>
-#include <cmath>
+#include <stdexcept>
 #include "physics/Constants.hpp"
 
-void Body::calculateNextPosition(const double dt)
+Body::Body(const std::string& name, double mass, const Vector2D& pos, const Vector2D& vel) : m_name{ name }, m_mass{ mass }, m_position{ pos }, m_velocity{ vel }
 {
-	m_newPos = m_position + m_velocity * dt + 0.5 * m_acceleration * dt * dt;
-	m_newVel = m_velocity + m_acceleration * dt;
-}
-
-void Body::applyStep()
-{
-	m_position = m_newPos;
-	m_velocity = m_newVel;
-}
-
-void Body::debugPrint() const
-{
-	std::cout << m_name << " (mass " << m_mass << "kg):\n";
-	std::cout << "\tgravity force: " << m_force << '\n';
-	std::cout << "\tposition: " << m_position << '\n';
-	std::cout << "\tvelocity: " << m_velocity << '\n';
-	std::cout << "\tacceleration: " << m_acceleration << '\n';
+	if (mass <= 0.0) {
+		throw std::invalid_argument("Mass must be positive");
+	}
 }
 
 Vector2D getGravityForceBetween(const Body& a, const Body& b)
 {
 	const auto positionDiff{ b.getPosition() - a.getPosition() };
 	const auto distance{ positionDiff.getLength() };
-	return physics::G_CONST * a.getMass() * b.getMass() * positionDiff / pow(distance, 3.0);
+	if (distance == 0.0) {
+		throw std::domain_error("distance between two bodies is zero");
+	}
+	return physics::G_CONST * a.getMass() * b.getMass() * positionDiff / (distance * distance * distance);
 }
