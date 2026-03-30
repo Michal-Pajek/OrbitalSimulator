@@ -14,6 +14,13 @@ Simulation::Simulation(const std::vector<Body>& bodies, const double dt) : m_dt{
 	setBodies(bodies);
 }
 
+void Simulation::runSteps(const unsigned int n)
+{
+	for (unsigned int i{}; i < n; ++i) {
+		step();
+	}
+}
+
 void Simulation::step()
 {
 	if (m_bodyStepStates.empty()) {

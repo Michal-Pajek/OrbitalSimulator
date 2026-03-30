@@ -9,6 +9,7 @@ public:
 	Simulation() = delete;
 	Simulation(const std::vector<Body>& bodies);
 	Simulation(const std::vector<Body>& bodies, const double dt);
+	void runSteps(const unsigned int n);
 	void step();
 	void setBodies(const std::vector<Body>& bodies);
 	void setDt(const double dt);

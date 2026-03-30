@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <gtest/gtest.h>
 #include <vector>
 #include "simulation/Body.hpp"
@@ -11,8 +12,8 @@ namespace {
 	{
 		std::vector<Body> bodyVec{};
 		bodyVec.reserve(2u);
-		bodyVec.emplace_back(Body{ "body1", 1.0, Vector2D{2.0, 3.0}, Vector2D{4.0, 5.0} });
-		bodyVec.emplace_back(Body{ "body2", 6.0, Vector2D{7.0, 8.0}, Vector2D{9.0, 10.0} });
+		bodyVec.emplace_back(Body{ "body1", 1e8, Vector2D{2.0, 3.0}, Vector2D{4.0, 5.0} });
+		bodyVec.emplace_back(Body{ "body2", 6e8, Vector2D{7.0, 8.0}, Vector2D{9.0, 10.0} });
 		return bodyVec;
 	}
 
@@ -20,16 +21,9 @@ namespace {
 	{
 		std::vector<Body> bodyVec{};
 		bodyVec.reserve(2u);
-		bodyVec.emplace_back(Body{ "body1", 10.0, Vector2D{10.0, 0.0}, Vector2D{-2.0, 0.0} });
-		bodyVec.emplace_back(Body{ "body2", 10.0, Vector2D{0.0, 10.0}, Vector2D{2.0, 0.0} });
+		bodyVec.emplace_back(Body{ "body1", 1e9, Vector2D{10.0, 0.0}, Vector2D{-2.0, 0.0} });
+		bodyVec.emplace_back(Body{ "body2", 1e9, Vector2D{0.0, 10.0}, Vector2D{2.0, 0.0} });
 		return bodyVec;
-	}
-
-	void runStepsForSimulation(Simulation& simulation, const unsigned int n)
-	{
-		for (unsigned int i{}; i < n; ++i) {
-			simulation.step();
-		}
 	}
 
 	Vector2D calculateTotalMomentum(const Simulation& simulation)
@@ -41,6 +35,16 @@ namespace {
 			result += body.getMass() * body.getVelocity();
 		}
 		return result;
+	}
+
+	double calculateRelativeError(const double reference, const double actual)
+	{
+		constexpr double INTERNAL_EPSILON{ 1e-12 };
+		const auto absReference{ std::abs(reference) };
+		if (absReference < INTERNAL_EPSILON) {
+			return std::abs(reference - actual);
+		}
+		return std::abs(reference - actual) / absReference;
 	}
 
 } // anonymous namespace
@@ -66,12 +70,12 @@ TEST(SimulationTests, ReturnsCorrectBody)
 	const Simulation simulation{ bodyVec };
 	const auto& body1{ simulation.getBody(0u) };
 	const auto& body2{ simulation.getBody(1u) };
-	EXPECT_DOUBLE_EQ(body1.getMass(), 1.0);
+	EXPECT_DOUBLE_EQ(body1.getMass(), 1e8);
 	EXPECT_DOUBLE_EQ(body1.getPosition().getX(), 2.0);
 	EXPECT_DOUBLE_EQ(body1.getPosition().getY(), 3.0);
 	EXPECT_DOUBLE_EQ(body1.getVelocity().getX(), 4.0);
 	EXPECT_DOUBLE_EQ(body1.getVelocity().getY(), 5.0);
-	EXPECT_DOUBLE_EQ(body2.getMass(), 6.0);
+	EXPECT_DOUBLE_EQ(body2.getMass(), 6e8);
 	EXPECT_DOUBLE_EQ(body2.getPosition().getX(), 7.0);
 	EXPECT_DOUBLE_EQ(body2.getPosition().getY(), 8.0);
 	EXPECT_DOUBLE_EQ(body2.getVelocity().getX(), 9.0);
@@ -101,7 +105,7 @@ TEST(SimulationTests, PreservesSymmetry)
 {
 	const auto bodyVec{ createVectorWithTwoSymmetricBodies() };
 	Simulation simulation{ bodyVec };
-	runStepsForSimulation(simulation, 10u);
+	simulation.runSteps(10u);
 
 	const auto& pos1{ simulation.getBody(0u).getPosition() };
 	const auto& pos2{ simulation.getBody(1u).getPosition() };
@@ -119,10 +123,10 @@ TEST(SimulationTests, ConservesTotalMomentum)
 	const auto bodyVec{ createVectorWithTwoAsymmetricBodies() };
 	Simulation simulation{ bodyVec };
 	const auto totalMomentumBefore{ calculateTotalMomentum(simulation) };
-	runStepsForSimulation(simulation, 10u);
+	simulation.runSteps(10u);
 	const auto totalMomentumAfter{ calculateTotalMomentum(simulation) };
-	EXPECT_NEAR(totalMomentumBefore.getX(), totalMomentumAfter.getX(), EPSILON);
-	EXPECT_NEAR(totalMomentumBefore.getY(), totalMomentumAfter.getY(), EPSILON);
+	EXPECT_LE(calculateRelativeError(totalMomentumBefore.getX(), totalMomentumAfter.getX()), EPSILON);
+	EXPECT_LE(calculateRelativeError(totalMomentumBefore.getY(), totalMomentumAfter.getY()), EPSILON);
 }
 
 TEST(SimulationTests, AdvancesTimeCorrectly)
@@ -132,7 +136,7 @@ TEST(SimulationTests, AdvancesTimeCorrectly)
 	Simulation simulation{ bodyVec, DT };
 
 	constexpr unsigned int N{ 20 };
-	runStepsForSimulation(simulation, N);
+	simulation.runSteps(N);
 	EXPECT_DOUBLE_EQ(simulation.getTime(), N * DT);
 }
 
