@@ -135,7 +135,7 @@ TEST(SimulationTests, AdvancesTimeCorrectly)
 	const auto bodyVec{ createVectorWithTwoAsymmetricBodies() };
 	Simulation simulation{ bodyVec, DT };
 
-	constexpr unsigned int N{ 20 };
+	constexpr unsigned int N{ 20u };
 	simulation.runSteps(N);
 	EXPECT_DOUBLE_EQ(simulation.getTime(), N * DT);
 }
