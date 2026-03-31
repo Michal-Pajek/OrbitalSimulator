@@ -10,6 +10,7 @@ add_executable(orbital_simulator
     app/main.cpp
     src/app/Application.cpp
     src/math/Vector2D.cpp
+    src/scenario/Scenario.cpp
     src/simulation/Body.cpp
     src/simulation/BodyStepState.cpp
     src/simulation/Simulation.cpp)
