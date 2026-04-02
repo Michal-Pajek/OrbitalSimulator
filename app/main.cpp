@@ -3,5 +3,5 @@
 int main()
 {
 	Application app{};
-	app.run();
+	app.eventLoop();
 }

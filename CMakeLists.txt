@@ -9,6 +9,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_executable(orbital_simulator
     app/main.cpp
     src/app/Application.cpp
+    src/app/Menu.cpp
+    src/input/Console.cpp
+    src/input/Keyboard.cpp
     src/math/Vector2D.cpp
     src/scenario/Scenario.cpp
     src/simulation/Body.cpp
@@ -37,7 +40,7 @@ add_executable(orbital_tests
     src/math/Vector2D.cpp
     tests/BodyTests.cpp
     tests/SimulationsTests.cpp
-    tests/Vector2DTests.cpp)
+    tests/Vector2DTests.cpp "src/input/Console.cpp")
 
 target_include_directories(orbital_tests PRIVATE
     include
