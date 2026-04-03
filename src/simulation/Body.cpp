@@ -2,14 +2,14 @@
 #include <stdexcept>
 #include "physics/Constants.hpp"
 
-Body::Body(const std::string& name, double mass, const Vector2D& pos, const Vector2D& vel) : m_name{ name }, m_mass{ mass }, m_position{ pos }, m_velocity{ vel }
+Body::Body(const std::string& name, double mass, const Vector3D& pos, const Vector3D& vel) : m_name{ name }, m_mass{ mass }, m_position{ pos }, m_velocity{ vel }
 {
 	if (mass <= 0.0) {
 		throw std::invalid_argument("Mass must be positive");
 	}
 }
 
-Vector2D getGravityForceBetween(const Body& a, const Body& b)
+Vector3D getGravityForceBetween(const Body& a, const Body& b)
 {
 	const auto positionDiff{ b.getPosition() - a.getPosition() };
 	const auto distance{ positionDiff.getLength() };

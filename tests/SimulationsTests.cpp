@@ -12,8 +12,8 @@ namespace {
 	{
 		std::vector<Body> bodyVec{};
 		bodyVec.reserve(2u);
-		bodyVec.emplace_back(Body{ "body1", 1e8, Vector2D{2.0, 3.0}, Vector2D{4.0, 5.0} });
-		bodyVec.emplace_back(Body{ "body2", 6e8, Vector2D{7.0, 8.0}, Vector2D{9.0, 10.0} });
+		bodyVec.emplace_back(Body{ "body1", 1e8, Vector3D{2.0, 3.0, 0.0}, Vector3D{4.0, 5.0, 0.0} });
+		bodyVec.emplace_back(Body{ "body2", 6e8, Vector3D{7.0, 8.0, 0.0}, Vector3D{9.0, 10.0, 0.0} });
 		return bodyVec;
 	}
 
@@ -21,14 +21,14 @@ namespace {
 	{
 		std::vector<Body> bodyVec{};
 		bodyVec.reserve(2u);
-		bodyVec.emplace_back(Body{ "body1", 1e9, Vector2D{10.0, 0.0}, Vector2D{-2.0, 0.0} });
-		bodyVec.emplace_back(Body{ "body2", 1e9, Vector2D{0.0, 10.0}, Vector2D{2.0, 0.0} });
+		bodyVec.emplace_back(Body{ "body1", 1e9, Vector3D{10.0, 0.0, 0.0}, Vector3D{-2.0, 0.0, 0.0} });
+		bodyVec.emplace_back(Body{ "body2", 1e9, Vector3D{0.0, 10.0, 0.0}, Vector3D{2.0, 0.0, 0.0} });
 		return bodyVec;
 	}
 
-	Vector2D calculateTotalMomentum(const Simulation& simulation)
+	Vector3D calculateTotalMomentum(const Simulation& simulation)
 	{
-		Vector2D result{};
+		Vector3D result{};
 		const auto size{ simulation.getBodyCount() };
 		for (size_t i{}; i < size; ++i) {
 			const auto& body{ simulation.getBody(i) };
@@ -55,11 +55,11 @@ TEST(SimulationTests, ReturnsCorrectBodyCount)
 	Simulation simulation1{ bodyVec };
 	EXPECT_EQ(simulation1.getBodyCount(), 0u);
 
-	bodyVec.emplace_back(Body{ "body1", 1.0, Vector2D{2.0, 3.0}, Vector2D{4.0, 5.0} });
+	bodyVec.emplace_back(Body{ "body1", 1.0, Vector3D{2.0, 3.0, 0.0}, Vector3D{4.0, 5.0, 0.0} });
 	simulation1.setBodies(bodyVec);
 	EXPECT_EQ(simulation1.getBodyCount(), 1u);
 
-	bodyVec.emplace_back(Body{ "body2", 6.0, Vector2D{7.0, 8.0}, Vector2D{9.0, 10.0} });
+	bodyVec.emplace_back(Body{ "body2", 6.0, Vector3D{7.0, 8.0, 0.0}, Vector3D{9.0, 10.0, 0.0} });
 	const Simulation simulation2{ bodyVec };
 	EXPECT_EQ(simulation2.getBodyCount(), 2u);
 }
@@ -73,13 +73,17 @@ TEST(SimulationTests, ReturnsCorrectBody)
 	EXPECT_DOUBLE_EQ(body1.getMass(), 1e8);
 	EXPECT_DOUBLE_EQ(body1.getPosition().getX(), 2.0);
 	EXPECT_DOUBLE_EQ(body1.getPosition().getY(), 3.0);
+	EXPECT_DOUBLE_EQ(body1.getPosition().getZ(), 0.0);
 	EXPECT_DOUBLE_EQ(body1.getVelocity().getX(), 4.0);
 	EXPECT_DOUBLE_EQ(body1.getVelocity().getY(), 5.0);
+	EXPECT_DOUBLE_EQ(body1.getVelocity().getZ(), 0.0);
 	EXPECT_DOUBLE_EQ(body2.getMass(), 6e8);
 	EXPECT_DOUBLE_EQ(body2.getPosition().getX(), 7.0);
 	EXPECT_DOUBLE_EQ(body2.getPosition().getY(), 8.0);
+	EXPECT_DOUBLE_EQ(body2.getPosition().getZ(), 0.0);
 	EXPECT_DOUBLE_EQ(body2.getVelocity().getX(), 9.0);
 	EXPECT_DOUBLE_EQ(body2.getVelocity().getY(), 10.0);
+	EXPECT_DOUBLE_EQ(body2.getVelocity().getZ(), 0.0);
 	EXPECT_EQ(body1.getName(), "body1");
 	EXPECT_EQ(body2.getName(), "body2");
 }
@@ -111,11 +115,13 @@ TEST(SimulationTests, PreservesSymmetry)
 	const auto& pos2{ simulation.getBody(1u).getPosition() };
 	EXPECT_NEAR(pos1.getX() + pos2.getX(), 10.0, EPSILON);
 	EXPECT_NEAR(pos1.getY() + pos2.getY(), 10.0, EPSILON);
+	EXPECT_NEAR(pos1.getZ() + pos2.getZ(), 0.0, EPSILON);
 
 	const auto& vel1{ simulation.getBody(0u).getVelocity() };
 	const auto& vel2{ simulation.getBody(1u).getVelocity() };
 	EXPECT_NEAR(vel1.getX() + vel2.getX(), 0.0, EPSILON);
 	EXPECT_NEAR(vel1.getY() + vel2.getY(), 0.0, EPSILON);
+	EXPECT_NEAR(vel1.getZ() + vel2.getZ(), 0.0, EPSILON);
 }
 
 TEST(SimulationTests, ConservesTotalMomentum)
@@ -127,6 +133,7 @@ TEST(SimulationTests, ConservesTotalMomentum)
 	const auto totalMomentumAfter{ calculateTotalMomentum(simulation) };
 	EXPECT_LE(calculateRelativeError(totalMomentumBefore.getX(), totalMomentumAfter.getX()), EPSILON);
 	EXPECT_LE(calculateRelativeError(totalMomentumBefore.getY(), totalMomentumAfter.getY()), EPSILON);
+	EXPECT_LE(calculateRelativeError(totalMomentumBefore.getZ(), totalMomentumAfter.getZ()), EPSILON);
 }
 
 TEST(SimulationTests, AdvancesTimeCorrectly)

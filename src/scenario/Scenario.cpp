@@ -24,7 +24,7 @@ bool Scenario::prepareCSVfile(std::ofstream& file)
 {
 	file.open("testScenario.csv");
 	if (file.is_open()) {
-		file << "step,time,body_name,x,y,vx,vy\n";
+		file << "step,time,body_name,x,y,z,vx,vy,vz\n";
 		for (const auto& body : m_bodies) {
 			writeSingleSnapshotToCSV(file, body);
 		}
@@ -58,9 +58,11 @@ void Scenario::writeBodyStateToFile(const Body& body, std::ofstream& file)
 	const auto& pos{ body.getPosition() };
 	file << pos.getX() << SEPARATOR;
 	file << pos.getY() << SEPARATOR;
+	file << pos.getZ() << SEPARATOR;
 	const auto& vel{ body.getVelocity() };
 	file << vel.getX() << SEPARATOR;
-	file << vel.getY() << '\n';
+	file << vel.getY() << SEPARATOR;
+	file << vel.getZ() << '\n';
 }
 
 void Scenario::writeSingleSnapshotToCSV(std::ofstream& file, const Body& body, const unsigned int stepNo, const double time)
@@ -74,7 +76,7 @@ std::vector<Body> Scenario::createBodies()
 {
 	std::vector<Body> result{};
 	result.reserve(2u);
-	result.emplace_back(Body{ "body1", 1e14, Vector2D{}, Vector2D{1.0, 0.0} });
-	result.emplace_back(Body{ "body2", 2e14, Vector2D{100.0, 100.0}, Vector2D{0.0, -1.0} });
+	result.emplace_back(Body{ "body1", 1e14, Vector3D{}, Vector3D{1.0, 0.0, 0.0} });
+	result.emplace_back(Body{ "body2", 2e14, Vector3D{100.0, 100.0, 0.0}, Vector3D{0.0, -1.0, 0.0} });
 	return result;
 }

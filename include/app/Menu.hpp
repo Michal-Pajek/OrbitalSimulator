@@ -17,7 +17,7 @@ public:
 	Menu() = delete;
 	Menu(const std::vector<MenuOption>& menuInput, const std::string& text, const bool horizontal = false);
 	void execute() const;
-	static bool yesOrNo();
+	static bool yesOrNo(const std::string& question);
 private:
 	bool validateMenuOptions(const std::vector<MenuOption>& menuInput) const;
 	void prepareKeysMap();

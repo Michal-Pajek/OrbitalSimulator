@@ -32,15 +32,15 @@ class Simulation::BodyStepState
 public:
 	BodyStepState(const Body& body) : m_body{ body } {}
 	void applyStep();
-	void increaseGravityForce(const Vector2D& force) { m_force += force; }
+	void increaseGravityForce(const Vector3D& force) { m_force += force; }
 	void calculateAcceleration() { m_acceleration = m_force / m_body.getMass(); }
 	void calculateNextPosition(const double dt);
 	void resetForce() { m_force = {}; }
 	const Body& getBody() const { return m_body; }
 private:
 	Body m_body;
-	Vector2D m_acceleration{};
-	Vector2D m_force{};
-	Vector2D m_newPos{};
-	Vector2D m_newVel{};
+	Vector3D m_acceleration{};
+	Vector3D m_force{};
+	Vector3D m_newPos{};
+	Vector3D m_newVel{};
 };

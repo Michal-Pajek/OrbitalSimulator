@@ -23,9 +23,9 @@ void Menu::execute() const
 	m_menuOptions.at(m_keys.at(key)).func();
 }
 
-bool Menu::yesOrNo()
+bool Menu::yesOrNo(const std::string& question)
 {
-	std::cout << " [Y / N]: ";
+	std::cout << question << " [Y / N]: ";
 	char choice{getSingleKey()};
 	while (choice != 'N' && choice != 'Y') {
 		choice = getSingleKey();

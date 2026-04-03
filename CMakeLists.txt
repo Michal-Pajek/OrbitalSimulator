@@ -12,7 +12,7 @@ add_executable(orbital_simulator
     src/app/Menu.cpp
     src/input/Console.cpp
     src/input/Keyboard.cpp
-    src/math/Vector2D.cpp
+    src/math/Vector3D.cpp
     src/scenario/Scenario.cpp
     src/simulation/Body.cpp
     src/simulation/BodyStepState.cpp
@@ -37,10 +37,9 @@ add_executable(orbital_tests
     src/simulation/Body.cpp
     src/simulation/BodyStepState.cpp
     src/simulation/Simulation.cpp
-    src/math/Vector2D.cpp
+    src/math/Vector3D.cpp
     tests/BodyTests.cpp
-    tests/SimulationsTests.cpp
-    tests/Vector2DTests.cpp "src/input/Console.cpp")
+    tests/SimulationsTests.cpp)
 
 target_include_directories(orbital_tests PRIVATE
     include

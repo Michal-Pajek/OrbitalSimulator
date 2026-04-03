@@ -9,8 +9,7 @@ void Application::eventLoop()
 {
 	const auto closeApplication{ [this]() {
 		clearScreen();
-		std::cout << "Do you want to finish?";
-		if (Menu::yesOrNo()) {
+		if (Menu::yesOrNo(std::string{ "Do you want to finish?" })) {
 			std::cout << "Yes\nThe program has finished running. Press any key...";
 			getSingleKey();
 			m_continue = false;
