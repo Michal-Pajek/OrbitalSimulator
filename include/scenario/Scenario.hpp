@@ -1,24 +1,20 @@
 #pragma once
-#include <fstream>
 #include <string>
 #include <vector>
 #include "simulation/Body.hpp"
-
-class Simulation;
 
 class Scenario
 {
 public:
 	Scenario();
-	void run();
+	double getDt() const { return m_dt; }
+	unsigned int getSteps() const { return m_steps; }
+	const std::string& getName() const { return m_name; }
+	const std::vector<Body>& getBodies() const { return m_bodies; }
 private:
-	bool prepareCSVfile(std::ofstream& file);
-	void recordStateAfterStep(std::ofstream& file, const Simulation& simulation, const unsigned int stepNo);
-	void runAndRecordSimulation(std::ofstream& file, Simulation& simulation);
-	void writeBodyStateToFile(const Body& body, std::ofstream& file);
-	void writeSingleSnapshotToCSV(std::ofstream& file, const Body& body, const unsigned int stepNo = 0u, const double time = 0.0);
-	std::vector<Body> createBodies();
+	static std::vector<Body> createBodies();
 	double m_dt{ 1.0 };
+	unsigned int m_steps{ 1000u };		// temp value
 	std::string m_name{};
 	std::vector<Body> m_bodies{};
 };

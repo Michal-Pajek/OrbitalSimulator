@@ -1,75 +1,8 @@
 #include "scenario/Scenario.hpp"
-#include <iostream>
-#include "simulation/Body.hpp"
-#include "simulation/Simulation.hpp"
 
 Scenario::Scenario() : m_name{ "test simulation" }, m_bodies { createBodies() }
 {
 	// temp version
-}
-
-void Scenario::run()
-{
-	std::ofstream file{};
-	if (!prepareCSVfile(file)) {
-		std::cout << "Could not open the file\n";
-		return;
-	}
-	Simulation simulation{ m_bodies, m_dt };
-	runAndRecordSimulation(file, simulation);
-	std::cout << "File generated successfully\n";
-}
-
-bool Scenario::prepareCSVfile(std::ofstream& file)
-{
-	file.open("testScenario.csv");
-	if (file.is_open()) {
-		file << "step,time,body_name,x,y,z,vx,vy,vz\n";
-		for (const auto& body : m_bodies) {
-			writeSingleSnapshotToCSV(file, body);
-		}
-		return true;
-	}
-	return false;
-}
-
-void Scenario::recordStateAfterStep(std::ofstream& file, const Simulation& simulation, const unsigned int stepNo)
-{
-	const auto bodyCount{ simulation.getBodyCount() };
-	const auto time{ simulation.getTime() };
-	for (size_t i{}; i < bodyCount; ++i) {
-		writeSingleSnapshotToCSV(file, simulation.getBody(i), stepNo, time);
-	}
-}
-
-void Scenario::runAndRecordSimulation(std::ofstream& file, Simulation& simulation)
-{
-	constexpr unsigned int STEPS{ 100u };
-	for (unsigned int i{}; i < STEPS;) {
-		simulation.step();
-		recordStateAfterStep(file, simulation, ++i);
-	}
-}
-
-void Scenario::writeBodyStateToFile(const Body& body, std::ofstream& file)
-{
-	constexpr auto SEPARATOR{ ',' };
-	file << body.getName() << SEPARATOR;
-	const auto& pos{ body.getPosition() };
-	file << pos.getX() << SEPARATOR;
-	file << pos.getY() << SEPARATOR;
-	file << pos.getZ() << SEPARATOR;
-	const auto& vel{ body.getVelocity() };
-	file << vel.getX() << SEPARATOR;
-	file << vel.getY() << SEPARATOR;
-	file << vel.getZ() << '\n';
-}
-
-void Scenario::writeSingleSnapshotToCSV(std::ofstream& file, const Body& body, const unsigned int stepNo, const double time)
-{
-	constexpr auto SEPARATOR{ ',' };
-	file << stepNo << SEPARATOR << time << SEPARATOR;
-	writeBodyStateToFile(body, file);
 }
 
 std::vector<Body> Scenario::createBodies()

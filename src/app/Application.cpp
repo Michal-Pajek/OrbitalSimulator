@@ -1,8 +1,11 @@
 #include "app/Application.hpp"
+#include <exception>
 #include <iostream>
 #include "app/Menu.hpp"
 #include "input/Console.hpp"
 #include "input/Keyboard.hpp"
+#include "recording/Recorder.hpp"
+#include "runner/SimulationRunner.hpp"
 #include "scenario/Scenario.hpp"
 
 void Application::eventLoop()
@@ -29,7 +32,13 @@ void Application::testScenario()
 {
 	enterModule(std::string{ "Test scenario" });
 	Scenario scenario{};
-	scenario.run();
+	Recorder recorder{ "TestScenario.csv" };
+	try {
+		SimulationRunner::runAndRecord(recorder, scenario);
+	}
+	catch (const std::exception& e) {
+		std::cout << e.what() << '\n';
+	}
 	exitModule();
 }
 

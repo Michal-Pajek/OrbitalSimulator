@@ -13,6 +13,8 @@ add_executable(orbital_simulator
     src/input/Console.cpp
     src/input/Keyboard.cpp
     src/math/Vector3D.cpp
+    src/recording/Recorder.cpp
+    src/runner/SimulationRunner.cpp
     src/scenario/Scenario.cpp
     src/simulation/Body.cpp
     src/simulation/BodyStepState.cpp
