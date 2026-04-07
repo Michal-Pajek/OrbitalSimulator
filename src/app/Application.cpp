@@ -4,6 +4,7 @@
 #include "app/Menu.hpp"
 #include "input/Console.hpp"
 #include "input/Keyboard.hpp"
+#include "localization/Localization.hpp"
 #include "recording/Recorder.hpp"
 #include "runner/SimulationRunner.hpp"
 #include "scenario/Scenario.hpp"
@@ -12,16 +13,16 @@ void Application::eventLoop()
 {
 	const auto closeApplication{ [this]() {
 		clearScreen();
-		if (Menu::yesOrNo(std::string{ "Do you want to finish?" })) {
-			std::cout << "Yes\nThe program has finished running. Press any key...";
+		if (Menu::yesOrNo(TextId::FinishQuestion)) {
+			std::cout << Localization::translate(TextId::FinishRunning);
 			getSingleKey();
 			m_continue = false;
 		} } };
 	const Menu mainMenu{ {
-			MenuOption{.key = 'S', .label = "Run test scenario",	.func = Application::testScenario},
-			MenuOption{.key = 'O', .label = "Options",				.func = Application::options},
-			MenuOption{.key = 'E', .label = "Exit",					.func = closeApplication}
-			}, std::string{"Main Menu"} };
+			MenuOption{.key = 'S', .label = TextId::RunTestScenario,	.func = Application::testScenario},
+			MenuOption{.key = 'O', .label = TextId::Options,			.func = Application::options},
+			MenuOption{.key = 'E', .label = TextId::Exit,				.func = closeApplication}
+			}, TextId::MainMenu};
 	while (m_continue) {
 		clearScreen();
 		mainMenu.execute();
@@ -30,7 +31,7 @@ void Application::eventLoop()
 
 void Application::testScenario()
 {
-	enterModule(std::string{ "Test scenario" });
+	enterModule(TextId::RunTestScenario);
 	Scenario scenario{};
 	Recorder recorder{ "TestScenario.csv" };
 	try {
@@ -44,19 +45,19 @@ void Application::testScenario()
 
 void Application::options()
 {
-	enterModule(std::string{ "Options" });
-	std::cout << "Not implemented yet\n";
+	enterModule(TextId::Options);
+	std::cout << Localization::translate(TextId::NotImplemented);
 	exitModule();
 }
 
-void Application::enterModule(const std::string& text)
+void Application::enterModule(const TextId titleId)
 {
 	clearScreen();
-	std::cout << "\t=== " << text << " ===\n\n";
+	std::cout << "\t=== " << Localization::translate(titleId) << " ===\n\n";
 }
 
 void Application::exitModule()
 {
-	std::cout << "\nPress any key to back to main menu...";
+	std::cout << Localization::translate(TextId::BackToMainMenu);
 	getSingleKey();
 }

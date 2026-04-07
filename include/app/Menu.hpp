@@ -1,13 +1,13 @@
 #pragma once
 #include <functional>
-#include <string>
 #include <unordered_map>
 #include <vector>
+#include "localization/TextId.hpp"
 
 struct MenuOption
 {
 	char key;
-	std::string label;
+	TextId label;
 	std::function<void()> func;
 };
 
@@ -15,9 +15,9 @@ class Menu
 {
 public:
 	Menu() = delete;
-	Menu(const std::vector<MenuOption>& menuInput, const std::string& text, const bool horizontal = false);
+	Menu(const std::vector<MenuOption>& menuInput, const TextId text, const bool horizontal = false);
 	void execute() const;
-	static bool yesOrNo(const std::string& question);
+	static bool yesOrNo(const TextId question);
 private:
 	bool validateMenuOptions(const std::vector<MenuOption>& menuInput) const;
 	void prepareKeysMap();
@@ -25,5 +25,5 @@ private:
 	bool m_horizontal;
 	std::vector<MenuOption> m_menuOptions{};
 	std::unordered_map<char, size_t> m_keys{};
-	std::string m_text;
+	TextId m_text;
 };
