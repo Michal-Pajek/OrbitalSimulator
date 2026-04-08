@@ -25,5 +25,5 @@ private:
 	bool m_horizontal;
 	std::vector<MenuOption> m_menuOptions{};
 	std::unordered_map<char, size_t> m_keys{};
-	TextId m_text;
+	TextId m_title;
 };

@@ -1,12 +1,11 @@
 #include "app/Menu.hpp"
 #include <cctype>
-#include <iostream>
 #include <stdexcept>
 #include <unordered_set>
 #include "input/Keyboard.hpp"
-#include "localization/Localization.hpp"
+#include "ui/ConsoleWriter.hpp"
 
-Menu::Menu(const std::vector<MenuOption>& menuInput, const TextId text, const bool horizontal) : m_menuOptions{menuInput}, m_text{text}, m_horizontal{horizontal}
+Menu::Menu(const std::vector<MenuOption>& menuInput, const TextId text, const bool horizontal) : m_menuOptions{menuInput}, m_title{text}, m_horizontal{horizontal}
 {
 	if (!validateMenuOptions(menuInput)) {
 		throw std::invalid_argument("Menu input is incorrect");
@@ -26,9 +25,9 @@ void Menu::execute() const
 
 bool Menu::yesOrNo(const TextId question)
 {
-	std::cout << Localization::translate(question);
+	ConsoleWriter::write(question);
 	const auto yn{ Localization::getYn() };
-	std::cout << " [" << yn.yes << " / " << yn.no << "]: ";
+	ConsoleWriter::writeYesOrNo(yn);
 	char choice{getSingleKey()};
 	while (choice != yn.yes && choice != yn.no) {
 		choice = getSingleKey();
@@ -68,12 +67,12 @@ void Menu::prepareKeysMap()
 
 void Menu::print() const
 {
-	std::cout << "=== " << Localization::translate(m_text) << " ===\n";
+	ConsoleWriter::writeMenuTitle(m_title);
 	const auto separator{ m_horizontal ? '\t' : '\n' };
 	for (const auto& x : m_menuOptions) {
-		std::cout << "\t[ " << x.key << " ]\t" << Localization::translate(x.label) << separator;
+		ConsoleWriter::writeMenuOption(x.label, x.key, separator);
 	}
 	if (m_horizontal) {
-		std::cout << '\n';
+		ConsoleWriter::writeNewLine();
 	}
 }

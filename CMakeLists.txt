@@ -19,7 +19,8 @@ add_executable(orbital_simulator
     src/scenario/Scenario.cpp
     src/simulation/Body.cpp
     src/simulation/BodyStepState.cpp
-    src/simulation/Simulation.cpp)
+    src/simulation/Simulation.cpp
+    src/ui/ConsoleWriter.cpp)
 
 target_include_directories(orbital_simulator PRIVATE
     include   
