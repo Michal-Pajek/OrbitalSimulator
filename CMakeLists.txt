@@ -11,16 +11,19 @@ add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/Menu.cpp
     src/input/Console.cpp
+    src/input/DataGetter.cpp
     src/input/Keyboard.cpp
     src/localization/Localization.cpp
     src/math/Vector3D.cpp
     src/recording/Recorder.cpp
     src/runner/SimulationRunner.cpp
     src/scenario/Scenario.cpp
+    src/scenario/ScenarioBuilder.cpp
     src/simulation/Body.cpp
     src/simulation/BodyStepState.cpp
     src/simulation/Simulation.cpp
-    src/ui/ConsoleWriter.cpp)
+    src/ui/ConsoleWriter.cpp
+)
 
 target_include_directories(orbital_simulator PRIVATE
     include   
@@ -42,6 +45,8 @@ add_executable(orbital_tests
     src/simulation/BodyStepState.cpp
     src/simulation/Simulation.cpp
     src/math/Vector3D.cpp
+    src/ui/ConsoleWriter.cpp
+    src/localization/Localization.cpp
     tests/BodyTests.cpp
     tests/SimulationsTests.cpp)
 

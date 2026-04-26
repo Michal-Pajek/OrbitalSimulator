@@ -9,17 +9,22 @@ Vector3D& Vector3D::operator+=(const Vector3D& other)
 	return *this;
 }
 
-Vector3D Vector3D::operator/(const double cNumber) const
+Vector3D Vector3D::operator/(const double scalar) const
 {
-	if (cNumber == 0.0) {
-		throw std::invalid_argument("Division of Vector2D by zero.");
+	if (scalar == 0.0) {
+		throw std::invalid_argument("Division of Vector3D by zero.");
 	}
-	return *this * (1.0 / cNumber);
+	return *this * (1.0 / scalar);
 }
 
 Vector3D Vector3D::operator-() const
 {
 	return Vector3D{ -m_x, -m_y, -m_z };
+}
+
+bool operator==(const Vector3D& vecA, const Vector3D& vecB)
+{
+	return vecA.m_x == vecB.m_x && vecA.m_y == vecB.m_y && vecA.m_z == vecB.m_z;
 }
 
 std::ostream& operator<<(std::ostream& os, const Vector3D& vec)
@@ -28,14 +33,14 @@ std::ostream& operator<<(std::ostream& os, const Vector3D& vec)
 	return os;
 }
 
-Vector3D operator*(const Vector3D& vec, const double cNumber)
+Vector3D operator*(const Vector3D& vec, const double scalar)
 {
-	return Vector3D{ cNumber * vec.m_x, cNumber * vec.m_y, cNumber * vec.m_z };
+	return Vector3D{ scalar * vec.m_x, scalar * vec.m_y, scalar * vec.m_z };
 }
 
-Vector3D operator*(const double cNumber, const Vector3D& vec)
+Vector3D operator*(const double scalar, const Vector3D& vec)
 {
-	return Vector3D{ cNumber * vec.m_x, cNumber * vec.m_y, cNumber * vec.m_z };
+	return Vector3D{ scalar * vec.m_x, scalar * vec.m_y, scalar * vec.m_z };
 }
 
 Vector3D operator-(const Vector3D& vecA, const Vector3D& vecB)

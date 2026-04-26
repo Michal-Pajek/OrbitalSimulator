@@ -1,38 +1,32 @@
 #include "ui/ConsoleWriter.hpp"
-#include <iostream>
 #include "localization/Localization.hpp"
 
-void ConsoleWriter::write(const TextId textId)
+void ConsoleWriter::writeError(const std::string_view text)
 {
-	std::cout << Localization::translate(textId);
-}
-
-void ConsoleWriter::writeError(const std::string_view& text)
-{
-	std::cout << text << '\n';
+	writeLine("ERROR: ", text);
 }
 
 void ConsoleWriter::writeHeadline(const TextId titleId)
 {
-	std::cout << "\t=== " << Localization::translate(titleId) << " ===\n\n";
+	write("\t=== ", titleId, " ===\n\n");
 }
 
 void ConsoleWriter::writeMenuOption(const TextId textId, const char key, const char separator)
 {
-	std::cout << "\t[ " << key << " ]\t" << Localization::translate(textId) << separator;
+	write("\t[ ", key, " ]\t", textId, separator);
 }
 
 void ConsoleWriter::writeMenuTitle(const TextId titleId)
 {
-	std::cout << "=== " << Localization::translate(titleId) << " ===\n";
+	writeLine("=== ", titleId, " ===");
 }
 
-void ConsoleWriter::writeNewLine()
+void ConsoleWriter::writeSingle(const TextId textId)
 {
-	std::cout << '\n';
+	std::cout << Localization::translate(textId);
 }
 
 void ConsoleWriter::writeYesOrNo(const Localization::YesAndNo& yn)
 {
-	std::cout << " [" << yn.yes << " / " << yn.no << "]: ";
+	write(" [", yn.yes, " / ", yn.no, "]: ");
 }

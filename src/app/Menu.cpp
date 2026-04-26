@@ -5,9 +5,9 @@
 #include "input/Keyboard.hpp"
 #include "ui/ConsoleWriter.hpp"
 
-Menu::Menu(const std::vector<MenuOption>& menuInput, const TextId text, const bool horizontal) : m_menuOptions{menuInput}, m_title{text}, m_horizontal{horizontal}
+Menu::Menu(const std::vector<MenuOption>& options, const TextId title, const bool isHorizontal) : m_options{options}, m_title{title}, m_isHorizontal{isHorizontal}
 {
-	if (!validateMenuOptions(menuInput)) {
+	if (!validateMenuOptions(options)) {
 		throw std::invalid_argument("Menu input is incorrect");
 	}
 	prepareKeysMap();
@@ -15,12 +15,16 @@ Menu::Menu(const std::vector<MenuOption>& menuInput, const TextId text, const bo
 
 void Menu::execute() const
 {
+	if (m_options.size() == 1u) {
+		m_options.at(0u).action();
+		return;
+	}
 	print();
 	char key{};
 	do {
 		key = getSingleKey();
 	} while (m_keys.find(key) == m_keys.end());
-	m_menuOptions.at(m_keys.at(key)).func();
+	m_options.at(m_keys.at(key)).action();
 }
 
 bool Menu::yesOrNo(const TextId question)
@@ -32,21 +36,22 @@ bool Menu::yesOrNo(const TextId question)
 	while (choice != yn.yes && choice != yn.no) {
 		choice = getSingleKey();
 	}
+	ConsoleWriter::writeLine();
 	return choice == yn.yes;
 }
 
-bool Menu::validateMenuOptions(const std::vector<MenuOption>& menuInput) const
+bool Menu::validateMenuOptions(const std::vector<MenuOption>& options) const
 {
-	if (menuInput.empty()) {
+	if (options.empty()) {
 		return false;
 	}
 	std::unordered_set<char> keys{};
-	for (const auto& x : menuInput) {
+	for (const auto& x : options) {
 		const auto key{ x.key };
 		if (key != static_cast<char>(std::toupper(static_cast<unsigned char>(key)))) {
 			return false;
 		}
-		if (!x.func) {
+		if (!x.action) {
 			return false;
 		}
 		if (keys.find(key) != keys.end()) {
@@ -59,20 +64,21 @@ bool Menu::validateMenuOptions(const std::vector<MenuOption>& menuInput) const
 
 void Menu::prepareKeysMap()
 {
-	const auto size{ m_menuOptions.size() };
+	const auto size{ m_options.size() };
+	m_keys.reserve(size);
 	for (size_t i{}; i < size; ++i) {
-		m_keys.insert({ m_menuOptions[i].key, i });
+		m_keys.insert({ m_options[i].key, i });
 	}
 }
 
 void Menu::print() const
 {
 	ConsoleWriter::writeMenuTitle(m_title);
-	const auto separator{ m_horizontal ? '\t' : '\n' };
-	for (const auto& x : m_menuOptions) {
+	const auto separator{ m_isHorizontal ? '\t' : '\n' };
+	for (const auto& x : m_options) {
 		ConsoleWriter::writeMenuOption(x.label, x.key, separator);
 	}
-	if (m_horizontal) {
-		ConsoleWriter::writeNewLine();
+	if (m_isHorizontal) {
+		ConsoleWriter::writeLine();
 	}
 }

@@ -1,12 +1,27 @@
 #include "simulation/Body.hpp"
 #include <stdexcept>
 #include "physics/Constants.hpp"
+#include "ui/ConsoleWriter.hpp"
 
-Body::Body(const std::string& name, double mass, const Vector3D& pos, const Vector3D& vel) : m_name{ name }, m_mass{ mass }, m_position{ pos }, m_velocity{ vel }
+Body::Body(const std::string& name, double mass, const Vector3D& position, const Vector3D& velocity) : m_name{ name }, m_mass{ mass }, m_position{ position }, m_velocity{ velocity }
 {
 	if (mass <= 0.0) {
 		throw std::invalid_argument("Mass must be positive");
 	}
+}
+
+void Body::printSummary(const bool oneLine) const
+{
+	const auto sep{ oneLine ? '\t' : '\n' };
+	ConsoleWriter::writeLine(m_name, sep, TextId::Mass, " (kg): ", m_mass, sep, TextId::Position, " (m): ", m_position, sep, TextId::Velocity, " (m/s): ", m_velocity);
+}
+
+void Body::setMass(const double mass)
+{
+	if (mass <= 0.0) {
+		throw std::invalid_argument("Mass must be positive");
+	}
+	m_mass = mass;
 }
 
 Vector3D getGravityForceBetween(const Body& a, const Body& b)
