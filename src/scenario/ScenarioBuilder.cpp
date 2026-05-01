@@ -6,7 +6,7 @@
 #include "input/DataGetter.hpp"
 #include "input/Keyboard.hpp"
 #include "physics/Constants.hpp"
-#include "simulation/Body.hpp"
+#include "simulation/bodies/Body.hpp"
 #include "ui/ConsoleWriter.hpp"
 
 namespace
@@ -327,7 +327,7 @@ Body ScenarioBuilder::createBodyFromInput()
 	const auto bodyPosition{ promptForBodyPosition() };
 	const auto bodyVelocity{ promptForBodyVelocity() };
 
-	Body result{ bodyName, bodyMass, bodyPosition, bodyVelocity };
+	Body result{ bodyName, {}, bodyMass, bodyPosition, bodyVelocity };		// temp
 
 	reviewAndEditBody(result);
 

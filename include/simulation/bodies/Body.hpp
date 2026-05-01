@@ -1,12 +1,13 @@
 #pragma once
 #include <string>
+#include "BodyType.hpp"
 #include "math/Vector3D.hpp"
 
 class Body
 {
 public:
 	Body() = delete;
-	Body(const std::string& name, double mass, const Vector3D& position, const Vector3D& velocity);
+	Body(const std::string& name, BodyType bodyType, double mass, const Vector3D& position, const Vector3D& velocity);
 	double getMass() const { return m_mass; }
 	const Vector3D& getPosition() const { return m_position; }
 	const Vector3D& getVelocity() const { return m_velocity; }
@@ -19,6 +20,7 @@ public:
 private:
 	std::string m_name;
 	double m_mass;
+	BodyType m_bodyType;
 	Vector3D m_position;
 	Vector3D m_velocity;
 };

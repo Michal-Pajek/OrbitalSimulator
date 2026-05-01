@@ -1,9 +1,9 @@
-#include "simulation/Body.hpp"
+#include "simulation/bodies/Body.hpp"
 #include <stdexcept>
 #include "physics/Constants.hpp"
 #include "ui/ConsoleWriter.hpp"
 
-Body::Body(const std::string& name, double mass, const Vector3D& position, const Vector3D& velocity) : m_name{ name }, m_mass{ mass }, m_position{ position }, m_velocity{ velocity }
+Body::Body(const std::string& name, BodyType bodyType, double mass, const Vector3D& position, const Vector3D& velocity) : m_name{ name }, m_bodyType{ bodyType }, m_mass { mass }, m_position{ position }, m_velocity{ velocity }
 {
 	if (mass <= 0.0) {
 		throw std::invalid_argument("Mass must be positive");

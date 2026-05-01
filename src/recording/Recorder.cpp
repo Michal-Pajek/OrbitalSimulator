@@ -1,5 +1,5 @@
 #include "recording/Recorder.hpp"
-#include "simulation/Body.hpp"
+#include "simulation/bodies/Body.hpp"
 #include "simulation/Simulation.hpp"
 
 bool Recorder::beginRecording()

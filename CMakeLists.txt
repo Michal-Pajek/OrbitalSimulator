@@ -19,8 +19,8 @@ add_executable(orbital_simulator
     src/runner/SimulationRunner.cpp
     src/scenario/Scenario.cpp
     src/scenario/ScenarioBuilder.cpp
-    src/simulation/Body.cpp
-    src/simulation/BodyStepState.cpp
+    src/simulation/bodies/Body.cpp
+    src/simulation/bodies/BodyStepState.cpp
     src/simulation/Simulation.cpp
     src/ui/ConsoleWriter.cpp
 )
@@ -41,12 +41,12 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 add_executable(orbital_tests
-    src/simulation/Body.cpp
-    src/simulation/BodyStepState.cpp
-    src/simulation/Simulation.cpp
-    src/math/Vector3D.cpp
-    src/ui/ConsoleWriter.cpp
     src/localization/Localization.cpp
+    src/math/Vector3D.cpp
+    src/simulation/bodies/Body.cpp
+    src/simulation/bodies/BodyStepState.cpp
+    src/simulation/Simulation.cpp
+    src/ui/ConsoleWriter.cpp
     tests/BodyTests.cpp
     tests/SimulationsTests.cpp)
 

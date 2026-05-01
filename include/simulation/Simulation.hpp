@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "simulation/Body.hpp"
+#include "simulation/bodies/Body.hpp"
 
 class Simulation
 {

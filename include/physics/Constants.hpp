@@ -13,6 +13,7 @@ namespace physics {
 	inline constexpr double KILOTON{1'000'000.0};
 	inline constexpr double MEGATON{1'000'000'000.0};
 	inline constexpr double EARTH_MASS{5.9722E24};
+	inline constexpr double JUPITER_MASS{ 1.89819E27 };
 	inline constexpr double SOLAR_MASS{1.989E30};
 	// speed
 	inline constexpr double C_CONST{ 2.99792458E8 };

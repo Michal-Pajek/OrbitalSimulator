@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include "scenario/Scenario.hpp"
-#include "simulation/Body.hpp"
+#include "simulation/bodies/Body.hpp"
 
 class ScenarioBuilder
 {
