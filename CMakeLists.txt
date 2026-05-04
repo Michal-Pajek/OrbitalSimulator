@@ -17,7 +17,6 @@ add_executable(orbital_simulator
     src/math/Vector3D.cpp
     src/recording/Recorder.cpp
     src/runner/SimulationRunner.cpp
-    src/scenario/Scenario.cpp
     src/scenario/ScenarioBuilder.cpp
     src/simulation/bodies/Body.cpp
     src/simulation/bodies/BodyStepState.cpp
