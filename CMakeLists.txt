@@ -19,10 +19,10 @@ add_executable(orbital_simulator
     src/runner/SimulationRunner.cpp
     src/scenario/ScenarioBuilder.cpp
     src/simulation/bodies/Body.cpp
+    src/simulation/bodies/BodyBuilder.cpp
     src/simulation/bodies/BodyStepState.cpp
     src/simulation/Simulation.cpp
-    src/ui/ConsoleWriter.cpp
-)
+    src/ui/ConsoleWriter.cpp)
 
 target_include_directories(orbital_simulator PRIVATE
     include   

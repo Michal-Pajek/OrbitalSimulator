@@ -14,6 +14,17 @@ struct MenuOption
 	MenuOption(const char _key, const TextId _label, std::function<void()> _action) : key{ _key }, label{ _label }, action{ std::move(_action) } {}
 };
 
+// TEMP - MOVE TO BODYBUILDER
+struct MenuOptionPair {
+	TextId textId;
+	double multiplier;
+	MenuOptionPair() = delete;
+	MenuOptionPair(TextId _textId, double _multiplier) : textId{ _textId }, multiplier{ _multiplier } {}
+};
+
+double getUnitMultiplier(const std::vector<MenuOptionPair>& options, const TextId menuTitle);
+// END OF TEMP
+
 class Menu
 {
 public:
