@@ -45,11 +45,12 @@ Body BodyBuilder::createBodyFromInput() const
 	clearScreen();
 	ConsoleWriter::writeHeadline(TextId::EnterNewBodyData);
 	const auto bodyName{ promptForBodyName() };
+	const auto bodyType{ promptForBodyType() };
 	const auto bodyMass{ promptForBodyMass() };
 	const auto bodyPosition{ promptForBodyPosition() };
 	const auto bodyVelocity{ promptForBodyVelocity() };
 
-	Body result{ bodyName, {}, bodyMass, bodyPosition, bodyVelocity };		// temp
+	Body result{ bodyName, bodyType, bodyMass, bodyPosition, bodyVelocity };
 
 	reviewAndEditBody(result);
 
@@ -123,6 +124,23 @@ std::string BodyBuilder::promptForBodyName(const std::optional<std::string>& cur
 		enteredName = DataGetter::getSingleWordText();
 	}
 	return enteredName;
+}
+
+BodyType BodyBuilder::promptForBodyType() const
+{
+	BodyType result{};
+	const Menu selectBodyType{ {
+		MenuOption{'T', TextId::Custom,			[]() {}},
+		MenuOption{'M', TextId::Meteor,			[&result]() {result = BodyType::Meteor; }},
+		MenuOption{'A', TextId::Asteroid,		[&result]() {result = BodyType::Asteroid; }},
+		MenuOption{'C', TextId::Comet,			[&result]() {result = BodyType::Comet; }},
+		MenuOption{'D', TextId::DwarfPlanet,	[&result]() {result = BodyType::DwarfPlanet; }},
+		MenuOption{'P', TextId::Planet,			[&result]() {result = BodyType::Planet; }},
+		MenuOption{'B', TextId::BrownDwarf,		[&result]() {result = BodyType::BrownDwarf; }},
+		MenuOption{'S', TextId::Star,			[&result]() {result = BodyType::Star; }}},
+		TextId::SelectBodyType };
+	selectBodyType.execute();
+	return result;
 }
 
 Vector3D BodyBuilder::promptForBodyPosition(const std::optional<Vector3D>& currentPosition) const

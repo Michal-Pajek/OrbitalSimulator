@@ -11,6 +11,7 @@ struct MassInterval
 
 enum class BodyType
 {
+	Custom,
 	Meteor,
 	Asteroid,
 	Comet,

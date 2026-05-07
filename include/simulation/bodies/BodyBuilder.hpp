@@ -2,6 +2,7 @@
 #include <optional>
 #include <vector>
 #include "Body.hpp"
+#include "BodyType.hpp"
 #include "math/Vector3D.hpp"
 
 class BodyBuilder
@@ -17,6 +18,7 @@ private:
 	double promptForBodyMass() const;
 	void reviewAndEditBody(Body& body) const;
 	std::string promptForBodyName(const std::optional<std::string>& currentName = std::nullopt) const;
+	BodyType promptForBodyType() const;
 	Vector3D promptForBodyPosition(const std::optional<Vector3D>& currentPosition = std::nullopt) const;
 	Vector3D promptForBodyVelocity() const;
 	const std::vector<Body>& m_bodies;

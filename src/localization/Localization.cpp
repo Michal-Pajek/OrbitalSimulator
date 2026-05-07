@@ -41,6 +41,8 @@ namespace Localization
 				return "Add body";
 			case TextId::ApplicationFinished:
 				return "The program has finished running";
+			case TextId::Asteroid:
+				return "Asteroid";
 			case TextId::AstronomicalUnit:
 				return "Astronomical unit";
 			case TextId::AverageEarthToMoonDistance:
@@ -63,18 +65,26 @@ namespace Localization
 				return "This body position is already occupied. Enter another";
 			case TextId::BodyVelocity:
 				return "Body velocity";
+			case TextId::BrownDwarf:
+				return "Brown dwarf";
 			case TextId::Cancel:
 				return "Cancel";
+			case TextId::Comet:
+				return "Comet";
 			case TextId::ConfirmBody:
 				return "Confirm body";
 			case TextId::CurrentBodiesList:
 				return "Current bodies list";
 			case TextId::CurrentScenarioSummary:
 				return "Current scenario summary";
+			case TextId::Custom:
+				return "Custom";
 			case TextId::Day:
 				return "Day";
 			case TextId::DeleteBody:
 				return "Delete body";
+			case TextId::DwarfPlanet:
+				return "Dwarf planet / moon";
 			case TextId::EarthMass:
 				return "Earth mass";
 			case TextId::EditBody:
@@ -119,6 +129,8 @@ namespace Localization
 				return "Mass";
 			case TextId::Megaton:
 				return "Megaton";
+			case TextId::Meteor:
+				return "Meteor";
 			case TextId::Metre:
 				return "Metre";
 			case TextId::MetrePerSecond:
@@ -133,6 +145,8 @@ namespace Localization
 				return "Object count";
 			case TextId::Options:
 				return "Options";
+			case TextId::Planet:
+				return "Planet";
 			case TextId::Position:
 				return "Position";
 			case TextId::PositiveNumber:
@@ -169,6 +183,8 @@ namespace Localization
 				return "Scenario name";
 			case TextId::Second:
 				return "Second";
+			case TextId::SelectBodyType:
+				return "Select body type";
 			case TextId::SelectDistanceUnit:
 				return "Select distance unit";
 			case TextId::SelectedUnit:
@@ -183,6 +199,8 @@ namespace Localization
 				return "Solar mass";
 			case TextId::SpeedOfLight:
 				return "Speed of light";
+			case TextId::Star:
+				return "Star";
 			case TextId::StepCount:
 				return "Step count";
 			case TextId::ThousandKilometre:
@@ -214,6 +232,8 @@ namespace Localization
 				return "Dodaj obiekt";
 			case TextId::ApplicationFinished:
 				return "Program zakonczyl prace";
+			case TextId::Asteroid:
+				return "Asteroida";
 			case TextId::AstronomicalUnit:
 				return "Jednostka astronomiczna";
 			case TextId::AverageEarthToMoonDistance:
@@ -236,18 +256,26 @@ namespace Localization
 				return "Ta pozycja obiektu jest juz zajeta. Wprowadz inna";
 			case TextId::BodyVelocity:
 				return "Predkosc obiektu";
+			case TextId::BrownDwarf:
+				return "Brazowy karzel";
 			case TextId::Cancel:
 				return "Anuluj";
+			case TextId::Comet:
+				return "Kometa";
 			case TextId::ConfirmBody:
 				return "Potwierdz obiekt";
 			case TextId::CurrentBodiesList:
 				return "Aktualna lista obiektow";
 			case TextId::CurrentScenarioSummary:
 				return "Aktualne podsumowanie scenariusza";
+			case TextId::Custom:
+				return "Dowolny";
 			case TextId::Day:
 				return "Dzien";
 			case TextId::DeleteBody:
 				return "Usun obiekt";
+			case TextId::DwarfPlanet:
+				return "Planeta karlowata / ksiezyc";
 			case TextId::EarthMass:
 				return "Masa Ziemi";
 			case TextId::EditBody:
@@ -292,6 +320,8 @@ namespace Localization
 				return "Masa";
 			case TextId::Megaton:
 				return "Megatona";
+			case TextId::Meteor:
+				return "Meteoryt";
 			case TextId::Metre:
 				return "Metr";
 			case TextId::MetrePerSecond:
@@ -306,6 +336,8 @@ namespace Localization
 				return "Liczba obiektow";
 			case TextId::Options:
 				return "Opcje";
+			case TextId::Planet:
+				return "Planeta";
 			case TextId::Position:
 				return "Polozenie";
 			case TextId::PositiveNumber:
@@ -342,6 +374,8 @@ namespace Localization
 				return "Nazwa scenariusza";
 			case TextId::Second:
 				return "Sekunda";
+			case TextId::SelectBodyType:
+				return "Wybierz rodzaj obiektu";
 			case TextId::SelectDistanceUnit:
 				return "Wybierz jednostke odleglosci";
 			case TextId::SelectedUnit:
@@ -356,6 +390,8 @@ namespace Localization
 				return "Masa Slonca";
 			case TextId::SpeedOfLight:
 				return "Predkosc swiatla";
+			case TextId::Star:
+				return "Gwiazda";
 			case TextId::StepCount:
 				return "Liczba krokow";
 			case TextId::ThousandKilometre:
