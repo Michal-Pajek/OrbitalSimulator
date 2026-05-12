@@ -63,6 +63,8 @@ namespace Localization
 				return "Body position";
 			case TextId::BodyPositionAlreadyOccupiedEnterAnother:
 				return "This body position is already occupied. Enter another";
+			case TextId::BodyType:
+				return "Body type";
 			case TextId::BodyVelocity:
 				return "Body velocity";
 			case TextId::BrownDwarf:
@@ -77,8 +79,6 @@ namespace Localization
 				return "Current bodies list";
 			case TextId::CurrentScenarioSummary:
 				return "Current scenario summary";
-			case TextId::Custom:
-				return "Custom";
 			case TextId::Day:
 				return "Day";
 			case TextId::DeleteBody:
@@ -115,6 +115,10 @@ namespace Localization
 				return "Exit";
 			case TextId::Hour:
 				return "Hour";
+			case TextId::Interval:
+				return "interval";
+			case TextId::JupiterMass:
+				return "Jupiter mass";
 			case TextId::Kilogram:
 				return "Kilogram";
 			case TextId::Kilometre:
@@ -139,6 +143,8 @@ namespace Localization
 				return "Million kilometre";
 			case TextId::Minute:
 				return "Minute";
+			case TextId::MoonMass:
+				return "Moon mass";
 			case TextId::NotImplemented:
 				return "Not implemented yet";
 			case TextId::ObjectCount:
@@ -215,8 +221,6 @@ namespace Localization
 				return "Value out of range";
 			case TextId::Velocity:
 				return "Velocity";
-			case TextId::Yes:
-				return "Yes";
 			case TextId::YouAreEditingBody:
 				return "You are editing body";
 			case TextId::YouEnteredIncorrectValue:
@@ -254,6 +258,8 @@ namespace Localization
 				return "Polozenie obiektu";
 			case TextId::BodyPositionAlreadyOccupiedEnterAnother:
 				return "Ta pozycja obiektu jest juz zajeta. Wprowadz inna";
+			case TextId::BodyType:
+				return "Rodzaj obiektu";
 			case TextId::BodyVelocity:
 				return "Predkosc obiektu";
 			case TextId::BrownDwarf:
@@ -268,8 +274,6 @@ namespace Localization
 				return "Aktualna lista obiektow";
 			case TextId::CurrentScenarioSummary:
 				return "Aktualne podsumowanie scenariusza";
-			case TextId::Custom:
-				return "Dowolny";
 			case TextId::Day:
 				return "Dzien";
 			case TextId::DeleteBody:
@@ -306,6 +310,10 @@ namespace Localization
 				return "Wyjscie";
 			case TextId::Hour:
 				return "Godzina";
+			case TextId::Interval:
+				return "przedzial";
+			case TextId::JupiterMass:
+				return "Masa Jowisza";
 			case TextId::Kilogram:
 				return "Kilogram";
 			case TextId::Kilometre:
@@ -330,6 +338,8 @@ namespace Localization
 				return "Milion kilometrow";
 			case TextId::Minute:
 				return "Minuta";
+			case TextId::MoonMass:
+				return "Moon mass";
 			case TextId::NotImplemented:
 				return "Jeszcze nie zaimplementowano";
 			case TextId::ObjectCount:
@@ -406,8 +416,6 @@ namespace Localization
 				return "Wartosc poza zakresem";
 			case TextId::Velocity:
 				return "Predkosc";
-			case TextId::Yes:
-				return "Tak";
 			case TextId::YouAreEditingBody:
 				return "Edytujesz obiekt";
 			case TextId::YouEnteredIncorrectValue:

@@ -14,7 +14,7 @@ void Application::eventLoop()
 	const auto closeApplication{ [this]() {
 		clearScreen();
 		if (Menu::yesOrNo(TextId::QuestionDoYouWantToFinish)) {
-			ConsoleWriter::write(TextId::Yes, '\n', TextId::ApplicationFinished, ". ", TextId::PressAnyKeyToContinue);
+			ConsoleWriter::write(TextId::ApplicationFinished, ". ", TextId::PressAnyKeyToContinue);
 			getSingleKey();
 			m_continue = false;
 		} } };

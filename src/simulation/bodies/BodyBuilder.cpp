@@ -46,7 +46,7 @@ Body BodyBuilder::createBodyFromInput() const
 	ConsoleWriter::writeHeadline(TextId::EnterNewBodyData);
 	const auto bodyName{ promptForBodyName() };
 	const auto bodyType{ promptForBodyType() };
-	const auto bodyMass{ promptForBodyMass() };
+	const auto bodyMass{ promptForBodyMass(BodyTypeImpl::getInterval(bodyType)) };
 	const auto bodyPosition{ promptForBodyPosition() };
 	const auto bodyVelocity{ promptForBodyVelocity() };
 
@@ -57,13 +57,14 @@ Body BodyBuilder::createBodyFromInput() const
 	return result;
 }
 
-void BodyBuilder::editBody(Body& body) const
+void BodyBuilder::editBody(Body& body) const		// TODO
 {
 	clearScreen();
 	ConsoleWriter::writeLine(TextId::YouAreEditingBody, ' ', body.getName());
 	const Menu whatToChangeInBody{ {
 			MenuOption{'N', TextId::BodyName,		[&body, this]() {body.setName(promptForBodyName(body.getName())); }},
-			MenuOption{'M', TextId::BodyMass,		[&body, this]() {body.setMass(promptForBodyMass()); }},
+			MenuOption{'T', TextId::BodyType,		[&body, this]() {body.setType(promptForBodyType()); }},								// todo
+			//MenuOption{'M', TextId::BodyMass,		[&body, this, &interval]() {body.setMass(promptForBodyMass(interval); }},								// todo
 			MenuOption{'P', TextId::BodyPosition,	[&body, this]() {body.setPosition(promptForBodyPosition(body.getPosition())); }},
 			MenuOption{'V', TextId::BodyVelocity,	[&body, this]() {body.setVelocity(promptForBodyVelocity()); }},
 			MenuOption{'B', TextId::Back,			[]() {}}},
@@ -81,20 +82,15 @@ bool BodyBuilder::isBodyPositionAlreadyUsed(const Vector3D& position) const
 	return doesAnyBodyMatch([&position](const Body& body) {return body.getPosition() == position; });
 }
 
-double BodyBuilder::promptForBodyMass() const
+double BodyBuilder::promptForBodyMass(const BodyTypeImpl::MassInterval& massInterval) const
 {
 	ConsoleWriter::writeLine();
-	const auto massMultiplier{ getUnitMultiplier(std::vector<MenuOptionPair>{
-		{TextId::Kilogram,	1.0},
-		{TextId::Ton,		physics::TON},
-		{TextId::Kiloton,	physics::KILOTON},
-		{TextId::Megaton,	physics::MEGATON},
-		{TextId::EarthMass, physics::EARTH_MASS},
-		{TextId::SolarMass, physics::SOLAR_MASS}},
-		TextId::SelectMassUnit) };
-	ConsoleWriter::write(TextId::EnterBodyMass, ": ");
+	const auto massMultiplier{ getUnitMultiplier(BodyTypeImpl::getMassUnitVector(massInterval), TextId::SelectMassUnit) };
+	const auto min{ massInterval.min / massMultiplier };
+	const auto max{ massInterval.max / massMultiplier };
+	ConsoleWriter::write(TextId::EnterBodyMass, " (", TextId::Interval, ' ', min, " - ", max, "): ");
 
-	return massMultiplier * DataGetter::getValue<double>([](const double x) {return x > 0.0; });
+	return massMultiplier * DataGetter::getValue<double>([min, max](const double x) {return x >= min && x <= max; });
 }
 
 void BodyBuilder::reviewAndEditBody(Body& body) const
@@ -130,7 +126,6 @@ BodyType BodyBuilder::promptForBodyType() const
 {
 	BodyType result{};
 	const Menu selectBodyType{ {
-		MenuOption{'T', TextId::Custom,			[]() {}},
 		MenuOption{'M', TextId::Meteor,			[&result]() {result = BodyType::Meteor; }},
 		MenuOption{'A', TextId::Asteroid,		[&result]() {result = BodyType::Asteroid; }},
 		MenuOption{'C', TextId::Comet,			[&result]() {result = BodyType::Comet; }},

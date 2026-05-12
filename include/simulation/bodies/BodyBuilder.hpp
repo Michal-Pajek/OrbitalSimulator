@@ -15,7 +15,7 @@ public:
 private:
 	bool isBodyNameAlreadyUsed(const std::string& checkedName) const;
 	bool isBodyPositionAlreadyUsed(const Vector3D& position) const;
-	double promptForBodyMass() const;
+	double promptForBodyMass(const BodyTypeImpl::MassInterval& massInterval) const;
 	void reviewAndEditBody(Body& body) const;
 	std::string promptForBodyName(const std::optional<std::string>& currentName = std::nullopt) const;
 	BodyType promptForBodyType() const;
