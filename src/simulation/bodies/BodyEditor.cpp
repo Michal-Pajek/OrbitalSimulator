@@ -1,74 +1,40 @@
-#include "simulation/bodies/BodyBuilder.hpp"
-#include <stdexcept>
+#include "simulation/bodies/BodyEditor.hpp"
 #include "app/Menu.hpp"
 #include "input/Console.hpp"
 #include "input/DataGetter.hpp"
-#include "localization/TextId.hpp"
-#include "simulation/bodies/BodyEditor.hpp"
 #include "ui/ConsoleWriter.hpp"
 
-namespace
-{
-	//struct MenuOptionPair {
-	//	TextId textId;
-	//	double multiplier;
-	//	MenuOptionPair() = delete;
-	//	MenuOptionPair(TextId _textId, double _multiplier) : textId{ _textId }, multiplier{ _multiplier } {}
-	//};
-
-	//double getUnitMultiplier(const std::vector<MenuOptionPair>& options, const TextId menuTitle)
-	//{
-	//	const auto size{ options.size() };
-	//	if (size == 0 || size >= 10u) {
-	//		throw std::invalid_argument("Options vector in getUnitMultiplier must be between 1 and 9");
-	//	}
-
-	//	double result{};
-	//	TextId selectedUnit;
-	//	auto key{ '1' };
-	//	std::vector<MenuOption> menuOptions{};
-	//	menuOptions.reserve(size);
-	//	for (size_t idx{}; idx < size; ++idx) {
-	//		const auto& multiplier{ options.at(idx).multiplier };
-	//		const auto& textId{ options.at(idx).textId };
-	//		menuOptions.emplace_back(key++, textId, [&result, &selectedUnit, multiplier, textId]() {result = multiplier; selectedUnit = textId; });
-	//	}
-
-	//	const Menu selectUnitMenu{ menuOptions, menuTitle };
-	//	selectUnitMenu.execute();
-	//	ConsoleWriter::writeLine(TextId::SelectedUnit, ": ", selectedUnit);
-	//	return result;
-	//}
-} // anonymous namespace
-
-Body BodyBuilder::createBodyFromInput() const
+void BodyEditor::editBody()
 {
 	clearScreen();
-	ConsoleWriter::writeHeadline(TextId::EnterNewBodyData);
-	const auto bodyName{ promptForBodyName() };
-	const auto bodyType{ promptForBodyType() };
-	const auto bodyMass{ promptForBodyMass(BodyTypeImpl::getInterval(bodyType)) };
-	const auto bodyPosition{ promptForBodyPosition() };
-	const auto bodyVelocity{ promptForBodyVelocity() };
-
-	Body result{ bodyName, bodyType, bodyMass, bodyPosition, bodyVelocity };
-
-	reviewAndEditBody(result);
-
-	return result;
+	ConsoleWriter::writeLine(TextId::YouAreEditingBody, ' ', m_body.getName());
+	const Menu whatToChangeInBody{ {
+			MenuOption{'N', TextId::BodyName,		[this]() {m_body.setName(promptForBodyName()); }},
+			MenuOption{'T', TextId::BodyType,		[this]() {m_body.setType(promptForBodyType()); }},
+			MenuOption{'M', TextId::BodyMass,		[this]() {m_body.setMass(promptForBodyMass()); }},
+			MenuOption{'P', TextId::BodyPosition,	[this]() {m_body.setPosition(promptForBodyPosition()); }},
+			MenuOption{'V', TextId::BodyVelocity,	[this]() {m_body.setVelocity(promptForBodyVelocity()); }},
+			MenuOption{'B', TextId::Back,			[]() {}}},
+			TextId::QuestionWhatDoYouWantToChangeInBody };
+	whatToChangeInBody.execute();
 }
 
-bool BodyBuilder::isBodyNameAlreadyUsed(const std::string& checkedName) const
+bool BodyEditor::isBodyNameAlreadyUsed(const std::string& checkedName) const
 {
 	return doesAnyBodyMatch([&checkedName](const Body& body) {return body.getName() == checkedName; });
 }
 
-bool BodyBuilder::isBodyPositionAlreadyUsed(const Vector3D& position) const
+bool BodyEditor::isBodyPositionAlreadyUsed(const Vector3D& position) const
 {
 	return doesAnyBodyMatch([&position](const Body& body) {return body.getPosition() == position; });
 }
 
-double BodyBuilder::promptForBodyMass(const BodyTypeImpl::MassInterval& massInterval) const
+double BodyEditor::promptForBodyMass() const
+{
+	return promptForBodyMass(BodyTypeImpl::getInterval(m_body.getType()));
+}
+
+double BodyEditor::promptForBodyMass(const BodyTypeImpl::MassInterval& massInterval) const
 {
 	ConsoleWriter::writeLine();
 	const auto massMultiplier{ getUnitMultiplier(BodyTypeImpl::getMassUnitVector(massInterval), TextId::SelectMassUnit) };
@@ -79,27 +45,13 @@ double BodyBuilder::promptForBodyMass(const BodyTypeImpl::MassInterval& massInte
 	return massMultiplier * DataGetter::getValue<double>([min, max](const double x) {return x >= min && x <= max; });
 }
 
-void BodyBuilder::reviewAndEditBody(Body& body) const
-{
-	clearScreen();
-	ConsoleWriter::writeHeadline(TextId::ConfirmBody);
-	while (true) {
-		body.printSummary();
-		ConsoleWriter::writeLine();
-		if (Menu::yesOrNo(TextId::QuestionDoYouWantToAccept)) {
-			return;
-		}
-
-		BodyEditor bodyEditor{ body, m_bodies };
-		bodyEditor.editBody();
-		body = bodyEditor.getBody();
-	}
-}
-
-std::string BodyBuilder::promptForBodyName() const
+std::string BodyEditor::promptForBodyName() const
 {
 	ConsoleWriter::write(TextId::EnterOneWordName, ": ");
 	auto enteredName{ DataGetter::getSingleWordText() };
+	if (m_body.getName() == enteredName) {
+		return enteredName;
+	}
 	while (isBodyNameAlreadyUsed(enteredName)) {
 		ConsoleWriter::write(TextId::BodyNameAlreadyUsedEnterAnother, ": ");
 		enteredName = DataGetter::getSingleWordText();
@@ -107,7 +59,7 @@ std::string BodyBuilder::promptForBodyName() const
 	return enteredName;
 }
 
-BodyType BodyBuilder::promptForBodyType() const
+BodyType BodyEditor::promptForBodyType() const
 {
 	BodyType result{};
 	const Menu selectBodyType{ {
@@ -120,10 +72,13 @@ BodyType BodyBuilder::promptForBodyType() const
 		MenuOption{'S', TextId::Star,			[&result]() {result = BodyType::Star; }}},
 		TextId::SelectBodyType };
 	selectBodyType.execute();
+	// --------------------
+	// todo - zmiana masy jeśli nie pasuje do przedziału
+	// --------------------
 	return result;
 }
 
-Vector3D BodyBuilder::promptForBodyPosition() const
+Vector3D BodyEditor::promptForBodyPosition() const
 {
 	ConsoleWriter::writeLine();
 	const auto distanceMultiplier{ getUnitMultiplier(std::vector<MenuOptionPair>{
@@ -137,6 +92,9 @@ Vector3D BodyBuilder::promptForBodyPosition() const
 
 	ConsoleWriter::write(TextId::EnterPositionVector, ": ");
 	auto enteredPosition{ distanceMultiplier * DataGetter::getVector3D() };
+	if (m_body.getPosition() == enteredPosition) {
+		return enteredPosition;
+	}
 	while (isBodyPositionAlreadyUsed(enteredPosition)) {
 		ConsoleWriter::write(TextId::BodyPositionAlreadyOccupiedEnterAnother, ": ");
 		enteredPosition = distanceMultiplier * DataGetter::getVector3D();
@@ -144,7 +102,7 @@ Vector3D BodyBuilder::promptForBodyPosition() const
 	return enteredPosition;
 }
 
-Vector3D BodyBuilder::promptForBodyVelocity() const
+Vector3D BodyEditor::promptForBodyVelocity() const
 {
 	ConsoleWriter::writeLine();
 	const auto velocityMultiplier{ getUnitMultiplier(std::vector<MenuOptionPair>{

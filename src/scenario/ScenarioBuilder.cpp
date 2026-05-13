@@ -7,6 +7,7 @@
 #include "input/Keyboard.hpp"
 #include "simulation/bodies/Body.hpp"
 #include "simulation/bodies/BodyBuilder.hpp"
+#include "simulation/bodies/BodyEditor.hpp"
 #include "ui/ConsoleWriter.hpp"
 
 namespace
@@ -194,7 +195,10 @@ void ScenarioBuilder::reviewAndEditBodies()
 				ConsoleWriter::writeLine(TextId::BodyDeleted, '\n'); }},
 			MenuOption{'E', TextId::EditBody,	[this, chooseBodyIdx]() {
 				const BodyBuilder bodyBuilder{m_bodies};
-				bodyBuilder.editBody(m_bodies.at(chooseBodyIdx())); }}},
+				const auto idx{ chooseBodyIdx() };
+				BodyEditor bodyEditor{ m_bodies.at(idx), m_bodies };
+				bodyEditor.editBody();
+				m_bodies.at(idx) = bodyEditor.getBody(); }}},
 			TextId::QuestionWhatDoYouWantToDoWithBodies };
 		whatToDoWithBodies.execute();
 	}

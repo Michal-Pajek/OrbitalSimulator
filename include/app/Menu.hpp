@@ -14,7 +14,7 @@ struct MenuOption
 	MenuOption(const char _key, const TextId _label, std::function<void()> _action) : key{ _key }, label{ _label }, action{ std::move(_action) } {}
 };
 
-// TEMP - MOVE TO BODYBUILDER
+// TEMP - MOVE TO BODYBUILDER ???
 struct MenuOptionPair {
 	TextId textId;
 	double multiplier;
