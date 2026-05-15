@@ -12,6 +12,7 @@ enum class TextId
 	Bodies,
 	BodyDeleted,
 	BodyMass,
+	BodyMassOutOfInterval,
 	BodyName,
 	BodyNameAlreadyUsedEnterAnother,
 	BodyPosition,

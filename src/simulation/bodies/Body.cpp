@@ -13,7 +13,7 @@ Body::Body(const std::string& name, BodyType bodyType, double mass, const Vector
 void Body::printSummary(const bool oneLine) const
 {
 	const auto sep{ oneLine ? '\t' : '\n' };
-	ConsoleWriter::writeLine(m_name, sep, TextId::Mass, " (kg): ", m_mass, sep, TextId::Position, " (m): ", m_position, sep, TextId::Velocity, " (m/s): ", m_velocity);
+	ConsoleWriter::writeLine(m_name, " (", BodyTypeImpl::typeToTextId(m_bodyType), ')', sep, TextId::Mass, " (kg): ", m_mass, sep, TextId::Position, " (m): ", m_position, sep, TextId::Velocity, " (m/s): ", m_velocity);
 }
 
 void Body::setMass(const double mass)

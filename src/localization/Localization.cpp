@@ -55,6 +55,8 @@ namespace Localization
 				return "Body deleted";
 			case TextId::BodyMass:
 				return "Body mass";
+			case TextId::BodyMassOutOfInterval:
+				return "The body's mass is outside the allowed range for this body type. Enter a new value";
 			case TextId::BodyName:
 				return "Body name";
 			case TextId::BodyNameAlreadyUsedEnterAnother:
@@ -250,6 +252,8 @@ namespace Localization
 				return "Usunieto obiekt";
 			case TextId::BodyMass:
 				return "Masa obiektu";
+			case TextId::BodyMassOutOfInterval:
+				return "Masa obiektu jest poza dozwolonym przedzialem dla tego typu obiektu. Wpisz nowa wartosc";
 			case TextId::BodyName:
 				return "Nazwa obiektu";
 			case TextId::BodyNameAlreadyUsedEnterAnother:

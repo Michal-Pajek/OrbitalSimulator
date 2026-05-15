@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include <stdexcept>
 #include <vector>
 #include "app/Menu.hpp"
 #include "localization/TextId.hpp"
@@ -55,6 +56,28 @@ namespace BodyTypeImpl
 	inline constexpr MassInterval getInterval(const BodyType bodyType)
 	{
 		return BodyTypeMassIntervalArray.at(static_cast<size_t>(bodyType));
+	}
+
+	inline constexpr TextId typeToTextId(const BodyType bodyType)
+	{
+		switch (bodyType) {
+		case BodyType::Meteor:
+			return TextId::Meteor;
+		case BodyType::Asteroid:
+			return TextId::Asteroid;
+		case BodyType::Comet:
+			return TextId::Comet;
+		case BodyType::DwarfPlanet:
+			return TextId::DwarfPlanet;
+		case BodyType::Planet:
+			return TextId::Planet;
+		case BodyType::BrownDwarf:
+			return TextId::BrownDwarf;
+		case BodyType::Star:
+			return TextId::Star;
+		default:
+			throw std::runtime_error("Incorrect body type");
+		}
 	}
 
 	std::vector<MenuOptionPair> getMassUnitVector(const MassInterval massInterval);

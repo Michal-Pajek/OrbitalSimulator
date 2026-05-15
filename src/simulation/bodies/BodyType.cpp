@@ -1,4 +1,7 @@
 #include "simulation/bodies/BodyType.hpp"
+#include <vector>
+#include "app/Menu.hpp"
+#include "localization/TextId.hpp"
 
 std::vector<MenuOptionPair> BodyTypeImpl::getMassUnitVector(const MassInterval massInterval)
 {
@@ -11,7 +14,7 @@ std::vector<MenuOptionPair> BodyTypeImpl::getMassUnitVector(const MassInterval m
 		}
 	}
 	if (result.empty()) {
-		// TODO: throw exception
+		result.emplace_back(TextId::Kilogram, 1.0);
 	}
 	return result;
 }
