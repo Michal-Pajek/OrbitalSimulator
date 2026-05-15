@@ -1,21 +1,23 @@
 #pragma once
+#include <string>
 #include <utility>
 #include <vector>
 #include "Body.hpp"
-#include "BodyBuilderEditorInterface.hpp"
+#include "BodyInputBase.hpp"
+#include "math/Vector3D.hpp"
 
-class BodyEditor : public BodyBuilderEditorInterface
+class BodyEditor : public BodyInputBase
 {
 public:
-	BodyEditor(Body body, const std::vector<Body>& bodies) : BodyBuilderEditorInterface{ bodies }, m_body { std::move(body) } {}
+	BodyEditor(Body body, const std::vector<Body>& bodies) : BodyInputBase{ bodies }, m_body { std::move(body) } {}
 	BodyEditor() = delete;
 	void editBody();
-	Body getBody() { return std::move(m_body); }
+	Body takeBody() { return std::move(m_body); }
 private:
-	using BodyBuilderEditorInterface::promptForBodyMass;
-	bool isTheSameNameAsBefore(const std::string& enteredName) const override { return m_body.getName() == enteredName; }
-	bool isTheSamePositionAsBefore(const Vector3D& enteredPosition) const override { return m_body.getPosition() == enteredPosition; }
+	using BodyInputBase::promptForBodyMass;
+	bool isSameAsCurrentName(const std::string& enteredName) const override { return m_body.getName() == enteredName; }
+	bool isSameAsCurrentPosition(const Vector3D& enteredPosition) const override { return m_body.getPosition() == enteredPosition; }
 	double promptForBodyMass() const;
-	void changeMassIfIsOutOfInterval();
+	void reviewMassAfterTypeChange();
 	Body m_body;
 };

@@ -5,6 +5,7 @@
 #include "input/Console.hpp"
 #include "input/DataGetter.hpp"
 #include "input/Keyboard.hpp"
+#include "input/UnitSelector.hpp"
 #include "simulation/bodies/Body.hpp"
 #include "simulation/bodies/BodyBuilder.hpp"
 #include "simulation/bodies/BodyEditor.hpp"
@@ -146,7 +147,7 @@ void ScenarioBuilder::promptForStepCount()
 void ScenarioBuilder::promptForTimeStep()
 {
 	ConsoleWriter::writeLine();
-	const auto timeMultiplier{ getUnitMultiplier(std::vector<MenuOptionPair>{
+	const auto timeMultiplier{ UnitSelector::selectUnitMultiplier(std::vector<UnitSelector::UnitOption>{
 		{TextId::Second,	1.0},
 		{TextId::Minute,	60.0},
 		{TextId::Hour,		3600.0},
@@ -194,11 +195,10 @@ void ScenarioBuilder::reviewAndEditBodies()
 				m_bodies.erase(m_bodies.begin() + chooseBodyIdx());
 				ConsoleWriter::writeLine(TextId::BodyDeleted, '\n'); }},
 			MenuOption{'E', TextId::EditBody,	[this, chooseBodyIdx]() {
-				const BodyBuilder bodyBuilder{m_bodies};
 				const auto idx{ chooseBodyIdx() };
 				BodyEditor bodyEditor{ m_bodies.at(idx), m_bodies };
 				bodyEditor.editBody();
-				m_bodies.at(idx) = bodyEditor.getBody(); }}},
+				m_bodies.at(idx) = bodyEditor.takeBody(); }}},
 			TextId::QuestionWhatDoYouWantToDoWithBodies };
 		whatToDoWithBodies.execute();
 	}

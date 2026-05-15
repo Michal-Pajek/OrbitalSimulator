@@ -13,6 +13,7 @@ add_executable(orbital_simulator
     src/input/Console.cpp
     src/input/DataGetter.cpp
     src/input/Keyboard.cpp
+    src/input/UnitSelector.cpp
     src/localization/Localization.cpp
     src/math/Vector3D.cpp
     src/recording/Recorder.cpp
@@ -20,7 +21,7 @@ add_executable(orbital_simulator
     src/scenario/ScenarioBuilder.cpp
     src/simulation/bodies/Body.cpp
     src/simulation/bodies/BodyBuilder.cpp
-    src/simulation/bodies/BodyBuilderEditorInterface.cpp
+    src/simulation/bodies/BodyInputBase.cpp
     src/simulation/bodies/BodyEditor.cpp
     src/simulation/bodies/BodyStepState.cpp
     src/simulation/bodies/BodyType.cpp

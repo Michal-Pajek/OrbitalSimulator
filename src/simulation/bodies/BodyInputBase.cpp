@@ -1,20 +1,25 @@
-#include "simulation/bodies/BodyBuilderEditorInterface.hpp"
+#include "simulation/bodies/BodyInputBase.hpp"
+#include "app/Menu.hpp"
 #include "input/DataGetter.hpp"
+#include "input/UnitSelector.hpp"
+#include "localization/TextId.hpp"
+#include "physics/Constants.hpp"
 
-bool BodyBuilderEditorInterface::isBodyNameAlreadyUsed(const std::string& checkedName) const
+bool BodyInputBase::isBodyNameAlreadyUsed(const std::string& checkedName) const
 {
 	return doesAnyBodyMatch([&checkedName](const Body& body) {return body.getName() == checkedName; });
 }
 
-bool BodyBuilderEditorInterface::isBodyPositionAlreadyUsed(const Vector3D& position) const
+bool BodyInputBase::isBodyPositionAlreadyUsed(const Vector3D& position) const
 {
 	return doesAnyBodyMatch([&position](const Body& body) {return body.getPosition() == position; });
 }
 
-double BodyBuilderEditorInterface::promptForBodyMass(const BodyTypeImpl::MassInterval& massInterval) const
+double BodyInputBase::promptForBodyMass(const BodyType* bodyTypePtr) const
 {
 	ConsoleWriter::writeLine();
-	const auto massMultiplier{ getUnitMultiplier(BodyTypeImpl::getMassUnitVector(massInterval), TextId::SelectMassUnit) };
+	const auto massMultiplier{ UnitSelector::selectUnitMultiplier(bodyTypePtr->getMassUnitVector(), TextId::SelectMassUnit) };
+	const auto& massInterval{ bodyTypePtr->getMassInterval() };
 	const auto min{ massInterval.min / massMultiplier };
 	const auto max{ massInterval.max / massMultiplier };
 	ConsoleWriter::write(TextId::EnterBodyMass, " (", TextId::Interval, ' ', min, " - ", max, "): ");
@@ -22,11 +27,11 @@ double BodyBuilderEditorInterface::promptForBodyMass(const BodyTypeImpl::MassInt
 	return massMultiplier * DataGetter::getValue<double>([min, max](const double x) {return x >= min && x <= max; });
 }
 
-std::string BodyBuilderEditorInterface::promptForBodyName() const
+std::string BodyInputBase::promptForBodyName() const
 {
 	ConsoleWriter::write(TextId::EnterOneWordName, ": ");
 	auto enteredName{ DataGetter::getSingleWordText() };
-	if (isTheSameNameAsBefore(enteredName)) {
+	if (isSameAsCurrentName(enteredName)) {
 		return enteredName;
 	}
 	while (isBodyNameAlreadyUsed(enteredName)) {
@@ -36,26 +41,26 @@ std::string BodyBuilderEditorInterface::promptForBodyName() const
 	return enteredName;
 }
 
-BodyType BodyBuilderEditorInterface::promptForBodyType() const
+const BodyType* BodyInputBase::promptForBodyType() const
 {
-	BodyType result{};
+	const BodyType* result{};
 	const Menu selectBodyType{ {
-		MenuOption{'M', TextId::Meteor,			[&result]() {result = BodyType::Meteor; }},
-		MenuOption{'A', TextId::Asteroid,		[&result]() {result = BodyType::Asteroid; }},
-		MenuOption{'C', TextId::Comet,			[&result]() {result = BodyType::Comet; }},
-		MenuOption{'D', TextId::DwarfPlanet,	[&result]() {result = BodyType::DwarfPlanet; }},
-		MenuOption{'P', TextId::Planet,			[&result]() {result = BodyType::Planet; }},
-		MenuOption{'B', TextId::BrownDwarf,		[&result]() {result = BodyType::BrownDwarf; }},
-		MenuOption{'S', TextId::Star,			[&result]() {result = BodyType::Star; }}},
+		MenuOption{'M', TextId::Meteor,			[&result]() {result = BodyType::getType(TextId::Meteor); }},
+		MenuOption{'A', TextId::Asteroid,		[&result]() {result = BodyType::getType(TextId::Asteroid); }},
+		MenuOption{'C', TextId::Comet,			[&result]() {result = BodyType::getType(TextId::Comet); }},
+		MenuOption{'D', TextId::DwarfPlanet,	[&result]() {result = BodyType::getType(TextId::DwarfPlanet); }},
+		MenuOption{'P', TextId::Planet,			[&result]() {result = BodyType::getType(TextId::Planet); }},
+		MenuOption{'B', TextId::BrownDwarf,		[&result]() {result = BodyType::getType(TextId::BrownDwarf); }},
+		MenuOption{'S', TextId::Star,			[&result]() {result = BodyType::getType(TextId::Star); }}},
 		TextId::SelectBodyType };
 	selectBodyType.execute();
 	return result;
 }
 
-Vector3D BodyBuilderEditorInterface::promptForBodyPosition() const
+Vector3D BodyInputBase::promptForBodyPosition() const
 {
 	ConsoleWriter::writeLine();
-	const auto distanceMultiplier{ getUnitMultiplier(std::vector<MenuOptionPair>{
+	const auto distanceMultiplier{ UnitSelector::selectUnitMultiplier(std::vector<UnitSelector::UnitOption>{
 		{TextId::Metre,							1.0},
 		{TextId::Kilometre,						physics::KM_MULTIPLIER},
 		{TextId::ThousandKilometre,				physics::KKM_MULTIPLIER},
@@ -66,7 +71,7 @@ Vector3D BodyBuilderEditorInterface::promptForBodyPosition() const
 
 	ConsoleWriter::write(TextId::EnterPositionVector, ": ");
 	auto enteredPosition{ distanceMultiplier * DataGetter::getVector3D() };
-	if (isTheSamePositionAsBefore(enteredPosition)) {
+	if (isSameAsCurrentPosition(enteredPosition)) {
 		return enteredPosition;
 	}
 	while (isBodyPositionAlreadyUsed(enteredPosition)) {
@@ -76,10 +81,10 @@ Vector3D BodyBuilderEditorInterface::promptForBodyPosition() const
 	return enteredPosition;
 }
 
-Vector3D BodyBuilderEditorInterface::promptForBodyVelocity() const
+Vector3D BodyInputBase::promptForBodyVelocity() const
 {
 	ConsoleWriter::writeLine();
-	const auto velocityMultiplier{ getUnitMultiplier(std::vector<MenuOptionPair>{
+	const auto velocityMultiplier{ UnitSelector::selectUnitMultiplier(std::vector<UnitSelector::UnitOption>{
 		{TextId::MetrePerSecond, 1.0},
 		{TextId::KilometrePerSecond, physics::KMS_MULTIPLIER},
 		{TextId::ThousandKilometrePerHour, physics::KKMH_MULTIPLIER},

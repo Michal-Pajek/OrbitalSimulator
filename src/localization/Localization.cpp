@@ -79,6 +79,8 @@ namespace Localization
 				return "Confirm body";
 			case TextId::CurrentBodiesList:
 				return "Current bodies list";
+			case TextId::CurrentBodyMassIsWithinTheRangeForThisType:
+				return "The current body mass is within the range for this type";
 			case TextId::CurrentScenarioSummary:
 				return "Current scenario summary";
 			case TextId::Day:
@@ -163,6 +165,8 @@ namespace Localization
 				return "Press any key to continue...";
 			case TextId::PressAnyKeyToReturnToMainMenu:
 				return "Press any key to return to main menu...";
+			case TextId::QuestionDoYouStillWantToEnterNewValue:
+				return "Do you still want to enter a new value?";
 			case TextId::QuestionDoYouWantToAccept:
 				return "Do you want to accept?";
 			case TextId::QuestionDoYouWantToFinish:
@@ -276,6 +280,8 @@ namespace Localization
 				return "Potwierdz obiekt";
 			case TextId::CurrentBodiesList:
 				return "Aktualna lista obiektow";
+			case TextId::CurrentBodyMassIsWithinTheRangeForThisType:
+				return "Obecna masa obiektu miesci sie juz w zakresie dla tego typu";
 			case TextId::CurrentScenarioSummary:
 				return "Aktualne podsumowanie scenariusza";
 			case TextId::Day:
@@ -333,7 +339,7 @@ namespace Localization
 			case TextId::Megaton:
 				return "Megatona";
 			case TextId::Meteor:
-				return "Meteoryt";
+				return "Meteoroid";
 			case TextId::Metre:
 				return "Metr";
 			case TextId::MetrePerSecond:
@@ -343,7 +349,7 @@ namespace Localization
 			case TextId::Minute:
 				return "Minuta";
 			case TextId::MoonMass:
-				return "Moon mass";
+				return "Masa Ksiezyca";
 			case TextId::NotImplemented:
 				return "Jeszcze nie zaimplementowano";
 			case TextId::ObjectCount:
@@ -360,6 +366,8 @@ namespace Localization
 				return "Wcisnij dowolny klawisz, aby kontynuowac...";
 			case TextId::PressAnyKeyToReturnToMainMenu:
 				return "Wcisnij dowolny klawisz, aby wrocic do menu glownego...";
+			case TextId::QuestionDoYouStillWantToEnterNewValue:
+				return "Czy mimo to chcesz wpisac nowa wartosc?";
 			case TextId::QuestionDoYouWantToAccept:
 				return "Czy chcesz zaakceptowac?";
 			case TextId::QuestionDoYouWantToFinish:

@@ -5,21 +5,21 @@
 #include "BodyType.hpp"
 #include "math/Vector3D.hpp"
 
-class BodyBuilderEditorInterface
+class BodyInputBase
 {
 public:
-	BodyBuilderEditorInterface(const std::vector<Body>& bodies) : m_bodies{ bodies } {}
-	BodyBuilderEditorInterface() = delete;
+	BodyInputBase(const std::vector<Body>& bodies) : m_bodies{ bodies } {}
+	BodyInputBase() = delete;
 protected:
 	bool isBodyNameAlreadyUsed(const std::string& checkedName) const;
 	bool isBodyPositionAlreadyUsed(const Vector3D& position) const;
-	double promptForBodyMass(const BodyTypeImpl::MassInterval& massInterval) const;
+	double promptForBodyMass(const BodyType* bodyTypePtr) const;
 	std::string promptForBodyName() const;
-	BodyType promptForBodyType() const;
+	const BodyType* promptForBodyType() const;
 	Vector3D promptForBodyPosition() const;
 	Vector3D promptForBodyVelocity() const;
-	virtual bool isTheSameNameAsBefore(const std::string& enteredName) const = 0;
-	virtual bool isTheSamePositionAsBefore(const Vector3D& enteredPosition) const = 0;
+	virtual bool isSameAsCurrentName(const std::string& enteredName) const = 0;
+	virtual bool isSameAsCurrentPosition(const Vector3D& enteredPosition) const = 0;
 	const std::vector<Body>& m_bodies;
 
 	template <typename Predicate>

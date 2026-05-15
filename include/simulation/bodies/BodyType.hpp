@@ -1,84 +1,29 @@
 #pragma once
 #include <array>
-#include <stdexcept>
 #include <vector>
-#include "app/Menu.hpp"
+#include "input/UnitSelector.hpp"
 #include "localization/TextId.hpp"
-#include "physics/Constants.hpp"
 
-enum class BodyType
+struct MassInterval
 {
-	Meteor,
-	Asteroid,
-	Comet,
-	DwarfPlanet,
-	Planet,
-	BrownDwarf,
-	Star,
-	Count
+	double min;
+	double max;
 };
 
-namespace BodyTypeImpl
+class BodyType
 {
-	struct MassInterval
-	{
-		double min;
-		double max;
-	};
-
-	struct MassUnit
-	{
-		TextId name;
-		double mass;
-	};
-
-	inline constexpr std::array<MassUnit, 8u> MassUnitsArray{
-		MassUnit{.name{TextId::Kilogram},		.mass{1.0}},
-		MassUnit{.name{TextId::Ton},			.mass{physics::TON}},
-		MassUnit{.name{TextId::Kiloton},		.mass{physics::KILOTON}},
-		MassUnit{.name{TextId::Megaton},		.mass{physics::MEGATON}},
-		MassUnit{.name{TextId::MoonMass},		.mass{physics::MOON_MASS}},
-		MassUnit{.name{TextId::EarthMass},		.mass{physics::EARTH_MASS}},
-		MassUnit{.name{TextId::JupiterMass},	.mass{physics::JUPITER_MASS}},
-		MassUnit{.name{TextId::SolarMass},		.mass{physics::SOLAR_MASS}}
-	};
-
-	inline constexpr std::array<MassInterval, static_cast<std::size_t>(BodyType::Count)> BodyTypeMassIntervalArray{
-		MassInterval{.min{1e-9},	.max{1e8}},
-		MassInterval{.min{1e8},		.max{1e21}},
-		MassInterval{.min{1e11},	.max{1e18}},
-		MassInterval{.min{1e20},	.max{1e24}},
-		MassInterval{.min{1e23},	.max{1e28}},
-		MassInterval{.min{13.0 * physics::JUPITER_MASS},	.max{80.0 * physics::JUPITER_MASS}},
-		MassInterval{.min{0.08 * physics::SOLAR_MASS},		.max{200.0 * physics::SOLAR_MASS}}
-	};
-
-	inline constexpr MassInterval getInterval(const BodyType bodyType)
-	{
-		return BodyTypeMassIntervalArray.at(static_cast<size_t>(bodyType));
-	}
-
-	inline constexpr TextId typeToTextId(const BodyType bodyType)
-	{
-		switch (bodyType) {
-		case BodyType::Meteor:
-			return TextId::Meteor;
-		case BodyType::Asteroid:
-			return TextId::Asteroid;
-		case BodyType::Comet:
-			return TextId::Comet;
-		case BodyType::DwarfPlanet:
-			return TextId::DwarfPlanet;
-		case BodyType::Planet:
-			return TextId::Planet;
-		case BodyType::BrownDwarf:
-			return TextId::BrownDwarf;
-		case BodyType::Star:
-			return TextId::Star;
-		default:
-			throw std::runtime_error("Incorrect body type");
-		}
-	}
-
-	std::vector<MenuOptionPair> getMassUnitVector(const MassInterval massInterval);
-}
+public:
+	BodyType(const BodyType&) = delete;
+	BodyType& operator=(const BodyType&) = delete;
+	const MassInterval& getMassInterval() const { return m_massInterval; }
+	const TextId& getTextId() const { return m_textId; }
+	const std::vector<UnitSelector::UnitOption>& getMassUnitVector() const { return m_massUnitVector; }
+	static const BodyType* getType(const TextId textId);
+private:
+	BodyType(const TextId textId, const MassInterval& massInterval) : m_textId{ textId }, m_massInterval{ massInterval }, m_massUnitVector{ generateMassUnitVector() } {}
+	std::vector<UnitSelector::UnitOption> generateMassUnitVector();
+	TextId m_textId;
+	MassInterval m_massInterval;
+	std::vector<UnitSelector::UnitOption> m_massUnitVector;
+	static const std::array<BodyType, 7> bodyTypeList;
+};

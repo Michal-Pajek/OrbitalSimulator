@@ -11,7 +11,7 @@ void BodyEditor::editBody()
 			MenuOption{'N', TextId::BodyName,		[this]() {m_body.setName(promptForBodyName()); }},
 			MenuOption{'T', TextId::BodyType,		[this]() {
 				m_body.setType(promptForBodyType());
-				changeMassIfIsOutOfInterval();
+				reviewMassAfterTypeChange();
 			}},
 			MenuOption{'M', TextId::BodyMass,		[this]() {m_body.setMass(promptForBodyMass()); }},
 			MenuOption{'P', TextId::BodyPosition,	[this]() {m_body.setPosition(promptForBodyPosition()); }},
@@ -23,17 +23,25 @@ void BodyEditor::editBody()
 
 double BodyEditor::promptForBodyMass() const
 {
-	return promptForBodyMass(BodyTypeImpl::getInterval(m_body.getType()));
+	return promptForBodyMass(m_body.getType());
 }
 
-void BodyEditor::changeMassIfIsOutOfInterval()
+void BodyEditor::reviewMassAfterTypeChange()
 {
 	const auto currentMass{ m_body.getMass() };
 	const auto type{ m_body.getType() };
-	const auto min{ BodyTypeImpl::getInterval(type).min };
-	const auto max{ BodyTypeImpl::getInterval(type).max };
-	if (currentMass < min || currentMass > max) {
+	const auto min{ type->getMassInterval().min };
+	const auto max{ type->getMassInterval().max};
+	const auto isMassOutsideInterval{ currentMass < min || currentMass > max };
+
+	if (isMassOutsideInterval) {
 		ConsoleWriter::writeLine(TextId::BodyMassOutOfInterval);
-		promptForBodyMass();
 	}
+	else {
+		ConsoleWriter::writeLine(TextId::CurrentBodyMassIsWithinTheRangeForThisType);
+		if (!Menu::yesOrNo(TextId::QuestionDoYouStillWantToEnterNewValue)) {
+			return;
+		}
+	}
+	m_body.setMass(promptForBodyMass());
 }
