@@ -1,4 +1,5 @@
 #include "simulation/bodies/BodyEditor.hpp"
+#include "simulation/bodies/types/BodyTypeCatalog.hpp"
 #include "app/Menu.hpp"
 #include "input/Console.hpp"
 #include "ui/ConsoleWriter.hpp"
@@ -10,7 +11,7 @@ void BodyEditor::editBody()
 	const Menu whatToChangeInBody{ {
 			MenuOption{'N', TextId::BodyName,		[this]() {m_body.setName(promptForBodyName()); }},
 			MenuOption{'T', TextId::BodyType,		[this]() {
-				m_body.setType(promptForBodyType());
+				m_body.setTypeId(promptForBodyType());
 				reviewMassAfterTypeChange();
 			}},
 			MenuOption{'M', TextId::BodyMass,		[this]() {m_body.setMass(promptForBodyMass()); }},
@@ -23,15 +24,15 @@ void BodyEditor::editBody()
 
 double BodyEditor::promptForBodyMass() const
 {
-	return promptForBodyMass(m_body.getType());
+	return promptForBodyMass(m_body.getTypeId());
 }
 
 void BodyEditor::reviewMassAfterTypeChange()
 {
 	const auto currentMass{ m_body.getMass() };
-	const auto type{ m_body.getType() };
-	const auto min{ type->getMassInterval().min };
-	const auto max{ type->getMassInterval().max};
+	const auto& type{ BodyTypeCatalog::getType(m_body.getTypeId()) };
+	const auto min{ type.getMassInterval().min };
+	const auto max{ type.getMassInterval().max};
 	const auto isMassOutsideInterval{ currentMass < min || currentMass > max };
 
 	if (isMassOutsideInterval) {

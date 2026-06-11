@@ -1,9 +1,11 @@
 #include "simulation/bodies/BodyInputBase.hpp"
-#include "app/Menu.hpp"
+#include <cmath>
 #include "input/DataGetter.hpp"
 #include "input/UnitSelector.hpp"
 #include "localization/TextId.hpp"
 #include "physics/Constants.hpp"
+#include "simulation/bodies/types/BodyTypeCatalog.hpp"
+#include "ui/ConsoleWriter.hpp"
 
 bool BodyInputBase::isBodyNameAlreadyUsed(const std::string& checkedName) const
 {
@@ -15,11 +17,12 @@ bool BodyInputBase::isBodyPositionAlreadyUsed(const Vector3D& position) const
 	return doesAnyBodyMatch([&position](const Body& body) {return body.getPosition() == position; });
 }
 
-double BodyInputBase::promptForBodyMass(const BodyType* bodyTypePtr) const
+double BodyInputBase::promptForBodyMass(const BodyTypeId bodyTypeId) const
 {
 	ConsoleWriter::writeLine();
-	const auto massMultiplier{ UnitSelector::selectUnitMultiplier(bodyTypePtr->getMassUnitVector(), TextId::SelectMassUnit) };
-	const auto& massInterval{ bodyTypePtr->getMassInterval() };
+	const auto& bodyType{ BodyTypeCatalog::getType(bodyTypeId) };
+	const auto massMultiplier{ UnitSelector::selectUnitMultiplier(bodyType.getMassUnitVector(), TextId::SelectMassUnit) };
+	const auto& massInterval{ bodyType.getMassInterval() };
 	const auto min{ massInterval.min / massMultiplier };
 	const auto max{ massInterval.max / massMultiplier };
 	ConsoleWriter::write(TextId::EnterBodyMass, " (", TextId::Interval, ' ', min, " - ", max, "): ");
@@ -41,20 +44,10 @@ std::string BodyInputBase::promptForBodyName() const
 	return enteredName;
 }
 
-const BodyType* BodyInputBase::promptForBodyType() const
+BodyTypeId BodyInputBase::promptForBodyType() const
 {
-	const BodyType* result{};
-	const Menu selectBodyType{ {
-		MenuOption{'M', TextId::Meteor,			[&result]() {result = BodyType::getType(TextId::Meteor); }},
-		MenuOption{'A', TextId::Asteroid,		[&result]() {result = BodyType::getType(TextId::Asteroid); }},
-		MenuOption{'C', TextId::Comet,			[&result]() {result = BodyType::getType(TextId::Comet); }},
-		MenuOption{'D', TextId::DwarfPlanet,	[&result]() {result = BodyType::getType(TextId::DwarfPlanet); }},
-		MenuOption{'P', TextId::Planet,			[&result]() {result = BodyType::getType(TextId::Planet); }},
-		MenuOption{'B', TextId::BrownDwarf,		[&result]() {result = BodyType::getType(TextId::BrownDwarf); }},
-		MenuOption{'S', TextId::Star,			[&result]() {result = BodyType::getType(TextId::Star); }}},
-		TextId::SelectBodyType };
-	selectBodyType.execute();
-	return result;
+	// TEMP: returns default BodyTypeId until generic selector is implemented.
+	return {};
 }
 
 Vector3D BodyInputBase::promptForBodyPosition() const
@@ -92,5 +85,5 @@ Vector3D BodyInputBase::promptForBodyVelocity() const
 		TextId::SelectSpeedUnit) };
 
 	ConsoleWriter::write(TextId::EnterVelocityVector, ": ");
-	return velocityMultiplier * DataGetter::getVector3D([velocityMultiplier](const double v) {return std::abs(velocityMultiplier * v) < physics::C_CONST; });
+	return velocityMultiplier * DataGetter::getVector3D([velocityMultiplier](const double v) {return std::fabs(velocityMultiplier * v) < physics::C_CONST; });
 }

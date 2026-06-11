@@ -11,12 +11,12 @@ Body BodyBuilder::createBodyFromInput() const
 	clearScreen();
 	ConsoleWriter::writeHeadline(TextId::EnterNewBodyData);
 	const auto bodyName{ promptForBodyName() };
-	const auto bodyTypePtr{ promptForBodyType() };
-	const auto bodyMass{ promptForBodyMass(bodyTypePtr) };
+	const auto bodyType{ promptForBodyType() };
+	const auto bodyMass{ promptForBodyMass(bodyType) };
 	const auto bodyPosition{ promptForBodyPosition() };
 	const auto bodyVelocity{ promptForBodyVelocity() };
 
-	Body result{ bodyName, bodyTypePtr, bodyMass, bodyPosition, bodyVelocity };
+	Body result{ bodyName, bodyType, bodyMass, bodyPosition, bodyVelocity };
 
 	reviewAndEditBody(result);
 

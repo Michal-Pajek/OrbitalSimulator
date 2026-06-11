@@ -4,7 +4,7 @@
 #include "simulation/bodies/Body.hpp"
 
 // temp
-#include "simulation/bodies/BodyType.hpp"
+#include "simulation/bodies/types/BodyType.hpp"
 // -----------------------------------------
 
 constexpr double EPSILON{ 1e-12 };

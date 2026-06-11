@@ -87,7 +87,7 @@ namespace Localization
 				return "Day";
 			case TextId::DeleteBody:
 				return "Delete body";
-			case TextId::DwarfPlanet:
+			case TextId::DwarfPlanetOrMoon:
 				return "Dwarf planet / moon";
 			case TextId::EarthMass:
 				return "Earth mass";
@@ -288,7 +288,7 @@ namespace Localization
 				return "Dzien";
 			case TextId::DeleteBody:
 				return "Usun obiekt";
-			case TextId::DwarfPlanet:
+			case TextId::DwarfPlanetOrMoon:
 				return "Planeta karlowata / ksiezyc";
 			case TextId::EarthMass:
 				return "Masa Ziemi";

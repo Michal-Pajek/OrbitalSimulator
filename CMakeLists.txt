@@ -24,7 +24,8 @@ add_executable(orbital_simulator
     src/simulation/bodies/BodyInputBase.cpp
     src/simulation/bodies/BodyEditor.cpp
     src/simulation/bodies/BodyStepState.cpp
-    src/simulation/bodies/BodyType.cpp
+    src/simulation/bodies/types/BodyType.cpp
+    src/simulation/bodies/types/BodyTypeCatalog.cpp
     src/simulation/Simulation.cpp
     src/ui/ConsoleWriter.cpp)
 
@@ -48,6 +49,8 @@ add_executable(orbital_tests
     src/math/Vector3D.cpp
     src/simulation/bodies/Body.cpp
     src/simulation/bodies/BodyStepState.cpp
+    src/simulation/bodies/types/BodyType.cpp
+    src/simulation/bodies/types/BodyTypeCatalog.cpp
     src/simulation/Simulation.cpp
     src/ui/ConsoleWriter.cpp
     tests/BodyTests.cpp

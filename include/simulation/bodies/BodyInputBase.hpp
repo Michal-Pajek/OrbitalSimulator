@@ -2,8 +2,8 @@
 #include <string>
 #include <vector>
 #include "Body.hpp"
-#include "BodyType.hpp"
 #include "math/Vector3D.hpp"
+#include "types/BodyType.hpp"
 
 class BodyInputBase
 {
@@ -13,9 +13,9 @@ public:
 protected:
 	bool isBodyNameAlreadyUsed(const std::string& checkedName) const;
 	bool isBodyPositionAlreadyUsed(const Vector3D& position) const;
-	double promptForBodyMass(const BodyType* bodyTypePtr) const;
+	double promptForBodyMass(const BodyTypeId bodyTypeId) const;
 	std::string promptForBodyName() const;
-	const BodyType* promptForBodyType() const;
+	BodyTypeId promptForBodyType() const;
 	Vector3D promptForBodyPosition() const;
 	Vector3D promptForBodyVelocity() const;
 	virtual bool isSameAsCurrentName(const std::string& enteredName) const = 0;

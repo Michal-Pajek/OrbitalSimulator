@@ -28,7 +28,7 @@ enum class TextId
 	CurrentScenarioSummary,
 	Day,
 	DeleteBody,
-	DwarfPlanet,
+	DwarfPlanetOrMoon,
 	EarthMass,
 	EditBody,
 	EnterBodyMass,

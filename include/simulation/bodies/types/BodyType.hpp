@@ -4,6 +4,17 @@
 #include "input/UnitSelector.hpp"
 #include "localization/TextId.hpp"
 
+enum class BodyTypeId
+{
+	Meteor,
+	Asteroid,
+	Comet,
+	DwarfPlanet,
+	Planet,
+	BrownDwarf,
+	Star
+};
+
 struct MassInterval
 {
 	double min;
@@ -12,18 +23,18 @@ struct MassInterval
 
 class BodyType
 {
+	friend class BodyTypeCatalog;
 public:
 	BodyType(const BodyType&) = delete;
 	BodyType& operator=(const BodyType&) = delete;
 	const MassInterval& getMassInterval() const { return m_massInterval; }
-	const TextId& getTextId() const { return m_textId; }
 	const std::vector<UnitSelector::UnitOption>& getMassUnitVector() const { return m_massUnitVector; }
-	static const BodyType* getType(const TextId textId);
+	TextId getTextId() const { return m_textId; }
 private:
-	BodyType(const TextId textId, const MassInterval& massInterval) : m_textId{ textId }, m_massInterval{ massInterval }, m_massUnitVector{ generateMassUnitVector() } {}
+	BodyType(const TextId textId, const BodyTypeId id, const MassInterval& massInterval) : m_textId{ textId }, m_id{ id }, m_massInterval{ massInterval }, m_massUnitVector{ generateMassUnitVector() } {}
 	std::vector<UnitSelector::UnitOption> generateMassUnitVector();
 	TextId m_textId;
+	const BodyTypeId m_id;
 	MassInterval m_massInterval;
 	std::vector<UnitSelector::UnitOption> m_massUnitVector;
-	static const std::array<BodyType, 7> bodyTypeList;
 };
