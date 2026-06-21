@@ -84,6 +84,7 @@ enum class TextId
 	Second,
 	SelectBodyType,
 	SelectDistanceUnit,
+	SelectedBodyType,
 	SelectedUnit,
 	SelectMassUnit,
 	SelectSpeedUnit,

@@ -1,7 +1,6 @@
 #pragma once
-#include <array>
 #include <vector>
-#include "input/UnitSelector.hpp"
+#include "input/OptionSelector.hpp"
 #include "localization/TextId.hpp"
 
 enum class BodyTypeId
@@ -27,6 +26,7 @@ class BodyType
 public:
 	BodyType(const BodyType&) = delete;
 	BodyType& operator=(const BodyType&) = delete;
+	BodyTypeId getId() const { return m_id; }
 	const MassInterval& getMassInterval() const { return m_massInterval; }
 	const std::vector<UnitSelector::UnitOption>& getMassUnitVector() const { return m_massUnitVector; }
 	TextId getTextId() const { return m_textId; }

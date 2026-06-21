@@ -1,4 +1,5 @@
 #include "simulation/bodies/types/BodyType.hpp"
+#include <array>
 #include <vector>
 #include "localization/TextId.hpp"
 #include "physics/Constants.hpp"

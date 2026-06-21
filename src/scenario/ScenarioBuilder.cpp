@@ -5,7 +5,7 @@
 #include "input/Console.hpp"
 #include "input/DataGetter.hpp"
 #include "input/Keyboard.hpp"
-#include "input/UnitSelector.hpp"
+#include "input/OptionSelector.hpp"
 #include "simulation/bodies/Body.hpp"
 #include "simulation/bodies/BodyBuilder.hpp"
 #include "simulation/bodies/BodyEditor.hpp"

@@ -13,7 +13,6 @@ add_executable(orbital_simulator
     src/input/Console.cpp
     src/input/DataGetter.cpp
     src/input/Keyboard.cpp
-    src/input/UnitSelector.cpp
     src/localization/Localization.cpp
     src/math/Vector3D.cpp
     src/recording/Recorder.cpp

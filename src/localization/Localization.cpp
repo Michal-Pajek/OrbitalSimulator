@@ -199,6 +199,8 @@ namespace Localization
 				return "Select body type";
 			case TextId::SelectDistanceUnit:
 				return "Select distance unit";
+			case TextId::SelectedBodyType:
+				return "Selected body type";
 			case TextId::SelectedUnit:
 				return "Selected unit";
 			case TextId::SelectMassUnit:
@@ -400,6 +402,8 @@ namespace Localization
 				return "Wybierz rodzaj obiektu";
 			case TextId::SelectDistanceUnit:
 				return "Wybierz jednostke odleglosci";
+			case TextId::SelectedBodyType:
+				return "Wybrany typ obiektu";
 			case TextId::SelectedUnit:
 				return "Wybrana jednostka";
 			case TextId::SelectMassUnit:

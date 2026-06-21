@@ -1,7 +1,7 @@
 #include "simulation/bodies/BodyInputBase.hpp"
 #include <cmath>
 #include "input/DataGetter.hpp"
-#include "input/UnitSelector.hpp"
+#include "input/OptionSelector.hpp"
 #include "localization/TextId.hpp"
 #include "physics/Constants.hpp"
 #include "simulation/bodies/types/BodyTypeCatalog.hpp"
@@ -46,8 +46,15 @@ std::string BodyInputBase::promptForBodyName() const
 
 BodyTypeId BodyInputBase::promptForBodyType() const
 {
-	// TEMP: returns default BodyTypeId until generic selector is implemented.
-	return {};
+	const auto bodyTypes{ BodyTypeCatalog::getAvailableTypes() };
+	std::vector<OptionSelector::SelectionOption<BodyTypeId>> options{};
+	options.reserve(bodyTypes.size());
+	for (const auto& bodyType : bodyTypes) {
+		options.emplace_back(bodyType.getTextId(), bodyType.getId());
+	}
+	const auto selectedOption{ OptionSelector::selectOption(options, TextId::SelectBodyType) };
+	ConsoleWriter::writeLine(TextId::SelectedBodyType, ": ", selectedOption.textId);
+	return selectedOption.value;
 }
 
 Vector3D BodyInputBase::promptForBodyPosition() const
