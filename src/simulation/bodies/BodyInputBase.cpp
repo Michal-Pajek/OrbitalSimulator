@@ -1,5 +1,6 @@
 #include "simulation/bodies/BodyInputBase.hpp"
 #include <cmath>
+#include "input/BodyMassUnitSelector.hpp"
 #include "input/DataGetter.hpp"
 #include "input/OptionSelector.hpp"
 #include "localization/TextId.hpp"
@@ -21,7 +22,7 @@ double BodyInputBase::promptForBodyMass(const BodyTypeId bodyTypeId) const
 {
 	ConsoleWriter::writeLine();
 	const auto& bodyType{ BodyTypeCatalog::getType(bodyTypeId) };
-	const auto massMultiplier{ UnitSelector::selectUnitMultiplier(bodyType.getMassUnitVector(), TextId::SelectMassUnit) };
+	const auto massMultiplier{ BodyMassUnitSelector::getInstance().selectMassMultiplier(bodyTypeId) };
 	const auto& massInterval{ bodyType.getMassInterval() };
 	const auto min{ massInterval.min / massMultiplier };
 	const auto max{ massInterval.max / massMultiplier };
