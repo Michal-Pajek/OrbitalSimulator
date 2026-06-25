@@ -26,10 +26,11 @@ add_executable(orbital_simulator
     src/simulation/bodies/BodyStepState.cpp
     src/simulation/bodies/types/BodyTypeCatalog.cpp
     src/simulation/Simulation.cpp
-    src/ui/ConsoleWriter.cpp)
+    src/ui/ConsoleWriter.cpp
+)
 
 target_include_directories(orbital_simulator PRIVATE
-    include   
+    include
 )
 
 enable_testing()
@@ -53,7 +54,8 @@ add_executable(orbital_tests
     src/ui/ConsoleWriter.cpp
     tests/BodyTests.cpp
     tests/BodyTypesTests.cpp
-    tests/SimulationsTests.cpp)
+    tests/SimulationsTests.cpp
+)
 
 target_include_directories(orbital_tests PRIVATE
     include

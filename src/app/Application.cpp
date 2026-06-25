@@ -65,6 +65,7 @@ void Application::options()
 	exitModule();
 }
 
+// TODO: Remove after the Scenario refactor
 void Application::testScenario()
 {
 	enterModule(TextId::RunTestScenario);

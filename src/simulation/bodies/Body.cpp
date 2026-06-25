@@ -1,4 +1,5 @@
 #include "simulation/bodies/Body.hpp"
+#include <cstddef>
 #include <stdexcept>
 #include "localization/TextId.hpp"
 #include "physics/Constants.hpp"
@@ -22,7 +23,8 @@ namespace
 	}
 } // anonymous namespace
 
-Body::Body(const std::string& name, BodyTypeId typeId, double mass, const Vector3D& position, const Vector3D& velocity) : m_name{name}, m_typeId{typeId}, m_mass{mass}, m_position{position}, m_velocity{velocity}
+Body::Body(const std::string& name, BodyTypeId typeId, double mass, const Vector3D& position, const Vector3D& velocity)
+	: m_name{name}, m_typeId{typeId}, m_mass{mass}, m_position{position}, m_velocity{velocity}
 {
 	validateMass(mass);
 	validateTypeId(typeId);

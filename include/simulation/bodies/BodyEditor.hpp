@@ -9,7 +9,8 @@
 class BodyEditor : public BodyInputBase
 {
 public:
-	BodyEditor(Body body, const std::vector<Body>& bodies) : BodyInputBase{ bodies }, m_body { std::move(body) } {}
+	BodyEditor(Body body, const std::vector<Body>& bodies)
+		: BodyInputBase{ bodies }, m_body{ std::move(body) } {}
 	BodyEditor() = delete;
 	void editBody();
 	Body takeBody() { return std::move(m_body); }

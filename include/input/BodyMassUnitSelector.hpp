@@ -3,7 +3,7 @@
 #include <cstddef>
 #include <optional>
 #include <vector>
-#include "OptionSelector.hpp"
+#include "input/OptionSelector.hpp"
 #include "simulation/bodies/types/BodyType.hpp"
 
 class BodyMassUnitSelector

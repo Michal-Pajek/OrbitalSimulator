@@ -2,6 +2,7 @@
 #include "simulation/bodies/types/BodyTypeCatalog.hpp"
 #include "app/Menu.hpp"
 #include "input/Console.hpp"
+#include "localization/TextId.hpp"
 #include "ui/ConsoleWriter.hpp"
 
 void BodyEditor::editBody()
@@ -32,7 +33,7 @@ void BodyEditor::reviewMassAfterTypeChange()
 	const auto currentMass{ m_body.getMass() };
 	const auto& type{ BodyTypeCatalog::getType(m_body.getTypeId()) };
 	const auto min{ type.getMassInterval().min };
-	const auto max{ type.getMassInterval().max};
+	const auto max{ type.getMassInterval().max };
 	const auto isMassOutsideInterval{ currentMass < min || currentMass > max };
 
 	if (isMassOutsideInterval) {

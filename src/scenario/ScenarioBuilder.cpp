@@ -1,4 +1,5 @@
 #include "scenario/ScenarioBuilder.hpp"
+#include <optional>
 #include <stdexcept>
 #include <utility>
 #include "app/Menu.hpp"
@@ -6,6 +7,7 @@
 #include "input/DataGetter.hpp"
 #include "input/Keyboard.hpp"
 #include "input/OptionSelector.hpp"
+#include "localization/TextId.hpp"
 #include "simulation/bodies/Body.hpp"
 #include "simulation/bodies/BodyBuilder.hpp"
 #include "simulation/bodies/BodyEditor.hpp"
@@ -29,19 +31,19 @@ namespace
 
 	Decision getScenarioAcceptanceDecision()
 	{
-		Decision result;
+		std::optional<Decision> result{};
 		const Menu scenarioAcceptanceMenu{ {
 			MenuOption{'A', TextId::Accept,	[&result]() {result = Decision::Accept; }},
 			MenuOption{'R', TextId::Revise,	[&result]() {result = Decision::Revise; }},
 			MenuOption{'C', TextId::Cancel,	[&result]() {result = Decision::Cancel; }}},
 			TextId::QuestionWhatDoYouWantToDo };
 		scenarioAcceptanceMenu.execute();
-		return result;
+		return result.value();
 	}
 
 	PartToChange getWhatToChangeDecision()
 	{
-		PartToChange result;
+		std::optional<PartToChange> result{};
 		const Menu whatToChangeMenu{ {
 			MenuOption{'T', TextId::TimeStep,		[&result]() {result = PartToChange::TimeStep; }},
 			MenuOption{'S', TextId::StepCount,		[&result]() {result = PartToChange::StepCount; }},
@@ -50,7 +52,7 @@ namespace
 			MenuOption{'C', TextId::Cancel,			[&result]() {result = PartToChange::Cancel; }}},
 			TextId::QuestionWhatDoYouWantToChange };
 		whatToChangeMenu.execute();
-		return result;
+		return result.value();
 	}
 } // anonymous namespace
 
@@ -174,7 +176,7 @@ void ScenarioBuilder::reviewAndEditBodies()
 		if (bodyCount == 0) {
 			ConsoleWriter::writeLine(TextId::ScenarioMustHaveAtLeastOneBody, ". ", TextId::PressAnyKeyToContinue);
 			getSingleKey();
-			const BodyBuilder bodyBuilder{m_bodies};
+			const BodyBuilder bodyBuilder{ m_bodies };
 			m_bodies.emplace_back(bodyBuilder.createBodyFromInput());
 			++bodyCount;
 		}
@@ -189,7 +191,7 @@ void ScenarioBuilder::reviewAndEditBodies()
 		Menu whatToDoWithBodies{ {
 			MenuOption{'A', TextId::Accept,		[&continueChecking]() {continueChecking = false; }},
 			MenuOption{'B', TextId::AddBody,	[this]() {
-				const BodyBuilder bodyBuilder{m_bodies};
+				const BodyBuilder bodyBuilder{ m_bodies };
 				m_bodies.emplace_back(bodyBuilder.createBodyFromInput()); }},
 			MenuOption{'D', TextId::DeleteBody,	[this, chooseBodyIdx]() {
 				m_bodies.erase(m_bodies.begin() + chooseBodyIdx());

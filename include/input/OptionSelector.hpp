@@ -15,7 +15,6 @@ namespace OptionSelector
         SelectionOption(TextId _textId, T _value) : textId{ _textId }, value{ _value } {}
         TextId textId;
         T value;
-
     };
 
     template <typename T>

@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <gtest/gtest.h>
 #include <stdexcept>
 #include "math/Vector3D.hpp"

@@ -6,10 +6,12 @@
 
 struct Scenario
 {
-	Scenario() = default;		// temp version
-	Scenario(double timeStep, unsigned int stepCount, std::string name, std::vector<Body> bodies) : timeStep{ timeStep }, stepCount{ stepCount }, name{ std::move(name) }, bodies{ std::move(bodies) } {}
+	// Temporary constructor used only by Application::testScenario
+	Scenario() : stepCount{ 1000u } {}
+	Scenario(double timeStep, unsigned int stepCount, std::string name, std::vector<Body> bodies)
+		: timeStep{ timeStep }, stepCount{ stepCount }, name{ std::move(name) }, bodies{ std::move(bodies) } {}
 	double timeStep{ 1.0 };
-	unsigned int stepCount{ 1000u };		// temp value
+	unsigned int stepCount;
 	std::string name{};
 	std::vector<Body> bodies{};
 };
