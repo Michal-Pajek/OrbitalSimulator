@@ -42,6 +42,8 @@ auto BodyMassUnitSelector::getUnitsFor(const BodyTypeId bodyTypeId) -> const Uni
 }
 
 auto BodyMassUnitSelector::generateMassUnitVector(const MassInterval& massInterval) -> UnitVector {
+	// The unit list is selected automatically based on the body type mass interval.
+	// This avoids hardcoding unit sets per BodyTypeId. The tolerance may be tuned later.
 	constexpr double TOLERANCE{ 1e3 };
 	UnitVector result{};
 	for (const auto& x : massUnitsArray) {

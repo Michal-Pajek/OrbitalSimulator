@@ -52,6 +52,7 @@ add_executable(orbital_tests
     src/simulation/Simulation.cpp
     src/ui/ConsoleWriter.cpp
     tests/BodyTests.cpp
+    tests/BodyTypesTests.cpp
     tests/SimulationsTests.cpp)
 
 target_include_directories(orbital_tests PRIVATE

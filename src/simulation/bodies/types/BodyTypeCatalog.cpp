@@ -3,7 +3,7 @@
 #include "localization/TextId.hpp"
 #include "physics/Constants.hpp"
 
-const std::array<BodyType, 7u> BodyTypeCatalog::bodyTypesArray{
+const std::array<BodyType, BODY_TYPE_COUNT> BodyTypeCatalog::bodyTypesArray{
 		BodyType{TextId::Meteor,			BodyTypeId::Meteor,			MassInterval{.min{1e-9},	.max{1e8}}},
 		BodyType{TextId::Asteroid,			BodyTypeId::Asteroid,		MassInterval{.min{1e8},		.max{1e21}}},
 		BodyType{TextId::Comet,				BodyTypeId::Comet,			MassInterval{.min{1e11},	.max{1e18}}},
@@ -13,12 +13,11 @@ const std::array<BodyType, 7u> BodyTypeCatalog::bodyTypesArray{
 		BodyType{TextId::Star,				BodyTypeId::Star,			MassInterval{.min{0.08 * physics::SOLAR_MASS},		.max{200.0 * physics::SOLAR_MASS}}}
 	};
 
-const BodyType& BodyTypeCatalog::getType(const BodyTypeId id) // todo: change to binary search
+const BodyType& BodyTypeCatalog::getType(const BodyTypeId id)
 {
-	for (const auto& type : bodyTypesArray) {
-		if (id == type.m_id) {
-			return type;
-		}
+	const auto idx{ static_cast<std::size_t>(id) };
+	if (idx >= BODY_TYPE_COUNT) {
+		throw std::logic_error{ "BodyTypeCatalog::getType: unknown BodyTypeId" };
 	}
-	throw std::logic_error{ "BodyTypeCatalog::getType: unknown BodyTypeId" };
+	return bodyTypesArray.at(idx);
 }

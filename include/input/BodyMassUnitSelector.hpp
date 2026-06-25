@@ -12,7 +12,6 @@ public:
 	static BodyMassUnitSelector& getInstance();
 	double selectMassMultiplier(const BodyTypeId bodyTypeId);
 private:
-	static constexpr std::size_t BODY_TYPE_COUNT{ 7u };
 	using UnitVector = std::vector<UnitSelector::UnitOption>;
 	using UnitCache = std::array<std::optional<UnitVector>, BODY_TYPE_COUNT>;
 	BodyMassUnitSelector() = default;

@@ -1,4 +1,5 @@
 #pragma once
+#include <cstddef>
 #include "localization/TextId.hpp"
 
 enum class BodyTypeId
@@ -9,8 +10,12 @@ enum class BodyTypeId
 	DwarfPlanet,
 	Planet,
 	BrownDwarf,
-	Star
+	Star,
+	// ----------
+	COUNT
 };
+
+constexpr auto BODY_TYPE_COUNT{ static_cast<std::size_t>(BodyTypeId::COUNT) };
 
 struct MassInterval
 {
