@@ -87,8 +87,8 @@ namespace Localization
 				return "Day";
 			case TextId::DeleteBody:
 				return "Delete body";
-			case TextId::DwarfPlanetOrMoon:
-				return "Dwarf planet / moon";
+			case TextId::DwarfPlanet:
+				return "Dwarf planet";
 			case TextId::EarthMass:
 				return "Earth mass";
 			case TextId::EditBody:
@@ -147,6 +147,8 @@ namespace Localization
 				return "Million kilometre";
 			case TextId::Minute:
 				return "Minute";
+			case TextId::Moon:
+				return "Moon";
 			case TextId::MoonMass:
 				return "Moon mass";
 			case TextId::NotImplemented:
@@ -290,8 +292,8 @@ namespace Localization
 				return "Dzien";
 			case TextId::DeleteBody:
 				return "Usun obiekt";
-			case TextId::DwarfPlanetOrMoon:
-				return "Planeta karlowata / ksiezyc";
+			case TextId::DwarfPlanet:
+				return "Planeta karlowata";
 			case TextId::EarthMass:
 				return "Masa Ziemi";
 			case TextId::EditBody:
@@ -350,6 +352,8 @@ namespace Localization
 				return "Milion kilometrow";
 			case TextId::Minute:
 				return "Minuta";
+			case TextId::Moon:
+				return "Ksiezyc";
 			case TextId::MoonMass:
 				return "Masa Ksiezyca";
 			case TextId::NotImplemented:

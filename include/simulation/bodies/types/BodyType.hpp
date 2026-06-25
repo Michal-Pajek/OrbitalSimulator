@@ -7,6 +7,7 @@ enum class BodyTypeId
 	Meteor,
 	Asteroid,
 	Comet,
+	Moon,
 	DwarfPlanet,
 	Planet,
 	BrownDwarf,
