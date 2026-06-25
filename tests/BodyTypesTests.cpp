@@ -18,3 +18,18 @@ TEST(BodyTypesTests, BodyTypeIdsMatchCatalogIndexes)
 		EXPECT_EQ(BodyTypeCatalog::getType(bodyTypeId).getId(), bodyTypeId);
 	}
 }
+
+TEST(BodyTypesTests, AllMassIntervalsAreValid)
+{
+	for (const auto& bodyType : BodyTypeCatalog::getAvailableTypes()) {
+		const auto interval{ bodyType.getMassInterval() };
+		EXPECT_GT(interval.max, 0.0);
+		EXPECT_GT(interval.min, 0.0);
+		EXPECT_GT(interval.max, interval.min);
+	}
+}
+
+TEST(BodyTypesTests, BodyTypesArraySizeEqualsBodyTypeCount)
+{
+	EXPECT_EQ(BodyTypeCatalog::getAvailableTypes().size(), BODY_TYPE_COUNT);
+}

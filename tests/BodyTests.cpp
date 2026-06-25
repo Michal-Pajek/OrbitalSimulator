@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <stdexcept>
 #include "math/Vector3D.hpp"
 #include "physics/Constants.hpp"
 #include "simulation/bodies/Body.hpp"
@@ -45,4 +46,51 @@ TEST(GravityForceTests, ObeysThirdNewtonianRule)
 	EXPECT_NEAR(forceAB.getX(), -forceBA.getX(), EPSILON);
 	EXPECT_NEAR(forceAB.getY(), -forceBA.getY(), EPSILON);
 	EXPECT_NEAR(forceAB.getZ(), -forceBA.getZ(), EPSILON);
+}
+
+TEST(BodyTests, ConstructorStoresBodyTypeId)
+{
+	for (std::size_t id{}; id < BODY_TYPE_COUNT; ++id) {
+		const auto bodyTypeId{ static_cast<BodyTypeId>(id) };
+		const Body body{ "A", bodyTypeId, 1.0, Vector3D{}, Vector3D{} };
+		EXPECT_EQ(body.getTypeId(), bodyTypeId);
+	}
+}
+
+TEST(BodyTests, SetTypeIdChangesBodyTypeId)
+{
+	for (std::size_t id{}; id < BODY_TYPE_COUNT; ++id) {
+		Body body{ "A", static_cast<BodyTypeId>(id), 1.0, Vector3D{}, Vector3D{} };
+		for (std::size_t newId{}; newId < BODY_TYPE_COUNT; ++newId) {
+			const auto bodyTypeId{ static_cast<BodyTypeId>(newId) };
+			body.setTypeId(bodyTypeId);
+			EXPECT_EQ(body.getTypeId(), bodyTypeId);
+		}
+	}
+}
+
+TEST(BodyTests, ConstructorThrowsForInvalidBodyTypeId)
+{
+	EXPECT_THROW((Body{ "A", static_cast<BodyTypeId>(BODY_TYPE_COUNT), 1.0, Vector3D{}, Vector3D{} }), std::invalid_argument);
+}
+
+TEST(BodyTests, SetTypeIdThrowsForInvalidBodyTypeId)
+{
+	for (std::size_t id{}; id < BODY_TYPE_COUNT; ++id) {
+		Body body{ "A", static_cast<BodyTypeId>(id), 1.0, Vector3D{}, Vector3D{} };
+		EXPECT_THROW(body.setTypeId(static_cast<BodyTypeId>(BODY_TYPE_COUNT)), std::invalid_argument);
+	}
+}
+
+TEST(BodyTests, ConstructorThrowsForNonPositiveMass)
+{
+	EXPECT_THROW((Body{ "A", TEST_BODY_TYPE, 0.0, Vector3D{}, Vector3D{} }), std::invalid_argument);
+	EXPECT_THROW((Body{ "A", TEST_BODY_TYPE, -1.0, Vector3D{}, Vector3D{} }), std::invalid_argument);
+}
+
+TEST(BodyTests, SetMassThrowsForNonPositiveMass)
+{
+	Body body{ "A", TEST_BODY_TYPE, 1.0, Vector3D{}, Vector3D{} };
+	EXPECT_THROW(body.setMass(0.0), std::invalid_argument);
+	EXPECT_THROW(body.setMass(-1.0), std::invalid_argument);
 }
