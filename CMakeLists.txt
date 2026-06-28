@@ -54,6 +54,7 @@ add_executable(orbital_tests
     src/ui/ConsoleWriter.cpp
     tests/BodyTests.cpp
     tests/BodyTypesTests.cpp
+    tests/LocalizationTests.cpp
     tests/SimulationsTests.cpp
 )
 

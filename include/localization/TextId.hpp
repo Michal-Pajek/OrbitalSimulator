@@ -1,4 +1,5 @@
 #pragma once
+#include <cstddef>
 
 enum class TextId
 {
@@ -101,5 +102,9 @@ enum class TextId
 	ValueOutOfRange,
 	Velocity,
 	YouAreEditingBody,
-	YouEnteredIncorrectValue
+	YouEnteredIncorrectValue,
+	// -----------
+	COUNT
 };
+
+inline constexpr auto TEXT_ID_COUNT{ static_cast<std::size_t>(TextId::COUNT) };
