@@ -14,7 +14,10 @@ add_executable(orbital_simulator
     src/input/Console.cpp
     src/input/DataGetter.cpp
     src/input/Keyboard.cpp
+    src/input/JsonLocalizationLoader.cpp
+    src/input/JsonLocalizationParser.cpp
     src/localization/Localization.cpp
+    src/localization/LocalizationManager.cpp
     src/math/Vector3D.cpp
     src/recording/Recorder.cpp
     src/runner/SimulationRunner.cpp
