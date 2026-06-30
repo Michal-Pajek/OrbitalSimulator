@@ -50,6 +50,7 @@ FetchContent_MakeAvailable(googletest)
 add_executable(orbital_tests
     src/localization/Localization.cpp
     src/math/Vector3D.cpp
+    src/input/JsonLocalizationParser.cpp
     src/simulation/bodies/Body.cpp
     src/simulation/bodies/BodyStepState.cpp
     src/simulation/bodies/types/BodyTypeCatalog.cpp
@@ -57,6 +58,7 @@ add_executable(orbital_tests
     src/ui/ConsoleWriter.cpp
     tests/BodyTests.cpp
     tests/BodyTypesTests.cpp
+    tests/JsonLocalizationParserTests.cpp
     tests/LocalizationTests.cpp
     tests/SimulationsTests.cpp
 )

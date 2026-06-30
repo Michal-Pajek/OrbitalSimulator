@@ -83,6 +83,7 @@ void JsonLocalizationParser::parseTexts()
 		const auto key{ getString() };
 		require(expectChar(':'));
 		const auto value{ getString() };
+		require(!(key.empty() || value.empty()));
 		const auto [it, inserted]{ m_localizationData.insert({ key, value }) };
 		if (!inserted) {
 			throw std::runtime_error{ "Duplicated localization key: " + it->first };
