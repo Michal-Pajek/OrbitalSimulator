@@ -1,12 +1,14 @@
 #include <gtest/gtest.h>
 #include <set>
 #include <string>
+#include <string_view>
 #include "input/JsonLocalizationLoader.hpp"
-#include "localization/LocalizationManager.hpp"
 #include "localization/TextIdEntries.hpp"
 
 namespace
 {
+	static inline constexpr std::string_view ENGLISH{ "en_US" };
+	static inline constexpr std::string_view POLISH{ "pl_PL" };
 
 std::set<std::string> getExpectedLocalizationKeys()
 {
@@ -47,50 +49,50 @@ void expectJsonHasExpectedEntryCount(const LocalizationMap& localizationMap)
 
 TEST(LocalizationResourcesTests, EnglishJsonContainsAllTextIdEntries)
 {
-	const auto localizationMap{ JsonLocalizationLoader::loadData(LocalizationManager::ENGLISH) };
+	const auto localizationMap{ JsonLocalizationLoader::loadData(ENGLISH) };
 
 	expectJsonContainsAllTextIdEntries(localizationMap);
 }
 
 TEST(LocalizationResourcesTests, PolishJsonContainsAllTextIdEntries)
 {
-	const auto localizationMap{ JsonLocalizationLoader::loadData(LocalizationManager::POLISH) };
+	const auto localizationMap{ JsonLocalizationLoader::loadData(POLISH) };
 
 	expectJsonContainsAllTextIdEntries(localizationMap);
 }
 
 TEST(LocalizationResourcesTests, EnglishJsonDoesNotContainUnknownKeys)
 {
-	const auto localizationMap{ JsonLocalizationLoader::loadData(LocalizationManager::ENGLISH) };
+	const auto localizationMap{ JsonLocalizationLoader::loadData(ENGLISH) };
 
 	expectJsonDoesNotContainUnknownKeys(localizationMap);
 }
 
 TEST(LocalizationResourcesTests, PolishJsonDoesNotContainUnknownKeys)
 {
-	const auto localizationMap{ JsonLocalizationLoader::loadData(LocalizationManager::POLISH) };
+	const auto localizationMap{ JsonLocalizationLoader::loadData(POLISH) };
 
 	expectJsonDoesNotContainUnknownKeys(localizationMap);
 }
 
 TEST(LocalizationResourcesTests, EnglishJsonHasExpectedEntryCount)
 {
-	const auto localizationMap{ JsonLocalizationLoader::loadData(LocalizationManager::ENGLISH) };
+	const auto localizationMap{ JsonLocalizationLoader::loadData(ENGLISH) };
 
 	expectJsonHasExpectedEntryCount(localizationMap);
 }
 
 TEST(LocalizationResourcesTests, PolishJsonHasExpectedEntryCount)
 {
-	const auto localizationMap{ JsonLocalizationLoader::loadData(LocalizationManager::POLISH) };
+	const auto localizationMap{ JsonLocalizationLoader::loadData(POLISH) };
 
 	expectJsonHasExpectedEntryCount(localizationMap);
 }
 
 TEST(LocalizationResourcesTests, EnglishAndPolishJsonHaveSameKeys)
 {
-	const auto englishMap{ JsonLocalizationLoader::loadData(LocalizationManager::ENGLISH) };
-	const auto polishMap{ JsonLocalizationLoader::loadData(LocalizationManager::POLISH) };
+	const auto englishMap{ JsonLocalizationLoader::loadData(ENGLISH) };
+	const auto polishMap{ JsonLocalizationLoader::loadData(POLISH) };
 
 	for (const auto& entry : englishMap) {
 		const auto& key{ entry.first };

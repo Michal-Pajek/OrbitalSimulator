@@ -1,10 +1,12 @@
 #include "localization/LocalizationManager.hpp"
+#include <stdexcept>
+#include <utility>
 #include "localization/TextIdEntries.hpp"
 #include "input/JsonLocalizationLoader.hpp"
 
 LocalizationManager::LocalizationManager()
 {
-	loadLanguage(ENGLISH);
+	setLanguage(DEFAULT_LANGUAGE);
 }
 
 LocalizationManager& LocalizationManager::getInstance()
@@ -13,9 +15,11 @@ LocalizationManager& LocalizationManager::getInstance()
 	return instance;
 }
 
-void LocalizationManager::loadLanguage(std::string_view languageCode)
+void LocalizationManager::setLanguage(Language language)
 {
-	setLocalizationMap(JsonLocalizationLoader::loadData(languageCode));
+	auto newMap{ JsonLocalizationLoader::loadData(getLanguageCode(language)) };
+	setLocalizationMap(std::move(newMap));
+	m_currentLanguage = language;
 }
 
 std::string LocalizationManager::get(TextId textId) const
@@ -26,4 +30,28 @@ std::string LocalizationManager::get(TextId textId) const
 		return it->second;
 	}
 	return "<ERROR: MISSING TRANSLATION: " + key + ">";
+}
+
+std::string_view LocalizationManager::getLanguageCode(Language language)
+{
+	switch (language) {
+	case Language::English:
+		return "en_US";
+	case Language::Polish:
+		return "pl_PL";
+	default:
+		throw std::runtime_error("Unsupported language");
+	}
+}
+
+LocalizationManager::YesAndNo LocalizationManager::getYn() const
+{
+	switch (m_currentLanguage) {
+	case Language::English:
+		return YesAndNo{ .yes = 'Y', .no = 'N' };
+	case Language::Polish:
+		return YesAndNo{ .yes = 'T', .no = 'N' };
+	default:
+		throw std::runtime_error("Unsupported language");
+	}
 }

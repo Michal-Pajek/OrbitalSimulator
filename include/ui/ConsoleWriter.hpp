@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string_view>
 #include <utility>
-#include "localization/Localization.hpp"
+#include "localization/LocalizationManager.hpp"
 #include "localization/TextId.hpp"
 
 namespace ConsoleWriter
@@ -12,7 +12,7 @@ namespace ConsoleWriter
 	void writeMenuOption(const TextId textId, const char key, const char separator);
 	void writeMenuTitle(const TextId titleId);
 	void writeSingle(TextId id);
-	void writeYesOrNo(const Localization::YesAndNo& yn);
+	void writeYesOrNo(const LocalizationManager::YesAndNo& yn);
 
 	template <typename T>
 	void writeSingle(const T& value)

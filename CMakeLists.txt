@@ -16,7 +16,6 @@ add_executable(orbital_simulator
     src/input/Keyboard.cpp
     src/input/JsonLocalizationLoader.cpp
     src/input/JsonLocalizationParser.cpp
-    src/localization/Localization.cpp
     src/localization/LocalizationManager.cpp
     src/math/Vector3D.cpp
     src/recording/Recorder.cpp
@@ -54,10 +53,10 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 add_executable(orbital_tests
-    src/localization/Localization.cpp
-    src/math/Vector3D.cpp
     src/input/JsonLocalizationLoader.cpp
     src/input/JsonLocalizationParser.cpp
+    src/localization/LocalizationManager.cpp
+    src/math/Vector3D.cpp
     src/simulation/bodies/Body.cpp
     src/simulation/bodies/BodyStepState.cpp
     src/simulation/bodies/types/BodyTypeCatalog.cpp

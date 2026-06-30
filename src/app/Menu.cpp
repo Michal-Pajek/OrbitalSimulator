@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <unordered_set>
 #include "input/Keyboard.hpp"
+#include "localization/LocalizationManager.hpp"
 #include "ui/ConsoleWriter.hpp"
 
 Menu::Menu(const std::vector<MenuOption>& options, const TextId title, const bool isHorizontal) : m_options{options}, m_title{title}, m_isHorizontal{isHorizontal}
@@ -30,7 +31,7 @@ void Menu::execute() const
 bool Menu::yesOrNo(const TextId question)
 {
 	ConsoleWriter::write(question);
-	const auto yn{ Localization::getYn() };
+	const auto yn{ LocalizationManager::getInstance().getYn() };
 	ConsoleWriter::writeYesOrNo(yn);
 	char choice{getSingleKey()};
 	while (choice != yn.yes && choice != yn.no) {

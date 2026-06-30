@@ -1,5 +1,5 @@
 #include "ui/ConsoleWriter.hpp"
-#include "localization/Localization.hpp"
+#include "localization/LocalizationManager.hpp"
 
 void ConsoleWriter::writeError(const std::string_view text)
 {
@@ -23,10 +23,10 @@ void ConsoleWriter::writeMenuTitle(const TextId titleId)
 
 void ConsoleWriter::writeSingle(const TextId textId)
 {
-	std::cout << Localization::translate(textId);
+	std::cout << LocalizationManager::getInstance().get(textId);
 }
 
-void ConsoleWriter::writeYesOrNo(const Localization::YesAndNo& yn)
+void ConsoleWriter::writeYesOrNo(const LocalizationManager::YesAndNo& yn)
 {
 	write(" [", yn.yes, " / ", yn.no, "]: ");
 }
