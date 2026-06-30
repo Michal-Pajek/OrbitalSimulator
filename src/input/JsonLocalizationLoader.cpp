@@ -10,7 +10,7 @@ namespace
 {
 	std::filesystem::path getPath(std::string_view languageCode)
 	{
-		return std::filesystem::path{ "../../../resources/localization" } /
+		return std::filesystem::path{ "resources/localization" } /
 			(std::string{ languageCode } + ".json");
 	}
 

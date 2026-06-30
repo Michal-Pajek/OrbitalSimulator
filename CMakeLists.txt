@@ -32,6 +32,12 @@ add_executable(orbital_simulator
     src/ui/ConsoleWriter.cpp
 )
 
+add_custom_command(TARGET orbital_simulator POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/resources
+        $<TARGET_FILE_DIR:orbital_simulator>/resources
+)
+
 target_include_directories(orbital_simulator PRIVATE
     include
 )
@@ -50,6 +56,7 @@ FetchContent_MakeAvailable(googletest)
 add_executable(orbital_tests
     src/localization/Localization.cpp
     src/math/Vector3D.cpp
+    src/input/JsonLocalizationLoader.cpp
     src/input/JsonLocalizationParser.cpp
     src/simulation/bodies/Body.cpp
     src/simulation/bodies/BodyStepState.cpp
@@ -59,8 +66,15 @@ add_executable(orbital_tests
     tests/BodyTests.cpp
     tests/BodyTypesTests.cpp
     tests/JsonLocalizationParserTests.cpp
+    tests/LocalizationResourcesTests.cpp
     tests/LocalizationTests.cpp
     tests/SimulationsTests.cpp
+)
+
+add_custom_command(TARGET orbital_tests POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/resources
+        $<TARGET_FILE_DIR:orbital_tests>/resources
 )
 
 target_include_directories(orbital_tests PRIVATE
