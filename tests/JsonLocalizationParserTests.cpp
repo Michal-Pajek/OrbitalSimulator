@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <stdexcept>
 #include <string_view>
-#include "input/JsonLocalizationParser.hpp"
+#include "input/jsons/JsonLocalizationParser.hpp"
 
 TEST(JsonLocalizationParserTests, ParsesOneValidEntry)
 {

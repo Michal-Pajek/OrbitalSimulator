@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include <utility>
 #include "localization/TextIdEntries.hpp"
-#include "input/JsonLocalizationLoader.hpp"
+#include "input/jsons/JsonLocalizationLoader.hpp"
 
 LocalizationManager::LocalizationManager()
 {

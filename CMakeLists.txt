@@ -13,9 +13,11 @@ add_executable(orbital_simulator
     src/input/BodyMassUnitSelector.cpp
     src/input/Console.cpp
     src/input/DataGetter.cpp
+    src/input/jsons/JsonLocalizationLoader.cpp
+    src/input/jsons/JsonLocalizationParser.cpp
+    src/input/jsons/JsonParserBase.cpp
+    src/input/jsons/JsonSettingsParser.cpp
     src/input/Keyboard.cpp
-    src/input/JsonLocalizationLoader.cpp
-    src/input/JsonLocalizationParser.cpp
     src/localization/LocalizationManager.cpp
     src/math/Vector3D.cpp
     src/platform/ConsoleEncoding.cpp
@@ -54,8 +56,9 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 add_executable(orbital_tests
-    src/input/JsonLocalizationLoader.cpp
-    src/input/JsonLocalizationParser.cpp
+    src/input/jsons/JsonLocalizationLoader.cpp
+    src/input/jsons/JsonLocalizationParser.cpp
+    src/input/jsons/JsonParserBase.cpp
     src/localization/LocalizationManager.cpp
     src/math/Vector3D.cpp
     src/simulation/bodies/Body.cpp

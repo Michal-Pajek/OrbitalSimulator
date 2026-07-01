@@ -1,10 +1,10 @@
-#include "input/JsonLocalizationLoader.hpp"
+#include "input/jsons/JsonLocalizationLoader.hpp"
 #include <filesystem>
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
 #include <string>
-#include "input/JsonLocalizationParser.hpp"
+#include "input/jsons/JsonLocalizationParser.hpp"
 
 namespace
 {

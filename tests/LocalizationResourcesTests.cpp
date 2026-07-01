@@ -2,7 +2,7 @@
 #include <set>
 #include <string>
 #include <string_view>
-#include "input/JsonLocalizationLoader.hpp"
+#include "input/jsons/JsonLocalizationLoader.hpp"
 #include "localization/TextIdEntries.hpp"
 
 namespace
