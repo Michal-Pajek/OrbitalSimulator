@@ -4,10 +4,10 @@
 #include <string_view>
 #include <utility>
 
-class JsonSettingsParser : private JsonParserBase
+class JsonLanguageSettingsParser : private JsonParserBase
 {
 public:
-	JsonSettingsParser(std::string_view data) : JsonParserBase{ data } {}
+	JsonLanguageSettingsParser(std::string_view data) : JsonParserBase{ data } {}
 	std::string takeLanguageCode() { return std::move(m_languageCode); }
 	void parse();
 private:

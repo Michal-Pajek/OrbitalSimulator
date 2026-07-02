@@ -1,12 +1,11 @@
 #include "localization/LocalizationManager.hpp"
-#include <stdexcept>
 #include <utility>
 #include "localization/TextIdEntries.hpp"
-#include "input/jsons/JsonLocalizationLoader.hpp"
+#include "input/jsons/JsonDataStorage.hpp"
 
 LocalizationManager::LocalizationManager()
 {
-	setLanguage(DEFAULT_LANGUAGE);
+	applyLanguage(loadSavedLanguageOrDefault());
 }
 
 LocalizationManager& LocalizationManager::getInstance()
@@ -15,11 +14,10 @@ LocalizationManager& LocalizationManager::getInstance()
 	return instance;
 }
 
-void LocalizationManager::setLanguage(Language language)
+void LocalizationManager::setLanguage(const Language language)
 {
-	auto newMap{ JsonLocalizationLoader::loadData(getLanguageCode(language)) };
-	setLocalizationMap(std::move(newMap));
-	m_currentLanguage = language;
+	applyLanguage(language);
+	saveLanguage(language);
 }
 
 std::string LocalizationManager::get(TextId textId) const
@@ -32,16 +30,14 @@ std::string LocalizationManager::get(TextId textId) const
 	return "<ERROR: MISSING TRANSLATION: " + key + ">";
 }
 
-std::string_view LocalizationManager::getLanguageCode(Language language)
+TextId LocalizationManager::getCurrentLanguageTextId() const
 {
-	switch (language) {
-	case Language::English:
-		return "en_US";
-	case Language::Polish:
-		return "pl_PL";
-	default:
-		throw std::runtime_error("Unsupported language");
-	}
+	return findLanguageEntry(
+		[this](const LanguageEntry& entry) {
+			return entry.language == m_currentLanguage;
+		},
+		"Unidentified language"
+	).name;
 }
 
 LocalizationManager::YesAndNo LocalizationManager::getYn() const
@@ -52,6 +48,52 @@ LocalizationManager::YesAndNo LocalizationManager::getYn() const
 	case Language::Polish:
 		return YesAndNo{ .yes = 'T', .no = 'N' };
 	default:
-		throw std::runtime_error("Unsupported language");
+		throw std::runtime_error{ "Unsupported language" };
 	}
+}
+
+void LocalizationManager::applyLanguage(const Language language)
+{
+	if (!m_languageApplied || m_currentLanguage != language) {
+		auto newMap{ JsonDataStorage::loadLocalizationData(getLanguageCode(language)) };
+		setLocalizationMap(std::move(newMap));
+		m_currentLanguage = language;
+		m_languageApplied = true;
+	}
+}
+
+void LocalizationManager::saveLanguage(const Language language)
+{
+	JsonDataStorage::saveLanguageCode(getLanguageCode(language));
+}
+
+LocalizationManager::Language LocalizationManager::getLanguageFromCode(std::string_view languageCode)
+{
+	return findLanguageEntry(
+		[languageCode](const LanguageEntry& entry) {
+				return entry.code == languageCode;
+		},
+		"Unsupported language code"
+	).language;
+}
+
+LocalizationManager::Language LocalizationManager::loadSavedLanguageOrDefault()
+{
+	try {
+		const auto languageCode{ JsonDataStorage::loadLanguageCode() };
+		return getLanguageFromCode(languageCode);
+	}
+	catch (...) {
+		return DEFAULT_LANGUAGE;
+	}
+}
+
+std::string_view LocalizationManager::getLanguageCode(const Language language)
+{
+	return findLanguageEntry(
+		[language](const LanguageEntry& entry) {
+			return entry.language == language;
+		},
+		"Unsupported language"
+	).code;
 }

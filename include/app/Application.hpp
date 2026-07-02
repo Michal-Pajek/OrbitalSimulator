@@ -9,7 +9,7 @@ private:
 	static void buildScenario();
 	static void enterModule(const TextId titleId);
 	static void exitModule();
-	static void options();
+	static void selectLanguage();
 	static void testScenario();
 	bool m_continue{ true };
 };

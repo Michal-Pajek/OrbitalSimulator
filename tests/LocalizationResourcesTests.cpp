@@ -2,7 +2,7 @@
 #include <set>
 #include <string>
 #include <string_view>
-#include "input/jsons/JsonLocalizationLoader.hpp"
+#include "input/jsons/JsonDataStorage.hpp"
 #include "localization/TextIdEntries.hpp"
 
 namespace
@@ -49,50 +49,50 @@ void expectJsonHasExpectedEntryCount(const LocalizationMap& localizationMap)
 
 TEST(LocalizationResourcesTests, EnglishJsonContainsAllTextIdEntries)
 {
-	const auto localizationMap{ JsonLocalizationLoader::loadData(ENGLISH) };
+	const auto localizationMap{ JsonDataStorage::loadLocalizationData(ENGLISH) };
 
 	expectJsonContainsAllTextIdEntries(localizationMap);
 }
 
 TEST(LocalizationResourcesTests, PolishJsonContainsAllTextIdEntries)
 {
-	const auto localizationMap{ JsonLocalizationLoader::loadData(POLISH) };
+	const auto localizationMap{ JsonDataStorage::loadLocalizationData(POLISH) };
 
 	expectJsonContainsAllTextIdEntries(localizationMap);
 }
 
 TEST(LocalizationResourcesTests, EnglishJsonDoesNotContainUnknownKeys)
 {
-	const auto localizationMap{ JsonLocalizationLoader::loadData(ENGLISH) };
+	const auto localizationMap{ JsonDataStorage::loadLocalizationData(ENGLISH) };
 
 	expectJsonDoesNotContainUnknownKeys(localizationMap);
 }
 
 TEST(LocalizationResourcesTests, PolishJsonDoesNotContainUnknownKeys)
 {
-	const auto localizationMap{ JsonLocalizationLoader::loadData(POLISH) };
+	const auto localizationMap{ JsonDataStorage::loadLocalizationData(POLISH) };
 
 	expectJsonDoesNotContainUnknownKeys(localizationMap);
 }
 
 TEST(LocalizationResourcesTests, EnglishJsonHasExpectedEntryCount)
 {
-	const auto localizationMap{ JsonLocalizationLoader::loadData(ENGLISH) };
+	const auto localizationMap{ JsonDataStorage::loadLocalizationData(ENGLISH) };
 
 	expectJsonHasExpectedEntryCount(localizationMap);
 }
 
 TEST(LocalizationResourcesTests, PolishJsonHasExpectedEntryCount)
 {
-	const auto localizationMap{ JsonLocalizationLoader::loadData(POLISH) };
+	const auto localizationMap{ JsonDataStorage::loadLocalizationData(POLISH) };
 
 	expectJsonHasExpectedEntryCount(localizationMap);
 }
 
 TEST(LocalizationResourcesTests, EnglishAndPolishJsonHaveSameKeys)
 {
-	const auto englishMap{ JsonLocalizationLoader::loadData(ENGLISH) };
-	const auto polishMap{ JsonLocalizationLoader::loadData(POLISH) };
+	const auto englishMap{ JsonDataStorage::loadLocalizationData(ENGLISH) };
+	const auto polishMap{ JsonDataStorage::loadLocalizationData(POLISH) };
 
 	for (const auto& entry : englishMap) {
 		const auto& key{ entry.first };

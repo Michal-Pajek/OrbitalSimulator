@@ -6,6 +6,14 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+function(copy_resources_to_target target_name)
+    add_custom_command(TARGET ${target_name} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            ${CMAKE_SOURCE_DIR}/resources
+            $<TARGET_FILE_DIR:${target_name}>/resources
+    )
+endfunction()
+
 add_executable(orbital_simulator
     app/main.cpp
     src/app/Application.cpp
@@ -13,10 +21,10 @@ add_executable(orbital_simulator
     src/input/BodyMassUnitSelector.cpp
     src/input/Console.cpp
     src/input/DataGetter.cpp
-    src/input/jsons/JsonLocalizationLoader.cpp
+    src/input/jsons/JsonDataStorage.cpp
+    src/input/jsons/JsonLanguageSettingsParser.cpp
     src/input/jsons/JsonLocalizationParser.cpp
     src/input/jsons/JsonParserBase.cpp
-    src/input/jsons/JsonSettingsParser.cpp
     src/input/Keyboard.cpp
     src/localization/LocalizationManager.cpp
     src/math/Vector3D.cpp
@@ -34,15 +42,11 @@ add_executable(orbital_simulator
     src/ui/ConsoleWriter.cpp
 )
 
-add_custom_command(TARGET orbital_simulator POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/resources
-        $<TARGET_FILE_DIR:orbital_simulator>/resources
-)
-
 target_include_directories(orbital_simulator PRIVATE
     include
 )
+
+copy_resources_to_target(orbital_simulator)
 
 enable_testing()
 
@@ -56,7 +60,8 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 add_executable(orbital_tests
-    src/input/jsons/JsonLocalizationLoader.cpp
+    src/input/jsons/JsonDataStorage.cpp
+    src/input/jsons/JsonLanguageSettingsParser.cpp
     src/input/jsons/JsonLocalizationParser.cpp
     src/input/jsons/JsonParserBase.cpp
     src/localization/LocalizationManager.cpp
@@ -74,12 +79,6 @@ add_executable(orbital_tests
     tests/SimulationsTests.cpp
 )
 
-add_custom_command(TARGET orbital_tests POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/resources
-        $<TARGET_FILE_DIR:orbital_tests>/resources
-)
-
 target_include_directories(orbital_tests PRIVATE
     include
 )
@@ -88,5 +87,10 @@ target_link_libraries(orbital_tests PRIVATE
     GTest::gtest_main
 )
 
+copy_resources_to_target(orbital_tests)
+
 include(GoogleTest)
-gtest_discover_tests(orbital_tests)
+
+gtest_discover_tests(orbital_tests
+    WORKING_DIRECTORY $<TARGET_FILE_DIR:orbital_tests>
+)

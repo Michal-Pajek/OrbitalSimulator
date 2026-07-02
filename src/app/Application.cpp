@@ -21,7 +21,7 @@ void Application::eventLoop()
 	const Menu mainMenu{ {
 			MenuOption{'B', TextId::ScenarioBuilder,	Application::buildScenario},
 			MenuOption{'S', TextId::RunTestScenario,	Application::testScenario},
-			MenuOption{'O', TextId::Options,			Application::options},
+			MenuOption{'L', TextId::SelectLanguage,		Application::selectLanguage},
 			MenuOption{'E', TextId::Exit,				closeApplication}
 			}, TextId::MainMenu};
 	while (m_continue) {
@@ -58,10 +58,16 @@ void Application::exitModule()
 	getSingleKey();
 }
 
-void Application::options()
+void Application::selectLanguage()
 {
-	enterModule(TextId::Options);
-	ConsoleWriter::write(TextId::NotImplemented);
+	clearScreen();
+	auto& localizationManager{ LocalizationManager::getInstance() };
+	const Menu languageMenu{ {
+		MenuOption{'E', TextId::English,	[&localizationManager]() {localizationManager.setLanguage(LocalizationManager::Language::English); } },
+		MenuOption{'P', TextId::Polish,		[&localizationManager]() {localizationManager.setLanguage(LocalizationManager::Language::Polish); } }
+		}, TextId::SelectLanguage };
+	languageMenu.execute();
+	ConsoleWriter::writeLine('\n', TextId::SelectedLanguage, ": ", localizationManager.getCurrentLanguageTextId());
 	exitModule();
 }
 

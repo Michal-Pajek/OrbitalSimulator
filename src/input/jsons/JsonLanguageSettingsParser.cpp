@@ -1,6 +1,6 @@
-#include "input/jsons/JsonSettingsParser.hpp"
+#include "input/jsons/JsonLanguageSettingsParser.hpp"
 
-void JsonSettingsParser::parse()
+void JsonLanguageSettingsParser::parse()
 {
 	require(expectChar('{'));
 	require(expectString("language"));
