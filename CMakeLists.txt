@@ -73,6 +73,7 @@ add_executable(orbital_tests
     src/ui/ConsoleWriter.cpp
     tests/BodyTests.cpp
     tests/BodyTypesTests.cpp
+    tests/JsonLanguageSettingsParserTests.cpp
     tests/JsonLocalizationParserTests.cpp
     tests/LocalizationResourcesTests.cpp
     tests/LocalizationTests.cpp

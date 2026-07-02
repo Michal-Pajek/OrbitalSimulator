@@ -71,7 +71,7 @@ LocalizationManager::Language LocalizationManager::getLanguageFromCode(std::stri
 {
 	return findLanguageEntry(
 		[languageCode](const LanguageEntry& entry) {
-				return entry.code == languageCode;
+			return entry.code == languageCode;
 		},
 		"Unsupported language code"
 	).language;
