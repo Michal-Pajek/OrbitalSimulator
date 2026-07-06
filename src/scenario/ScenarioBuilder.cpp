@@ -6,7 +6,6 @@
 #include "input/Console.hpp"
 #include "input/DataGetter.hpp"
 #include "input/Keyboard.hpp"
-#include "input/OptionSelector.hpp"
 #include "localization/TextId.hpp"
 #include "simulation/bodies/Body.hpp"
 #include "simulation/bodies/BodyBuilder.hpp"
@@ -22,8 +21,6 @@ namespace
 	};
 
 	enum class PartToChange {
-		TimeStep,
-		StepCount,
 		ScenarioName,
 		Bodies,
 		Cancel
@@ -45,8 +42,6 @@ namespace
 	{
 		std::optional<PartToChange> result{};
 		const Menu whatToChangeMenu{ {
-			MenuOption{'T', TextId::TimeStep,		[&result]() {result = PartToChange::TimeStep; }},
-			MenuOption{'S', TextId::StepCount,		[&result]() {result = PartToChange::StepCount; }},
 			MenuOption{'N',	TextId::ScenarioName,	[&result]() {result = PartToChange::ScenarioName; }},
 			MenuOption{'B', TextId::Bodies,			[&result]() {result = PartToChange::Bodies; }},
 			MenuOption{'C', TextId::Cancel,			[&result]() {result = PartToChange::Cancel; }}},
@@ -60,11 +55,9 @@ std::optional<Scenario> ScenarioBuilder::buildScenario()
 {
 	resetState();
 	promptForScenarioName();
-	promptForTimeStep();
-	promptForStepCount();
 	createBodiesFromInput();
 	if (reviewAndConfirmScenario()) {
-		return Scenario{ m_timeStep, m_stepCount, std::move(m_name), std::move(m_bodies) };
+		return Scenario{ std::move(m_name), std::move(m_bodies) };
 	}
 	return std::nullopt;
 }
@@ -128,8 +121,6 @@ void ScenarioBuilder::printScenarioSummary() const
 	clearScreen();
 	ConsoleWriter::writeHeadline(TextId::CurrentScenarioSummary);
 	ConsoleWriter::writeLine(TextId::ScenarioName, ":\t", m_name);
-	ConsoleWriter::writeLine(TextId::TimeStep, ":\t", m_timeStep, 's');
-	ConsoleWriter::writeLine(TextId::StepCount, ":\t", m_stepCount);
 	ConsoleWriter::writeLine(TextId::Bodies, ':');
 	printBodies(false);
 }
@@ -140,31 +131,10 @@ void ScenarioBuilder::promptForScenarioName()
 	m_name = DataGetter::getSingleWordText();
 }
 
-void ScenarioBuilder::promptForStepCount()
-{
-	ConsoleWriter::write('\n', TextId::EnterStepCount, ": ");
-	m_stepCount = static_cast<unsigned int>(DataGetter::getValue<int>([](const int x) {return x > 0; }));
-}
-
-void ScenarioBuilder::promptForTimeStep()
-{
-	ConsoleWriter::writeLine();
-	const auto timeMultiplier{ UnitSelector::selectUnitMultiplier(std::vector<UnitSelector::UnitOption>{
-		{TextId::Second,	1.0},
-		{TextId::Minute,	60.0},
-		{TextId::Hour,		3600.0},
-		{TextId::Day,		86400.0}},
-		TextId::SelectTimeUnitForTimeStep) };
-	ConsoleWriter::write(TextId::EnterTimeStep, " (", TextId::PositiveNumber, "): ");
-	m_timeStep = timeMultiplier * DataGetter::getValue<double>([](const double x) { return x > 0.0; });
-}
-
 void ScenarioBuilder::resetState()
 {
 	m_bodies.clear();
-	m_timeStep = {};
 	m_name.clear();
-	m_stepCount = {};
 }
 
 void ScenarioBuilder::reviewAndEditBodies()
@@ -211,12 +181,6 @@ void ScenarioBuilder::reviseScenario()
 	const auto partToChange{ getWhatToChangeDecision() };
 
 	switch (partToChange) {
-	case PartToChange::TimeStep:
-		promptForTimeStep();
-		break;
-	case PartToChange::StepCount:
-		promptForStepCount();
-		break;
 	case PartToChange::ScenarioName:
 		promptForScenarioName();
 		break;

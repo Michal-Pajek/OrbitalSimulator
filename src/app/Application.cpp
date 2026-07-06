@@ -1,11 +1,8 @@
 #include "app/Application.hpp"
-#include <exception>
 #include "app/Menu.hpp"
 #include "input/Console.hpp"
 #include "input/Keyboard.hpp"
-#include "recording/Recorder.hpp"
-#include "runner/SimulationRunner.hpp"
-#include "scenario/Scenario.hpp"
+#include "localization/LocalizationManager.hpp"
 #include "scenario/ScenarioBuilder.hpp"
 #include "ui/ConsoleWriter.hpp"
 
@@ -20,7 +17,6 @@ void Application::eventLoop()
 		} } };
 	const Menu mainMenu{ {
 			MenuOption{'B', TextId::ScenarioBuilder,	Application::buildScenario},
-			MenuOption{'S', TextId::RunTestScenario,	Application::testScenario},
 			MenuOption{'L', TextId::SelectLanguage,		Application::selectLanguage},
 			MenuOption{'E', TextId::Exit,				closeApplication}
 			}, TextId::MainMenu};
@@ -68,20 +64,5 @@ void Application::selectLanguage()
 		}, TextId::SelectLanguage };
 	languageMenu.execute();
 	ConsoleWriter::writeLine('\n', TextId::SelectedLanguage, ": ", localizationManager.getCurrentLanguageTextId());
-	exitModule();
-}
-
-// TODO: Remove after the Scenario refactor
-void Application::testScenario()
-{
-	enterModule(TextId::RunTestScenario);
-	Scenario scenario{};
-	Recorder recorder{ "TestScenario.csv" };
-	try {
-		SimulationRunner::runAndRecord(recorder, scenario);
-	}
-	catch (const std::exception& e) {
-		ConsoleWriter::writeError(e.what());
-	}
 	exitModule();
 }

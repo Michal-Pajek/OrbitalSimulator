@@ -12,7 +12,7 @@ namespace OptionSelector
     struct SelectionOption
     {
         SelectionOption() = delete;
-        SelectionOption(TextId _textId, T _value) : textId{ _textId }, value{ _value } {}
+        SelectionOption(TextId optionTextId, T optionValue) : textId{ optionTextId }, value{ optionValue } {}
         TextId textId;
         T value;
     };
