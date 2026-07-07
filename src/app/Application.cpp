@@ -1,10 +1,46 @@
 #include "app/Application.hpp"
+#include <exception>
+#include <string>
 #include "app/Menu.hpp"
 #include "input/Console.hpp"
 #include "input/Keyboard.hpp"
 #include "localization/LocalizationManager.hpp"
+#include "localization/TextId.hpp"
+#include "recording/Recorder.hpp"
+#include "runner/SimulationRunner.hpp"
+#include "scenario/Scenario.hpp"
 #include "scenario/ScenarioBuilder.hpp"
+#include "simulation/SimulationRunConfigBuilder.hpp"
 #include "ui/ConsoleWriter.hpp"
+
+namespace
+{
+	void saveScenario(const Scenario& scenario)	// TODO
+	{
+		ConsoleWriter::writeLine(TextId::NotImplemented);
+		ConsoleWriter::write('\n', TextId::PressAnyKeyToContinue);
+		getSingleKey();
+	}
+
+	void runSimulationForScenario(const Scenario& scenario)
+	{
+		const auto runConfig{ SimulationRunConfigBuilder::build() };
+		const std::string defaultName{ "simulation.csv" };						// temp
+		Recorder recorder{ defaultName };
+		SimulationRunner::runAndRecord(recorder, scenario, runConfig);
+	}
+
+	void handleScenario(const Scenario& scenario)
+	{
+		if (Menu::yesOrNo(TextId::QuestionDoYouWantToSaveThisScenario)) {
+			saveScenario(scenario);
+		}
+		ConsoleWriter::writeLine();
+		if (Menu::yesOrNo(TextId::QuestionDoYouWantToRunTheSimulationNow)) {
+			runSimulationForScenario(scenario);
+		}
+	}
+}
 
 void Application::eventLoop()
 {
@@ -29,15 +65,22 @@ void Application::eventLoop()
 void Application::buildScenario()
 {
 	enterModule(TextId::ScenarioBuilder);
-	ScenarioBuilder builder{};
-	const auto scenario{ builder.buildScenario() };
-	if (scenario.has_value()) {
-		// todo
-		ConsoleWriter::writeLine(TextId::ScenarioCreatedSuccessfully);
+
+	try {
+		ScenarioBuilder builder{};
+		auto scenario{ builder.buildScenario() };
+		if (scenario.has_value()) {
+			ConsoleWriter::writeLine(TextId::ScenarioCreatedSuccessfully);
+			handleScenario(scenario.value());
+		}
+		else {
+			ConsoleWriter::writeLine('\n', TextId::ScenarioCreationCanceled);
+		}
 	}
-	else {
-		// todo
-		ConsoleWriter::writeLine(TextId::ScenarioCreationCanceled);
+	catch (const std::exception& e) {
+		ConsoleWriter::writeError(e.what());
+		ConsoleWriter::write('\n', TextId::PressAnyKeyToContinue);
+		getSingleKey();
 	}
 	exitModule();
 }
