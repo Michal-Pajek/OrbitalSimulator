@@ -7,7 +7,7 @@ namespace physics {
 	inline constexpr double KKM_MULTIPLIER{ 1e6 };
 	inline constexpr double MKM_MULTIPLIER{ 1e9 };
 	inline constexpr double AU{ 1.495978707e12 };
-	inline constexpr double EARTH_MOON_DISTANCE{ 3.844e9 };
+	inline constexpr double EARTH_MOON_DISTANCE{ 3.844e8 };
 	// mass
 	inline constexpr double TON{ 1e3 };
 	inline constexpr double KILOTON{ 1e6 };
