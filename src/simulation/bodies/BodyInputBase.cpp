@@ -66,8 +66,8 @@ Vector3D BodyInputBase::promptForBodyPosition() const
 		{TextId::Kilometre,						physics::KM_MULTIPLIER},
 		{TextId::ThousandKilometre,				physics::KKM_MULTIPLIER},
 		{TextId::MillionKilometre,				physics::MKM_MULTIPLIER},
-		{TextId::AstronomicalUnit,				physics::AU},
-		{TextId::AverageEarthToMoonDistance,	physics::EARTH_MOON_DISTANCE}},
+		{TextId::AverageEarthToMoonDistance,	physics::EARTH_MOON_DISTANCE},
+		{TextId::AstronomicalUnit,				physics::AU}},
 		TextId::SelectDistanceUnit) };
 
 	ConsoleWriter::write(TextId::EnterPositionVector, ": ");
