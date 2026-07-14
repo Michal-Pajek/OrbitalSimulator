@@ -1,3 +1,5 @@
+#include <iomanip>
+#include <ios>
 #include "recording/Recorder.hpp"
 #include "simulation/bodies/Body.hpp"
 #include "simulation/Simulation.hpp"
@@ -6,6 +8,7 @@ bool Recorder::beginRecording()
 {
 	m_file.open(m_fileName);
 	if (m_file.is_open()) {
+		m_file << std::scientific << std::setprecision(OUTPUT_PRECISION);
 		m_file << "step,time,body_name,x,y,z,vx,vy,vz\n";
 		return true;
 	}

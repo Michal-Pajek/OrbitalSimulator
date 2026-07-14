@@ -1,11 +1,10 @@
 #pragma once
 
 class Recorder;
-class Scenario;
+struct Scenario;
+struct SimulationRunConfig;
 
-class SimulationRunner
+namespace SimulationRunner
 {
-public:
-	SimulationRunner() = delete;
-	static void runAndRecord(Recorder& recorder, const Scenario& scenario);
-};
+	void runAndRecord(Recorder& recorder, const Scenario& scenario, const SimulationRunConfig& config);
+}

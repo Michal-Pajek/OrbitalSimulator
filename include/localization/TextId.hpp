@@ -73,6 +73,7 @@ enum class TextId
 	QuestionDoYouStillWantToEnterNewValue,
 	QuestionDoYouWantToAccept,
 	QuestionDoYouWantToFinish,
+	QuestionDoYouWantToRunTheSimulationNow,
 	QuestionWhatDoYouWantToChange,
 	QuestionWhatDoYouWantToChangeInBody,
 	QuestionWhatDoYouWantToDo,

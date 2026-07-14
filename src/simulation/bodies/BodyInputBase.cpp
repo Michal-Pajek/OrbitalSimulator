@@ -66,8 +66,8 @@ Vector3D BodyInputBase::promptForBodyPosition() const
 		{TextId::Kilometre,						physics::KM_MULTIPLIER},
 		{TextId::ThousandKilometre,				physics::KKM_MULTIPLIER},
 		{TextId::MillionKilometre,				physics::MKM_MULTIPLIER},
-		{TextId::AstronomicalUnit,				physics::AU},
-		{TextId::AverageEarthToMoonDistance,	physics::EARTH_MOON_DISTANCE}},
+		{TextId::AverageEarthToMoonDistance,	physics::EARTH_MOON_DISTANCE},
+		{TextId::AstronomicalUnit,				physics::AU}},
 		TextId::SelectDistanceUnit) };
 
 	ConsoleWriter::write(TextId::EnterPositionVector, ": ");
@@ -86,10 +86,10 @@ Vector3D BodyInputBase::promptForBodyVelocity() const
 {
 	ConsoleWriter::writeLine();
 	const auto velocityMultiplier{ UnitSelector::selectUnitMultiplier(std::vector<UnitSelector::UnitOption>{
-		{TextId::MetrePerSecond, 1.0},
-		{TextId::KilometrePerSecond, physics::KMS_MULTIPLIER},
-		{TextId::ThousandKilometrePerHour, physics::KKMH_MULTIPLIER},
-		{TextId::SpeedOfLight, physics::C_CONST}},
+		{TextId::MetrePerSecond,			1.0},
+		{TextId::KilometrePerSecond,		physics::KMS_MULTIPLIER},
+		{TextId::ThousandKilometrePerHour,	physics::KKMH_MULTIPLIER},
+		{TextId::SpeedOfLight,				physics::C_CONST}},
 		TextId::SelectSpeedUnit) };
 
 	ConsoleWriter::write(TextId::EnterVelocityVector, ": ");

@@ -1,4 +1,5 @@
 #pragma once
+#include <stdexcept>
 #include <string>
 #include <utility>
 #include <vector>
@@ -6,12 +7,17 @@
 
 struct Scenario
 {
-	// Temporary constructor used only by Application::testScenario
-	Scenario() : stepCount{ 1000u } {}
-	Scenario(double timeStep, unsigned int stepCount, std::string name, std::vector<Body> bodies)
-		: timeStep{ timeStep }, stepCount{ stepCount }, name{ std::move(name) }, bodies{ std::move(bodies) } {}
-	double timeStep{ 1.0 };
-	unsigned int stepCount;
+	Scenario(std::string scenarioName, std::vector<Body> scenarioBodies)
+		: name{ std::move(scenarioName) }, bodies{ std::move(scenarioBodies) }
+	{
+		if (name.empty()) {
+			throw std::invalid_argument{ "Scenario name must not be empty" };
+		}
+		if (bodies.empty()) {
+			throw std::invalid_argument{ "Scenario must have at least one body" };
+		}
+	}
+
 	std::string name{};
 	std::vector<Body> bodies{};
 };

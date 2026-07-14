@@ -11,7 +11,7 @@ struct MenuOption
 	TextId label;
 	std::function<void()> action;
 	MenuOption() = delete;
-	MenuOption(const char _key, const TextId _label, std::function<void()> _action) : key{ _key }, label{ _label }, action{ std::move(_action) } {}
+	MenuOption(const char optionKey, const TextId optionLabel, std::function<void()> optionAction) : key{ optionKey }, label{ optionLabel }, action{ std::move(optionAction) } {}
 };
 
 class Menu

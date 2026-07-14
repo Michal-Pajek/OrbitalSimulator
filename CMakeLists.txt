@@ -39,6 +39,7 @@ add_executable(orbital_simulator
     src/simulation/bodies/BodyStepState.cpp
     src/simulation/bodies/types/BodyTypeCatalog.cpp
     src/simulation/Simulation.cpp
+    src/simulation/SimulationRunConfigBuilder.cpp
     src/ui/ConsoleWriter.cpp
 )
 

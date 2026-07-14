@@ -14,6 +14,7 @@ public:
 	void recordInitialState(const std::vector<Body>& bodies);
 	void recordStateAfterStep(const Simulation& simulation, const unsigned int stepNo);
 private:
+	static constexpr int OUTPUT_PRECISION{ 17 };
 	void writeBodyStateToFile(const Body& body);
 	void writeInitialSnapshotToCSV(const Body& body) { writeSingleSnapshotToCSV(body, 0u, 0.0); }
 	void writeSingleSnapshotToCSV(const Body& body, const unsigned int stepNo, const double time);

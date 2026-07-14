@@ -1,13 +1,35 @@
 #include "app/Application.hpp"
 #include <exception>
+#include <string>
 #include "app/Menu.hpp"
 #include "input/Console.hpp"
 #include "input/Keyboard.hpp"
+#include "localization/LocalizationManager.hpp"
+#include "localization/TextId.hpp"
 #include "recording/Recorder.hpp"
 #include "runner/SimulationRunner.hpp"
 #include "scenario/Scenario.hpp"
 #include "scenario/ScenarioBuilder.hpp"
+#include "simulation/SimulationRunConfigBuilder.hpp"
 #include "ui/ConsoleWriter.hpp"
+
+namespace
+{
+	void runSimulationForScenario(const Scenario& scenario)
+	{
+		const auto runConfig{ SimulationRunConfigBuilder::build() };
+		const std::string defaultName{ scenario.name + ".csv" };
+		Recorder recorder{ defaultName };
+		SimulationRunner::runAndRecord(recorder, scenario, runConfig);
+	}
+
+	void handleScenario(const Scenario& scenario)
+	{
+		if (Menu::yesOrNo(TextId::QuestionDoYouWantToRunTheSimulationNow)) {
+			runSimulationForScenario(scenario);
+		}
+	}
+}
 
 void Application::eventLoop()
 {
@@ -20,7 +42,6 @@ void Application::eventLoop()
 		} } };
 	const Menu mainMenu{ {
 			MenuOption{'B', TextId::ScenarioBuilder,	Application::buildScenario},
-			MenuOption{'S', TextId::RunTestScenario,	Application::testScenario},
 			MenuOption{'L', TextId::SelectLanguage,		Application::selectLanguage},
 			MenuOption{'E', TextId::Exit,				closeApplication}
 			}, TextId::MainMenu};
@@ -33,15 +54,20 @@ void Application::eventLoop()
 void Application::buildScenario()
 {
 	enterModule(TextId::ScenarioBuilder);
-	ScenarioBuilder builder{};
-	const auto scenario{ builder.buildScenario() };
-	if (scenario.has_value()) {
-		// todo
-		ConsoleWriter::writeLine(TextId::ScenarioCreatedSuccessfully);
+
+	try {
+		ScenarioBuilder builder{};
+		auto scenario{ builder.buildScenario() };
+		if (scenario.has_value()) {
+			ConsoleWriter::writeLine(TextId::ScenarioCreatedSuccessfully);
+			handleScenario(scenario.value());
+		}
+		else {
+			ConsoleWriter::writeLine('\n', TextId::ScenarioCreationCanceled);
+		}
 	}
-	else {
-		// todo
-		ConsoleWriter::writeLine(TextId::ScenarioCreationCanceled);
+	catch (const std::exception& e) {
+		ConsoleWriter::writeError(e.what());
 	}
 	exitModule();
 }
@@ -68,20 +94,5 @@ void Application::selectLanguage()
 		}, TextId::SelectLanguage };
 	languageMenu.execute();
 	ConsoleWriter::writeLine('\n', TextId::SelectedLanguage, ": ", localizationManager.getCurrentLanguageTextId());
-	exitModule();
-}
-
-// TODO: Remove after the Scenario refactor
-void Application::testScenario()
-{
-	enterModule(TextId::RunTestScenario);
-	Scenario scenario{};
-	Recorder recorder{ "TestScenario.csv" };
-	try {
-		SimulationRunner::runAndRecord(recorder, scenario);
-	}
-	catch (const std::exception& e) {
-		ConsoleWriter::writeError(e.what());
-	}
 	exitModule();
 }
