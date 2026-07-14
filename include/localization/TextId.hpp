@@ -74,7 +74,6 @@ enum class TextId
 	QuestionDoYouWantToAccept,
 	QuestionDoYouWantToFinish,
 	QuestionDoYouWantToRunTheSimulationNow,
-	QuestionDoYouWantToSaveThisScenario,
 	QuestionWhatDoYouWantToChange,
 	QuestionWhatDoYouWantToChangeInBody,
 	QuestionWhatDoYouWantToDo,

@@ -84,7 +84,6 @@ namespace TextIdEntries
         TextIdEntry{ TextId::QuestionDoYouWantToAccept,                     "question_do_you_want_to_accept" },
         TextIdEntry{ TextId::QuestionDoYouWantToFinish,                     "question_do_you_want_to_finish" },
         TextIdEntry{ TextId::QuestionDoYouWantToRunTheSimulationNow,        "question_do_you_want_to_run_the_simulation_now" },
-        TextIdEntry{ TextId::QuestionDoYouWantToSaveThisScenario,           "question_do_you_want_to_save_this_scenario" },
         TextIdEntry{ TextId::QuestionWhatDoYouWantToChange,                 "question_what_do_you_want_to_change" },
         TextIdEntry{ TextId::QuestionWhatDoYouWantToChangeInBody,           "question_what_do_you_want_to_change_in_body" },
         TextIdEntry{ TextId::QuestionWhatDoYouWantToDo,                     "question_what_do_you_want_to_do" },

@@ -15,27 +15,16 @@
 
 namespace
 {
-	void saveScenario(const Scenario& scenario)	// TODO
-	{
-		ConsoleWriter::writeLine(TextId::NotImplemented);
-		ConsoleWriter::write('\n', TextId::PressAnyKeyToContinue);
-		getSingleKey();
-	}
-
 	void runSimulationForScenario(const Scenario& scenario)
 	{
 		const auto runConfig{ SimulationRunConfigBuilder::build() };
-		const std::string defaultName{ "simulation.csv" };						// temp
+		const std::string defaultName{ scenario.name + ".csv" };
 		Recorder recorder{ defaultName };
 		SimulationRunner::runAndRecord(recorder, scenario, runConfig);
 	}
 
 	void handleScenario(const Scenario& scenario)
 	{
-		if (Menu::yesOrNo(TextId::QuestionDoYouWantToSaveThisScenario)) {
-			saveScenario(scenario);
-		}
-		ConsoleWriter::writeLine();
 		if (Menu::yesOrNo(TextId::QuestionDoYouWantToRunTheSimulationNow)) {
 			runSimulationForScenario(scenario);
 		}
@@ -79,8 +68,6 @@ void Application::buildScenario()
 	}
 	catch (const std::exception& e) {
 		ConsoleWriter::writeError(e.what());
-		ConsoleWriter::write('\n', TextId::PressAnyKeyToContinue);
-		getSingleKey();
 	}
 	exitModule();
 }
