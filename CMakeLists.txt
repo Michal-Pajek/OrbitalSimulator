@@ -32,6 +32,8 @@ add_executable(orbital_simulator
     src/recording/Recorder.cpp
     src/runner/SimulationRunner.cpp
     src/scenario/ScenarioBuilder.cpp
+    src/scenario/ScenarioHandler.cpp
+    src/scenario/ScenarioSaver.cpp
     src/simulation/bodies/Body.cpp
     src/simulation/bodies/BodyBuilder.cpp
     src/simulation/bodies/BodyInputBase.cpp

@@ -1,35 +1,13 @@
 #include "app/Application.hpp"
 #include <exception>
-#include <string>
 #include "app/Menu.hpp"
 #include "input/Console.hpp"
 #include "input/Keyboard.hpp"
 #include "localization/LocalizationManager.hpp"
 #include "localization/TextId.hpp"
-#include "recording/Recorder.hpp"
-#include "runner/SimulationRunner.hpp"
-#include "scenario/Scenario.hpp"
 #include "scenario/ScenarioBuilder.hpp"
-#include "simulation/SimulationRunConfigBuilder.hpp"
+#include "scenario/ScenarioHandler.hpp"
 #include "ui/ConsoleWriter.hpp"
-
-namespace
-{
-	void runSimulationForScenario(const Scenario& scenario)
-	{
-		const auto runConfig{ SimulationRunConfigBuilder::build() };
-		const std::string defaultName{ scenario.name + ".csv" };
-		Recorder recorder{ defaultName };
-		SimulationRunner::runAndRecord(recorder, scenario, runConfig);
-	}
-
-	void handleScenario(const Scenario& scenario)
-	{
-		if (Menu::yesOrNo(TextId::QuestionDoYouWantToRunTheSimulationNow)) {
-			runSimulationForScenario(scenario);
-		}
-	}
-}
 
 void Application::eventLoop()
 {
@@ -60,7 +38,8 @@ void Application::buildScenario()
 		auto scenario{ builder.buildScenario() };
 		if (scenario.has_value()) {
 			ConsoleWriter::writeLine(TextId::ScenarioCreatedSuccessfully);
-			handleScenario(scenario.value());
+			ScenarioHandler handler{ scenario.value() };
+			handler.handleScenario();
 		}
 		else {
 			ConsoleWriter::writeLine('\n', TextId::ScenarioCreationCanceled);

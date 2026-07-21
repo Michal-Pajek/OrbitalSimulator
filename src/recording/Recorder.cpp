@@ -6,7 +6,7 @@
 
 bool Recorder::beginRecording()
 {
-	m_file.open(m_fileName);
+	m_file.open(getPath());
 	if (m_file.is_open()) {
 		m_file << std::scientific << std::setprecision(OUTPUT_PRECISION);
 		m_file << "step,time,body_name,x,y,z,vx,vy,vz\n";
@@ -50,4 +50,12 @@ void Recorder::writeSingleSnapshotToCSV(const Body& body, const unsigned int ste
 	constexpr auto SEPARATOR{ ',' };
 	m_file << stepNo << SEPARATOR << time << SEPARATOR;
 	writeBodyStateToFile(body);
+}
+
+std::filesystem::path Recorder::getPath() const
+{
+	namespace fs = std::filesystem;
+	const fs::path filePath{ fs::path{"simulations"} / (m_fileName + ".csv") };
+	fs::create_directories(filePath.parent_path());
+	return filePath;
 }

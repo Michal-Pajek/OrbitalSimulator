@@ -128,7 +128,7 @@ void ScenarioBuilder::printScenarioSummary() const
 void ScenarioBuilder::promptForScenarioName()
 {
 	ConsoleWriter::write(TextId::EnterScenarioName, ": ");
-	m_name = DataGetter::getSingleWordText();
+	m_name = DataGetter::getFileBaseName();
 }
 
 void ScenarioBuilder::resetState()

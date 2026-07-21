@@ -68,4 +68,5 @@ namespace DataGetter
 	}
 
 	std::string getSingleWordText();
+	std::string getFileBaseName();
 } // namespace DataGetter
