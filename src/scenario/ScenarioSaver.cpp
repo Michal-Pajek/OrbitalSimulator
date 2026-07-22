@@ -6,6 +6,7 @@
 #include <ostream>
 #include <stdexcept>
 #include <string>
+#include "app/ApplicationPaths.hpp"
 #include "scenario/Scenario.hpp"
 #include "scenario/ScenarioFileFormat.hpp"
 #include "simulation/bodies/Body.hpp"
@@ -17,7 +18,7 @@ namespace
 
 	fs::path buildFilePath(const std::string& fileName)
 	{
-		return fs::path{ "scenarios" } / (fileName + ".sav");
+		return ApplicationPaths::scenariosDirectory() / (fileName + ".sav");
 	}
 
 	void serializeBody(std::ostream& output, const Body& body)

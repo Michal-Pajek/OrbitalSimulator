@@ -17,6 +17,7 @@ endfunction()
 add_executable(orbital_simulator
     app/main.cpp
     src/app/Application.cpp
+    src/app/ApplicationPaths.cpp
     src/app/Menu.cpp
     src/input/BodyMassUnitSelector.cpp
     src/input/Console.cpp

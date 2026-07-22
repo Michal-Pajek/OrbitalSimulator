@@ -1,5 +1,6 @@
 #include <iomanip>
 #include <ios>
+#include "app/ApplicationPaths.hpp"
 #include "recording/Recorder.hpp"
 #include "simulation/bodies/Body.hpp"
 #include "simulation/Simulation.hpp"
@@ -55,7 +56,7 @@ void Recorder::writeSingleSnapshotToCSV(const Body& body, const unsigned int ste
 std::filesystem::path Recorder::getPath() const
 {
 	namespace fs = std::filesystem;
-	const fs::path filePath{ fs::path{"simulations"} / (m_fileName + ".csv") };
+	const fs::path filePath{ ApplicationPaths::simulationsDirectory() / (m_fileName + ".csv") };
 	fs::create_directories(filePath.parent_path());
 	return filePath;
 }
