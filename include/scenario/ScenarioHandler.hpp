@@ -3,11 +3,18 @@
 
 struct Scenario;
 
+struct ScenarioHandlingConfig
+{
+	bool askToRun{ true };
+	bool askToSave{ true };
+	bool printSummary{ true };
+};
+
 class ScenarioHandler
 {
 public:
 	explicit ScenarioHandler(const Scenario& scenario) : m_scenario{ scenario } {}
-	void handleScenario() const;
+	void handleScenario(const ScenarioHandlingConfig& config = {}) const;
 private:
 	void runSimulationForScenario() const;
 	void saveScenario() const;

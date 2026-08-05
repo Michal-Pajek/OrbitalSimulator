@@ -29,12 +29,15 @@ add_executable(orbital_simulator
     src/input/Keyboard.cpp
     src/localization/LocalizationManager.cpp
     src/math/Vector3D.cpp
+    src/physics/Validation.cpp
     src/platform/ConsoleEncoding.cpp
     src/recording/Recorder.cpp
     src/runner/SimulationRunner.cpp
     src/scenario/ScenarioBuilder.cpp
     src/scenario/ScenarioHandler.cpp
+    src/scenario/ScenarioLoader.cpp
     src/scenario/ScenarioSaver.cpp
+    src/scenario/ScenarioSummary.cpp
     src/simulation/bodies/Body.cpp
     src/simulation/bodies/BodyBuilder.cpp
     src/simulation/bodies/BodyInputBase.cpp
@@ -70,6 +73,7 @@ add_executable(orbital_tests
     src/input/jsons/JsonParserBase.cpp
     src/localization/LocalizationManager.cpp
     src/math/Vector3D.cpp
+    src/physics/Validation.cpp
     src/simulation/bodies/Body.cpp
     src/simulation/bodies/BodyStepState.cpp
     src/simulation/bodies/types/BodyTypeCatalog.cpp
@@ -82,6 +86,7 @@ add_executable(orbital_tests
     tests/LocalizationResourcesTests.cpp
     tests/LocalizationTests.cpp
     tests/SimulationsTests.cpp
+    tests/support/TestBodyCreator.cpp
 )
 
 target_include_directories(orbital_tests PRIVATE

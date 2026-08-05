@@ -54,7 +54,7 @@ namespace DataGetter
 				ConsoleWriter::write(TextId::YouEnteredIncorrectValue, ". ", TextId::EnterDifferentValue, ": ");
 				continue;
 			}
-			if (predicate(x) && predicate(y) && predicate(z)) {
+			if (predicate(x, y, z)) {
 				detail::discardLineRemainder();
 				return Vector3D{ x, y, z };
 			}
@@ -64,7 +64,7 @@ namespace DataGetter
 
 	inline Vector3D getVector3D()
 	{
-		return getVector3D([](double) {return true; });
+		return getVector3D([](double, double, double) {return true; });
 	}
 
 	std::string getSingleWordText();

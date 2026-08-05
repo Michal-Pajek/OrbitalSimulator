@@ -6,6 +6,7 @@
 #include "runner/SimulationRunner.hpp"
 #include "scenario/Scenario.hpp"
 #include "scenario/ScenarioSaver.hpp"
+#include "scenario/ScenarioSummary.hpp"
 #include "simulation/SimulationRunConfigBuilder.hpp"
 #include "ui/ConsoleWriter.hpp"
 
@@ -18,12 +19,18 @@ namespace
 	}
 }
 
-void ScenarioHandler::handleScenario() const
+void ScenarioHandler::handleScenario(const ScenarioHandlingConfig& config) const
 {
-	if (Menu::yesOrNo(TextId::QuestionDoYouWantToSaveTheScenario)) {
+	if (config.printSummary) {
+		ScenarioSummary::print(m_scenario);
+	}
+
+	if (config.askToSave &&
+		Menu::yesOrNo(TextId::QuestionDoYouWantToSaveTheScenario)) {
 		saveScenario();
 	}
-	if (Menu::yesOrNo(TextId::QuestionDoYouWantToRunTheSimulationNow)) {
+	if (config.askToRun &&
+		Menu::yesOrNo(TextId::QuestionDoYouWantToRunTheSimulationNow)) {
 		runSimulationForScenario();
 	}
 }

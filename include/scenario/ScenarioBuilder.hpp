@@ -14,7 +14,6 @@ private:
 	bool reviewAndConfirmScenario();
 	void createBodiesFromInput();
 	void printBodies(const bool printHeadline = true) const;
-	void printScenarioSummary() const;
 	void promptForScenarioName();
 	void resetState();
 	void reviewAndEditBodies();

@@ -1,24 +1,39 @@
 #include "simulation/bodies/Body.hpp"
+#include <cmath>
 #include <cstddef>
 #include <stdexcept>
 #include "localization/TextId.hpp"
 #include "physics/Constants.hpp"
+#include "physics/Validation.hpp"
 #include "simulation/bodies/types/BodyTypeCatalog.hpp"
 #include "ui/ConsoleWriter.hpp"
 
 namespace
 {
-	void validateMass(const double mass)
+	void validateMass(const double mass, const BodyTypeId typeId)
 	{
 		if (mass <= 0.0) {
-			throw std::invalid_argument("Mass must be positive");
+			throw std::invalid_argument{ "Mass must be positive" };
+		}
+		if (!std::isfinite(mass)) {
+			throw std::invalid_argument{ "Mass must be finite" };
+		}
+		if (!BodyTypeCatalog::isMassInRange(typeId, mass)) {
+			throw std::invalid_argument{ "Mass is out of interval for the specified type" };
 		}
 	}
 
 	void validateTypeId(const BodyTypeId bodyTypeId)
 	{
 		if (static_cast<std::size_t>(bodyTypeId) >= BODY_TYPE_COUNT) {
-			throw std::invalid_argument("typeId out of range");
+			throw std::invalid_argument{ "typeId out of range" };
+		}
+	}
+
+	void validateVelocityVector(const Vector3D& velocity)
+	{
+		if (!physics::isSubLightVelocity(velocity)) {
+			throw std::invalid_argument{ "Velocity must be lower than c" };
 		}
 	}
 } // anonymous namespace
@@ -26,8 +41,9 @@ namespace
 Body::Body(const std::string& name, BodyTypeId typeId, double mass, const Vector3D& position, const Vector3D& velocity)
 	: m_name{name}, m_typeId{typeId}, m_mass{mass}, m_position{position}, m_velocity{velocity}
 {
-	validateMass(mass);
 	validateTypeId(typeId);
+	validateMass(mass, typeId);
+	validateVelocityVector(velocity);
 }
 
 void Body::printSummary(const bool oneLine) const
@@ -38,14 +54,17 @@ void Body::printSummary(const bool oneLine) const
 
 void Body::setMass(const double mass)
 {
-	validateMass(mass);
+	validateMass(mass, m_typeId);
 	m_mass = mass;
 }
 
-void Body::setTypeId(const BodyTypeId bodyTypeId)
+void Body::setTypeAndMass(const BodyTypeId typeId, const double mass)
 {
-	validateTypeId(bodyTypeId);
-	m_typeId = bodyTypeId;
+	validateTypeId(typeId);
+	validateMass(mass, typeId);
+
+	m_typeId = typeId;
+	m_mass = mass;
 }
 
 Vector3D getGravityForceBetween(const Body& a, const Body& b)
@@ -53,7 +72,7 @@ Vector3D getGravityForceBetween(const Body& a, const Body& b)
 	const auto positionDiff{ b.getPosition() - a.getPosition() };
 	const auto distance{ positionDiff.getLength() };
 	if (distance == 0.0) {
-		throw std::domain_error("distance between two bodies is zero");
+		throw std::domain_error{ "Distance between two bodies is zero" };
 	}
 	return physics::G_CONST * a.getMass() * b.getMass() * positionDiff / (distance * distance * distance);
 }

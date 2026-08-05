@@ -27,3 +27,19 @@ const BodyType& BodyTypeCatalog::getType(const BodyTypeId id)
 	}
 	return bodyTypesArray.at(idx);
 }
+
+bool BodyTypeCatalog::isMassInRange(const BodyTypeId id, const double mass)
+{
+	const auto [min, max] {getType(id).getMassInterval()};
+	return min <= mass && mass <= max;
+}
+
+std::optional<BodyTypeId> BodyTypeCatalog::deserializeKey(std::string_view serializationKey)
+{
+	for (const auto& bodyType : bodyTypesArray) {
+		if (bodyType.getSerializationKey() == serializationKey) {
+			return bodyType.getId();
+		}
+	}
+	return {};
+}

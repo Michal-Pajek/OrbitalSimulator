@@ -16,7 +16,7 @@ public:
 	void setMass(const double mass);
 	void setName(const std::string& name) { m_name = name; }
 	void setPosition(const Vector3D& position) { m_position = position; }
-	void setTypeId(const BodyTypeId bodyTypeId);
+	void setTypeAndMass(const BodyTypeId typeId, const double mass);
 	void setVelocity(const Vector3D& velocity) { m_velocity = velocity; }
 	const std::string& getName() const { return m_name; }
 private:

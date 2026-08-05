@@ -5,6 +5,7 @@
 #include "Body.hpp"
 #include "BodyInputBase.hpp"
 #include "math/Vector3D.hpp"
+#include "types/BodyType.hpp"
 
 class BodyEditor : public BodyInputBase
 {
@@ -19,6 +20,6 @@ private:
 	bool isSameAsCurrentName(const std::string& enteredName) const override { return m_body.getName() == enteredName; }
 	bool isSameAsCurrentPosition(const Vector3D& enteredPosition) const override { return m_body.getPosition() == enteredPosition; }
 	double promptForBodyMass() const;
-	void reviewMassAfterTypeChange();
+	double reviewMassAfterTypeChange(const BodyTypeId newTypeId);
 	Body m_body;
 };

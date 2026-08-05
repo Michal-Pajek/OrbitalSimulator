@@ -1,3 +1,5 @@
+#include <stdexcept>
+#include "physics/Validation.hpp"
 #include "simulation/Simulation.hpp"
 
 void Simulation::BodyStepState::applyStep()
@@ -10,6 +12,13 @@ void Simulation::BodyStepState::calculateNextPosition(const double dt)
 {
 	const auto& position{ m_body.getPosition() };
 	const auto& velocity{ m_body.getVelocity() };
-	m_newPos = position + velocity * dt + 0.5 * m_acceleration * dt * dt;
-	m_newVel = velocity + m_acceleration * dt;
+	const auto newPos{ position + velocity * dt + 0.5 * m_acceleration * dt * dt };
+	const auto newVel{ velocity + m_acceleration * dt };
+
+	if (!physics::isSubLightVelocity(newVel)) {
+		throw std::runtime_error{ "Current velocity is not below the speed of light" };
+	}
+
+	m_newPos = newPos;
+	m_newVel = newVel;
 }

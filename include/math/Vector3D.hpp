@@ -12,7 +12,7 @@ class Vector3D
 	friend Vector3D operator+(const Vector3D& vecA, const Vector3D& vecB);
 public:
 	Vector3D() = default;
-	Vector3D(double x, double y, double z) : m_x{ x }, m_y{ y }, m_z{ z } {}
+	Vector3D(double x, double y, double z);
 	double getX() const { return m_x; }
 	double getY() const { return m_y; }
 	double getZ() const { return m_z; }

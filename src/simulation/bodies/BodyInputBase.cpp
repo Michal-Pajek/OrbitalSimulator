@@ -1,10 +1,10 @@
 #include "simulation/bodies/BodyInputBase.hpp"
-#include <cmath>
 #include "input/BodyMassUnitSelector.hpp"
 #include "input/DataGetter.hpp"
 #include "input/OptionSelector.hpp"
 #include "localization/TextId.hpp"
 #include "physics/Constants.hpp"
+#include "physics/Validation.hpp"
 #include "simulation/bodies/types/BodyTypeCatalog.hpp"
 #include "ui/ConsoleWriter.hpp"
 
@@ -93,5 +93,10 @@ Vector3D BodyInputBase::promptForBodyVelocity() const
 		TextId::SelectSpeedUnit) };
 
 	ConsoleWriter::write(TextId::EnterVelocityVector, ": ");
-	return velocityMultiplier * DataGetter::getVector3D([velocityMultiplier](const double v) {return std::fabs(velocityMultiplier * v) < physics::C_CONST; });
+	return velocityMultiplier * DataGetter::getVector3D([velocityMultiplier](const double x, const double y, const double z) {
+		return physics::isSubLightVelocity(
+			x * velocityMultiplier,
+			y * velocityMultiplier,
+			z * velocityMultiplier);
+		});
 }

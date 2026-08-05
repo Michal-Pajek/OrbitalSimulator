@@ -7,6 +7,7 @@
 #include "input/DataGetter.hpp"
 #include "input/Keyboard.hpp"
 #include "localization/TextId.hpp"
+#include "scenario/ScenarioSummary.hpp"
 #include "simulation/bodies/Body.hpp"
 #include "simulation/bodies/BodyBuilder.hpp"
 #include "simulation/bodies/BodyEditor.hpp"
@@ -65,7 +66,8 @@ std::optional<Scenario> ScenarioBuilder::buildScenario()
 bool ScenarioBuilder::reviewAndConfirmScenario()
 {
 	while (true) {
-		printScenarioSummary();
+		clearScreen();
+		ScenarioSummary::print(m_name, m_bodies);
 
 		const auto decision{ getScenarioAcceptanceDecision() };
 		switch (decision) {
@@ -87,11 +89,10 @@ bool ScenarioBuilder::reviewAndConfirmScenario()
 
 void ScenarioBuilder::createBodiesFromInput()
 {
-	constexpr auto MAX_BODYCOUNT{ 20 };
 	m_bodies.clear();
 	ConsoleWriter::writeLine();
-	ConsoleWriter::write(TextId::EnterObjectCountNotGreaterThan, ' ', MAX_BODYCOUNT, ": ");
-	const auto bodiesCount{ static_cast<unsigned int>(DataGetter::getValue<int>([](const int x) {return x > 0 && x <= MAX_BODYCOUNT; })) };
+	ConsoleWriter::write(TextId::EnterObjectCountNotGreaterThan, ' ', Scenario::MAX_BODY_COUNT, ": ");
+	const auto bodiesCount{ static_cast<unsigned int>(DataGetter::getValue<int>([](const int x) {return x > 0 && x <= static_cast<int>(Scenario::MAX_BODY_COUNT); })) };
 	m_bodies.reserve(bodiesCount);
 	for (unsigned int i{}; i < bodiesCount; ++i) {
 		const BodyBuilder bodyBuilder{ m_bodies };
@@ -114,15 +115,6 @@ void ScenarioBuilder::printBodies(const bool printHeadline) const
 		ConsoleWriter::write('\t', counter++, ":\t");
 		body.printSummary(true);
 	}
-}
-
-void ScenarioBuilder::printScenarioSummary() const
-{
-	clearScreen();
-	ConsoleWriter::writeHeadline(TextId::CurrentScenarioSummary);
-	ConsoleWriter::writeLine(TextId::ScenarioName, ":\t", m_name);
-	ConsoleWriter::writeLine(TextId::Bodies, ':');
-	printBodies(false);
 }
 
 void ScenarioBuilder::promptForScenarioName()

@@ -1,5 +1,6 @@
 #include "app/Application.hpp"
 #include <exception>
+#include <stdexcept>
 #include "app/Menu.hpp"
 #include "input/Console.hpp"
 #include "input/Keyboard.hpp"
@@ -7,6 +8,7 @@
 #include "localization/TextId.hpp"
 #include "scenario/ScenarioBuilder.hpp"
 #include "scenario/ScenarioHandler.hpp"
+#include "scenario/ScenarioLoader.hpp"
 #include "ui/ConsoleWriter.hpp"
 
 void Application::eventLoop()
@@ -20,6 +22,7 @@ void Application::eventLoop()
 		} } };
 	const Menu mainMenu{ {
 			MenuOption{'B', TextId::ScenarioBuilder,	Application::buildScenario},
+			MenuOption{'O', TextId::LoadScenario,		Application::loadScenario},
 			MenuOption{'L', TextId::SelectLanguage,		Application::selectLanguage},
 			MenuOption{'E', TextId::Exit,				closeApplication}
 			}, TextId::MainMenu};
@@ -36,10 +39,10 @@ void Application::buildScenario()
 	try {
 		ScenarioBuilder builder{};
 		auto scenario{ builder.buildScenario() };
-		if (scenario.has_value()) {
+		if (scenario) {
 			ConsoleWriter::writeLine(TextId::ScenarioCreatedSuccessfully);
-			ScenarioHandler handler{ scenario.value() };
-			handler.handleScenario();
+			ScenarioHandler handler{ *scenario };
+			handler.handleScenario(ScenarioHandlingConfig{ .printSummary = false });
 		}
 		else {
 			ConsoleWriter::writeLine('\n', TextId::ScenarioCreationCanceled);
@@ -61,6 +64,41 @@ void Application::exitModule()
 {
 	ConsoleWriter::write('\n', TextId::PressAnyKeyToReturnToMainMenu);
 	getSingleKey();
+}
+
+void Application::loadScenario()
+{
+	clearScreen();
+
+	auto result{ ScenarioLoader::getScenario() };
+
+	switch (result.status) {
+	case ScenarioLoader::LoadStatus::Loaded:
+	{
+		if (!result.scenario) {
+			throw std::logic_error{ "ScenarioLoader returned Loaded status without a scenario" };
+		}
+
+		ConsoleWriter::writeLine(TextId::ScenarioLoadedSuccessfully, '\n');
+		ScenarioHandler handler{ *result.scenario };
+		handler.handleScenario(ScenarioHandlingConfig{ .askToSave = false });
+		break;
+	}
+
+	case ScenarioLoader::LoadStatus::Canceled:
+		ConsoleWriter::writeLine(TextId::ScenarioLoadingCanceled);
+		break;
+
+	case ScenarioLoader::LoadStatus::NoSavedScenarios:
+		ConsoleWriter::writeLine(TextId::ThereAreNoSavedScenarios);
+		break;
+
+	case ScenarioLoader::LoadStatus::Failed:
+		ConsoleWriter::writeLine(TextId::ScenarioLoadingFailed);
+		break;
+	}
+
+	exitModule();
 }
 
 void Application::selectLanguage()

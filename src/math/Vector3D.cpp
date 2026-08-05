@@ -1,18 +1,29 @@
 #include "math/Vector3D.hpp"
+#include <cmath>
 #include <stdexcept>
+
+Vector3D::Vector3D(double x, double y, double z) : m_x{ x }, m_y{ y }, m_z{ z }
+{
+	if (!std::isfinite(x) || !std::isfinite(y) || !std::isfinite(z)) {
+		throw std::invalid_argument{ "All components of the vector must be finite" };
+	}
+}
 
 Vector3D& Vector3D::operator+=(const Vector3D& other)
 {
-	m_x += other.m_x;
-	m_y += other.m_y;
-	m_z += other.m_z;
+	const Vector3D result{
+		m_x + other.m_x,
+		m_y + other.m_y,
+		m_z + other.m_z
+	};
+	*this = result;
 	return *this;
 }
 
 Vector3D Vector3D::operator/(const double scalar) const
 {
 	if (scalar == 0.0) {
-		throw std::invalid_argument("Division of Vector3D by zero.");
+		throw std::invalid_argument{ "Division of Vector3D by zero" };
 	}
 	return *this * (1.0 / scalar);
 }
