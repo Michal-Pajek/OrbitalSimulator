@@ -1,7 +1,6 @@
 #include "input/DataGetter.hpp"
-#include <algorithm>
 #include <limits>
-#include <string_view>
+#include "filesystem/FileNameValidation.hpp"
 
 namespace DataGetter
 {
@@ -22,18 +21,15 @@ namespace DataGetter
 
 	std::string getSingleWordText()
 	{
-		return detail::getValidatedInput<std::string>([](const std::string& text) { return !text.empty(); });
+		return detail::getValidatedInput<std::string>([](const std::string& text) {
+			return !text.empty();
+			});
 	}
 
 	std::string getFileBaseName()
 	{
-		const auto predicate{ [](const std::string& text) {
-			if (text.empty()) {
-				return false;
-			}
-			constexpr std::string_view forbiddenChars{ "/\\<>:\"?*|" };
-			return std::ranges::none_of(text, [forbiddenChars](char ch) {return forbiddenChars.find(ch) != std::string_view::npos; });
-		} };
-		return detail::getValidatedInput<std::string>(predicate);
+		return detail::getValidatedInput<std::string>([](const std::string& text) {
+			return FileNameValidation::isValidBaseName(text);
+			});
 	}
 } // namespace DataGetter

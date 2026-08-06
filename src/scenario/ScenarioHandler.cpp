@@ -38,8 +38,7 @@ void ScenarioHandler::handleScenario(const ScenarioHandlingConfig& config) const
 void ScenarioHandler::runSimulationForScenario() const
 {
 	const auto runConfig{ SimulationRunConfigBuilder::build() };
-	const std::string fileName{ m_scenario.name };
-	Recorder recorder{ fileName };
+	Recorder recorder{ m_scenario.name };
 	SimulationRunner::runAndRecord(recorder, m_scenario, runConfig);
 }
 

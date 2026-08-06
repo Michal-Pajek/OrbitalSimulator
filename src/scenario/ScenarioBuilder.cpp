@@ -73,7 +73,7 @@ bool ScenarioBuilder::reviewAndConfirmScenario()
 		switch (decision) {
 		case Decision::Accept:
 			if (m_bodies.empty()) {
-				throw std::logic_error("Scenario must contain at least one body");
+				throw std::logic_error{ "Scenario must contain at least one body" };
 			}
 			return true;
 		case Decision::Revise:
@@ -82,7 +82,7 @@ bool ScenarioBuilder::reviewAndConfirmScenario()
 		case Decision::Cancel:
 			return false;
 		default:
-			throw std::logic_error("Wrong decision selected");
+			throw std::logic_error{ "Wrong decision selected" };
 		}
 	}
 }
@@ -182,6 +182,6 @@ void ScenarioBuilder::reviseScenario()
 	case PartToChange::Cancel:
 		return;
 	default:
-		throw std::logic_error("Wrong decision selected");
+		throw std::logic_error{ "Wrong decision selected" };
 	}
 }

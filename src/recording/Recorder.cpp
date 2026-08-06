@@ -1,9 +1,18 @@
 #include <iomanip>
 #include <ios>
-#include "app/ApplicationPaths.hpp"
+#include <stdexcept>
+#include "filesystem/ApplicationPaths.hpp"
+#include "filesystem/FileNameValidation.hpp"
 #include "recording/Recorder.hpp"
 #include "simulation/bodies/Body.hpp"
 #include "simulation/Simulation.hpp"
+
+Recorder::Recorder(const std::string& fileBaseName) : m_fileBaseName{ fileBaseName }
+{
+	if (!FileNameValidation::isValidBaseName(m_fileBaseName)) {
+		throw std::invalid_argument{ "Invalid recording file base name" };
+	}
+}
 
 bool Recorder::beginRecording()
 {
@@ -56,7 +65,7 @@ void Recorder::writeSingleSnapshotToCSV(const Body& body, const unsigned int ste
 std::filesystem::path Recorder::getPath() const
 {
 	namespace fs = std::filesystem;
-	const fs::path filePath{ ApplicationPaths::simulationsDirectory() / (m_fileName + ".csv") };
+	const fs::path filePath{ ApplicationPaths::simulationsDirectory() / (m_fileBaseName + ".csv") };
 	fs::create_directories(filePath.parent_path());
 	return filePath;
 }

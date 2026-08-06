@@ -67,6 +67,12 @@ void Body::setTypeAndMass(const BodyTypeId typeId, const double mass)
 	m_mass = mass;
 }
 
+void Body::setVelocity(const Vector3D& velocity)
+{
+	validateVelocityVector(velocity);
+	m_velocity = velocity;
+}
+
 Vector3D getGravityForceBetween(const Body& a, const Body& b)
 {
 	const auto positionDiff{ b.getPosition() - a.getPosition() };

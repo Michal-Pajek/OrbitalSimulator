@@ -11,8 +11,9 @@
 #include <system_error>
 #include <utility>
 #include <vector>
-#include "app/ApplicationPaths.hpp"
 #include "app/Menu.hpp"
+#include "filesystem/ApplicationPaths.hpp"
+#include "filesystem/FileNameValidation.hpp"
 #include "input/DataGetter.hpp"
 #include "localization/TextId.hpp"
 #include "math/Vector3D.hpp"
@@ -25,8 +26,6 @@ namespace
 {
 	namespace fs = std::filesystem;
 
-	constexpr std::string_view extension{ ".sav" };
-
 	bool hasOnlyWhitespaceRemaining(std::istream& stream)
 	{
 		stream >> std::ws;
@@ -36,17 +35,24 @@ namespace
 	bool removeSaveExtension(std::string& filename)
 	{
 		const auto size{ filename.size() };
-		const auto extensionSize{ extension.size() };
+		const auto extensionSize{ ScenarioFileFormat::extension.size() };
 		if (size < (extensionSize + 1u)) {
 			return false;
 		}
 		const auto threshold{ size - extensionSize };
 		const auto substr{ filename.substr(threshold) };
-		if (substr != extension) {
+		if (substr != ScenarioFileFormat::extension) {
 			return false;
 		}
 		filename.erase(threshold);
 		return true;
+	}
+
+	void removeTrailingCarriageReturn(std::string& line)
+	{
+		if (!line.empty() && line.back() == '\r') {
+			line.pop_back();
+		}
 	}
 
 	bool validateFileHeader(std::istream& file)
@@ -112,8 +118,13 @@ namespace
 		std::string bodyDataLine;
 
 		if (!std::getline(file, name) ||
-			name.empty() ||
 			!std::getline(file, bodyDataLine)) {
+			return {};
+		}
+
+		removeTrailingCarriageReturn(name);
+
+		if (name.empty()) {
 			return {};
 		}
 
@@ -160,15 +171,15 @@ namespace
 		}
 	}
 
-	fs::path buildSaveFilePath(const std::string& fileName)
+	fs::path buildSaveFilePath(const std::string& fileBaseName)
 	{
-		return ApplicationPaths::scenariosDirectory() / (fileName + std::string{ extension });
+		return ApplicationPaths::scenariosDirectory() / (fileBaseName + std::string{ ScenarioFileFormat::extension });
 	}
 
 	std::optional<fs::path> selectSaveFileFromList(const std::vector<std::string>& fileNames)
 	{
 		printFileNames(fileNames);
-		ConsoleWriter::write(TextId::EnterFileNameNumberOrZeroToCancel, ": ");
+		ConsoleWriter::write(TextId::EnterScenarioNumberOrZeroToCancel, ": ");
 		const auto namesCount{ static_cast<int>(fileNames.size()) };
 		const auto idx{ static_cast<std::size_t>(DataGetter::getValue<int>([namesCount](const int value) {return 0 <= value && value <= namesCount; })) };
 		std::optional<fs::path> result{};
@@ -195,7 +206,13 @@ namespace
 	std::optional<Scenario> deserializeScenario(std::istream& file)
 	{
 		std::string scenarioName;
-		if (!std::getline(file, scenarioName) || scenarioName.empty()) {
+		if (!std::getline(file, scenarioName)) {
+			return {};
+		}
+
+		removeTrailingCarriageReturn(scenarioName);
+
+		if (!FileNameValidation::isValidBaseName(scenarioName)) {
 			return {};
 		}
 

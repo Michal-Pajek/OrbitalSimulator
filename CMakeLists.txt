@@ -17,8 +17,9 @@ endfunction()
 add_executable(orbital_simulator
     app/main.cpp
     src/app/Application.cpp
-    src/app/ApplicationPaths.cpp
     src/app/Menu.cpp
+    src/filesystem/ApplicationPaths.cpp
+    src/filesystem/FileNameValidation.cpp
     src/input/BodyMassUnitSelector.cpp
     src/input/Console.cpp
     src/input/DataGetter.cpp
@@ -67,6 +68,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 add_executable(orbital_tests
+    src/filesystem/FileNameValidation.cpp
     src/input/jsons/JsonDataStorage.cpp
     src/input/jsons/JsonLanguageSettingsParser.cpp
     src/input/jsons/JsonLocalizationParser.cpp
@@ -80,6 +82,7 @@ add_executable(orbital_tests
     src/simulation/Simulation.cpp
     src/ui/ConsoleWriter.cpp
     tests/BodyTests.cpp
+    tests/BodyTypeCatalogTests.cpp
     tests/BodyTypesTests.cpp
     tests/JsonLanguageSettingsParserTests.cpp
     tests/JsonLocalizationParserTests.cpp

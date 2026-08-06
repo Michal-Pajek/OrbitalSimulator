@@ -10,7 +10,7 @@ class Simulation;
 class Recorder
 {
 public:
-	Recorder(const std::string& fileName) : m_fileName{ fileName } {}
+	explicit Recorder(const std::string& fileBaseName);
 	bool beginRecording();
 	void recordInitialState(const std::vector<Body>& bodies);
 	void recordStateAfterStep(const Simulation& simulation, const unsigned int stepNo);
@@ -20,6 +20,6 @@ private:
 	void writeInitialSnapshotToCSV(const Body& body) { writeSingleSnapshotToCSV(body, 0u, 0.0); }
 	void writeSingleSnapshotToCSV(const Body& body, const unsigned int stepNo, const double time);
 	std::filesystem::path getPath() const;
-	const std::string m_fileName;
+	const std::string m_fileBaseName;
 	std::ofstream m_file;
 };

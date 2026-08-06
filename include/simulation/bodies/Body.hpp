@@ -6,7 +6,6 @@
 class Body
 {
 public:
-	Body() = delete;
 	Body(const std::string& name, BodyTypeId typeId, double mass, const Vector3D& position, const Vector3D& velocity);
 	double getMass() const { return m_mass; }
 	const Vector3D& getPosition() const { return m_position; }
@@ -17,7 +16,7 @@ public:
 	void setName(const std::string& name) { m_name = name; }
 	void setPosition(const Vector3D& position) { m_position = position; }
 	void setTypeAndMass(const BodyTypeId typeId, const double mass);
-	void setVelocity(const Vector3D& velocity) { m_velocity = velocity; }
+	void setVelocity(const Vector3D& velocity);
 	const std::string& getName() const { return m_name; }
 private:
 	std::string m_name;

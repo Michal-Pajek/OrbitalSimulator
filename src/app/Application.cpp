@@ -11,6 +11,40 @@
 #include "scenario/ScenarioLoader.hpp"
 #include "ui/ConsoleWriter.hpp"
 
+namespace
+{
+	void loadScenarioHelper()
+	{
+		auto result{ ScenarioLoader::getScenario() };
+
+		switch (result.status) {
+		case ScenarioLoader::LoadStatus::Loaded:
+		{
+			if (!result.scenario) {
+				throw std::logic_error{ "ScenarioLoader returned Loaded status without a scenario" };
+			}
+
+			ConsoleWriter::writeLine(TextId::ScenarioLoadedSuccessfully, '\n');
+			ScenarioHandler handler{ *result.scenario };
+			handler.handleScenario(ScenarioHandlingConfig{ .askToSave = false });
+			break;
+		}
+
+		case ScenarioLoader::LoadStatus::Canceled:
+			ConsoleWriter::writeLine(TextId::ScenarioLoadingCanceled);
+			break;
+
+		case ScenarioLoader::LoadStatus::NoSavedScenarios:
+			ConsoleWriter::writeLine(TextId::ThereAreNoSavedScenarios);
+			break;
+
+		case ScenarioLoader::LoadStatus::Failed:
+			ConsoleWriter::writeLine(TextId::ScenarioLoadingFailed);
+			break;
+		}
+	}
+}
+
 void Application::eventLoop()
 {
 	const auto closeApplication{ [this]() {
@@ -69,33 +103,11 @@ void Application::exitModule()
 void Application::loadScenario()
 {
 	clearScreen();
-
-	auto result{ ScenarioLoader::getScenario() };
-
-	switch (result.status) {
-	case ScenarioLoader::LoadStatus::Loaded:
-	{
-		if (!result.scenario) {
-			throw std::logic_error{ "ScenarioLoader returned Loaded status without a scenario" };
-		}
-
-		ConsoleWriter::writeLine(TextId::ScenarioLoadedSuccessfully, '\n');
-		ScenarioHandler handler{ *result.scenario };
-		handler.handleScenario(ScenarioHandlingConfig{ .askToSave = false });
-		break;
+	try {
+		loadScenarioHelper();
 	}
-
-	case ScenarioLoader::LoadStatus::Canceled:
-		ConsoleWriter::writeLine(TextId::ScenarioLoadingCanceled);
-		break;
-
-	case ScenarioLoader::LoadStatus::NoSavedScenarios:
-		ConsoleWriter::writeLine(TextId::ThereAreNoSavedScenarios);
-		break;
-
-	case ScenarioLoader::LoadStatus::Failed:
-		ConsoleWriter::writeLine(TextId::ScenarioLoadingFailed);
-		break;
+	catch (const std::exception& e) {
+		ConsoleWriter::writeError(e.what());
 	}
 
 	exitModule();

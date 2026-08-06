@@ -6,7 +6,8 @@
 #include <ostream>
 #include <stdexcept>
 #include <string>
-#include "app/ApplicationPaths.hpp"
+#include "filesystem/ApplicationPaths.hpp"
+#include "filesystem/FileNameValidation.hpp"
 #include "scenario/Scenario.hpp"
 #include "scenario/ScenarioFileFormat.hpp"
 #include "simulation/bodies/Body.hpp"
@@ -16,9 +17,9 @@ namespace
 {
 	namespace fs = std::filesystem;
 
-	fs::path buildFilePath(const std::string& fileName)
+	fs::path buildFilePath(const std::string& fileBaseName)
 	{
-		return ApplicationPaths::scenariosDirectory() / (fileName + ".sav");
+		return ApplicationPaths::scenariosDirectory() / (fileBaseName + std::string{ ScenarioFileFormat::extension });
 	}
 
 	void serializeBody(std::ostream& output, const Body& body)
@@ -42,6 +43,19 @@ namespace
 			serializeBody(output, body);
 		}
 	}
+
+	void validateBaseName(const std::string& name, const char* errorMessage)
+	{
+		if (!FileNameValidation::isValidBaseName(name)) {
+			throw std::invalid_argument{ errorMessage };
+		}
+	}
+
+	void validateNames(const std::string& saveName, const std::string& scenarioName)
+	{
+		validateBaseName(saveName, "Invalid scenario save file base name");
+		validateBaseName(scenarioName, "Invalid scenario name");
+	}
 } // anonymous namespace
 
 namespace ScenarioSaver
@@ -49,6 +63,8 @@ namespace ScenarioSaver
 
 SaveResult save(const Scenario& scenario, const std::string& saveName, OverwritePolicy policy)
 {
+	validateNames(saveName, scenario.name);
+
 	const auto filePath{ buildFilePath(saveName) };
 
 	if (fs::exists(filePath) &&
@@ -76,6 +92,7 @@ SaveResult save(const Scenario& scenario, const std::string& saveName, Overwrite
 
 std::string getNextAvailableSaveName(const std::string& baseName)
 {
+	validateBaseName(baseName, "Invalid scenario save file base name");
 	for (auto version{ 2 };; ++version) {
 		const std::string candidate{ baseName + '_' + std::to_string(version) };
 
