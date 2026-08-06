@@ -123,3 +123,93 @@ TEST(BodyTests, SetTypeAndMassThrowsForMismatchedMassAndPreservesState)
 		EXPECT_DOUBLE_EQ(body.getMass(), initialMass);
 	}
 }
+
+TEST(BodyTests, ConstructorThrowsForNonFiniteMass)
+{
+	constexpr auto infinity{ std::numeric_limits<double>::infinity() };
+	constexpr auto nan{ std::numeric_limits<double>::quiet_NaN() };
+
+	EXPECT_THROW((Body{ "A", BodyTypeId::Meteor, infinity, Vector3D{}, Vector3D{} }), std::invalid_argument);
+	EXPECT_THROW((Body{ "A", BodyTypeId::Meteor, -infinity, Vector3D{}, Vector3D{} }), std::invalid_argument);
+	EXPECT_THROW((Body{ "A", BodyTypeId::Meteor, nan, Vector3D{}, Vector3D{} }), std::invalid_argument);
+}
+
+TEST(BodyTests, ConstructorThrowsForMassOutsideTypeInterval)
+{
+	for (std::size_t id{}; id < BODY_TYPE_COUNT; ++id) {
+		const auto bodyTypeId{ static_cast<BodyTypeId>(id) };
+		const auto [min, max]{ BodyTypeCatalog::getType(bodyTypeId).getMassInterval() };
+		const auto massTooLow{ std::nextafter(min, 0.0) };
+		const auto massTooHigh{ std::nextafter(max, std::numeric_limits<double>::infinity()) };
+
+		SCOPED_TRACE(
+			::testing::Message{}
+			<< "Body type id: "
+			<< id);
+
+		EXPECT_THROW((Body{ "A", bodyTypeId, massTooLow, Vector3D{}, Vector3D{} }), std::invalid_argument);
+		EXPECT_THROW((Body{ "A", bodyTypeId, massTooHigh, Vector3D{}, Vector3D{} }), std::invalid_argument);
+	}
+}
+
+TEST(BodyTests, SetMassThrowsForOutOfRangeMassAndPreservesState)
+{
+	for (std::size_t id{}; id < BODY_TYPE_COUNT; ++id) {
+		const auto bodyTypeId{ static_cast<BodyTypeId>(id) };
+		const auto initialMass{ getProperMass(bodyTypeId) };
+		const auto [min, max]{ BodyTypeCatalog::getType(bodyTypeId).getMassInterval() };
+		const auto massTooLow{ std::nextafter(min, 0.0) };
+		const auto massTooHigh{ std::nextafter(max,std::numeric_limits<double>::infinity()) };
+
+		Body body{ "A", bodyTypeId, initialMass, Vector3D{}, Vector3D{} };
+
+		SCOPED_TRACE(
+			::testing::Message{}
+			<< "Body type id: "
+			<< id);
+
+		EXPECT_THROW(body.setMass(massTooLow), std::invalid_argument);
+		EXPECT_DOUBLE_EQ(body.getMass(), initialMass);
+		EXPECT_THROW(body.setMass(massTooHigh), std::invalid_argument);
+		EXPECT_DOUBLE_EQ(body.getMass(), initialMass);
+	}
+}
+
+TEST(BodyTests, SetMassThrowsForNonFiniteMassAndPreservesState)
+{
+	auto body{ createTestBody(1.0) };
+	const auto initialMass{ body.getMass() };
+	constexpr auto infinity{ std::numeric_limits<double>::infinity() };
+	constexpr auto nan{ std::numeric_limits<double>::quiet_NaN() };
+
+	EXPECT_THROW(body.setMass(infinity), std::invalid_argument);
+	EXPECT_DOUBLE_EQ(body.getMass(), initialMass);
+	EXPECT_THROW(body.setMass(nan), std::invalid_argument);
+	EXPECT_DOUBLE_EQ(body.getMass(), initialMass);
+}
+
+TEST(BodyTests, SetVelocityChangesVelocity)
+{
+	auto body{ createTestBody(1.0) };
+	const Vector3D velocity{ 10.0, 20.0, 30.0 };
+
+	body.setVelocity(velocity);
+
+	EXPECT_EQ(body.getVelocity(), velocity);
+}
+
+TEST(BodyTests, SetVelocityRejectsSpeedOfLightAndPreservesState)
+{
+	const Vector3D initialVelocity{ 10.0, 20.0, 30.0 };
+	auto body{ createTestBody(1.0, Vector3D{}, initialVelocity) };
+
+	const Vector3D invalidVelocity{ physics::C_CONST, 0.0, 0.0 };
+
+	EXPECT_THROW(body.setVelocity(invalidVelocity), std::invalid_argument);
+	EXPECT_EQ(body.getVelocity(), initialVelocity);
+}
+
+TEST(BodyTests, ConstructorRejectsSpeedOfLightVelocity)
+{
+	EXPECT_THROW((Body{ "A", BodyTypeId::Meteor, 1.0, Vector3D{}, Vector3D{ physics::C_CONST, 0.0, 0.0 } }), std::invalid_argument);
+}

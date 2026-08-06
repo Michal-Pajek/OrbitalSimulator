@@ -84,11 +84,15 @@ add_executable(orbital_tests
     tests/BodyTests.cpp
     tests/BodyTypeCatalogTests.cpp
     tests/BodyTypesTests.cpp
+    tests/FileNameValidationTests.cpp
     tests/JsonLanguageSettingsParserTests.cpp
     tests/JsonLocalizationParserTests.cpp
     tests/LocalizationResourcesTests.cpp
     tests/LocalizationTests.cpp
+    tests/PhysicsValidationTests.cpp
+    tests/ScenarioTests.cpp
     tests/SimulationsTests.cpp
+    tests/Vector3DTests.cpp
     tests/support/TestBodyCreator.cpp
 )
 

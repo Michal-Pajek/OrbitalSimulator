@@ -13,7 +13,7 @@ void BodyEditor::editBody()
 			MenuOption{'N', TextId::BodyName,		[this]() {m_body.setName(promptForBodyName()); }},
 			MenuOption{'T', TextId::BodyType,		[this]() {
 				const auto newTypeId{ promptForBodyType() };
-				const auto newMass{ reviewMassAfterTypeChange(newTypeId) };
+				const auto newMass{ resolveMassForTypeChange(newTypeId) };
 				m_body.setTypeAndMass(newTypeId, newMass);
 			}},
 			MenuOption{'M', TextId::BodyMass,		[this]() {m_body.setMass(promptForBodyMass()); }},
@@ -29,7 +29,7 @@ double BodyEditor::promptForBodyMass() const
 	return promptForBodyMass(m_body.getTypeId());
 }
 
-double BodyEditor::reviewMassAfterTypeChange(const BodyTypeId newTypeId)
+double BodyEditor::resolveMassForTypeChange(const BodyTypeId newTypeId)
 {
 	const auto currentMass{ m_body.getMass() };
 

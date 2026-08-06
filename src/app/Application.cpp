@@ -13,7 +13,7 @@
 
 namespace
 {
-	void loadScenarioHelper()
+	void loadAndHandleScenario()
 	{
 		auto result{ ScenarioLoader::getScenario() };
 
@@ -104,7 +104,7 @@ void Application::loadScenario()
 {
 	clearScreen();
 	try {
-		loadScenarioHelper();
+		loadAndHandleScenario();
 	}
 	catch (const std::exception& e) {
 		ConsoleWriter::writeError(e.what());

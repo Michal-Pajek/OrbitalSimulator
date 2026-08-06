@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <limits>
 #include <stdexcept>
 #include "math/Vector3D.hpp"
 
@@ -66,4 +67,36 @@ TEST(Vector3DTests, ModulusWorksCorrectly)
 	const Vector3D vec{ 3.0, 4.0, 0.0 };
 	const auto result{ vec.getLength() };
 	EXPECT_DOUBLE_EQ(result, 5.0);
+}
+
+TEST(Vector3DTests, ConstructorRejectsInfiniteComponent)
+{
+	constexpr auto positiveInfinity{ std::numeric_limits<double>::infinity() };
+	constexpr auto negativeInfinity{ -positiveInfinity };
+
+	for (const auto infinity : { positiveInfinity, negativeInfinity }) {
+		EXPECT_THROW((Vector3D{ infinity, 0.0, 0.0 }), std::invalid_argument);
+		EXPECT_THROW((Vector3D{ 0.0, infinity, 0.0 }), std::invalid_argument);
+		EXPECT_THROW((Vector3D{ 0.0, 0.0, infinity }), std::invalid_argument);
+	}
+}
+
+TEST(Vector3DTests, PlusEqualsPreservesStateWhenResultIsNotFinite)
+{
+	constexpr auto maxFinite{ std::numeric_limits<double>::max() };
+	Vector3D vector{ maxFinite, 10.0, 20.0 };
+	const Vector3D other{ maxFinite, 1.0, 2.0 };
+
+	EXPECT_THROW(vector += other, std::invalid_argument);
+	EXPECT_DOUBLE_EQ(vector.getX(), maxFinite);
+	EXPECT_DOUBLE_EQ(vector.getY(), 10.0);
+	EXPECT_DOUBLE_EQ(vector.getZ(), 20.0);
+}
+
+TEST(Vector3DTests, ConstructorRejectsNaNComponent)
+{
+	constexpr auto nan{ std::numeric_limits<double>::quiet_NaN() };
+	EXPECT_THROW((Vector3D{ nan, 0.0, 0.0 }), std::invalid_argument);
+	EXPECT_THROW((Vector3D{ 0.0, nan, 0.0 }), std::invalid_argument);
+	EXPECT_THROW((Vector3D{ 0.0, 0.0, nan }), std::invalid_argument);
 }

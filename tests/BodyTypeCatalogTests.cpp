@@ -1,3 +1,4 @@
+#include <cstddef>
 #include <gtest/gtest.h>
 #include <map>
 #include <string_view>
@@ -25,5 +26,26 @@ TEST(BodyTypeCatalogTests, SerializationKeysRemainBackwardCompatible)
 		const auto deserializedId{ BodyTypeCatalog::deserializeKey(expectedKey) };
 		ASSERT_TRUE(deserializedId);
 		EXPECT_EQ(*deserializedId, id);
+	}
+}
+
+TEST(BodyTypeCatalogTests, DeserializeKeyReturnsEmptyForUnknownKey)
+{
+	EXPECT_FALSE(BodyTypeCatalog::deserializeKey("UnknownBodyType"));
+}
+
+TEST(BodyTypeCatalogTests, MassIntervalIncludesBothBoundaries)
+{
+	for (std::size_t idValue{}; idValue < BODY_TYPE_COUNT; ++idValue) {
+		const auto id{ static_cast<BodyTypeId>(idValue) };
+		const auto& [min, max]{ BodyTypeCatalog::getType(id).getMassInterval() };
+
+		SCOPED_TRACE(
+			::testing::Message{}
+			<< "Body type id: "
+			<< idValue);
+
+		EXPECT_TRUE(BodyTypeCatalog::isMassInRange(id, min));
+		EXPECT_TRUE(BodyTypeCatalog::isMassInRange(id, max));
 	}
 }

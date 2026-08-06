@@ -20,6 +20,6 @@ private:
 	bool isSameAsCurrentName(const std::string& enteredName) const override { return m_body.getName() == enteredName; }
 	bool isSameAsCurrentPosition(const Vector3D& enteredPosition) const override { return m_body.getPosition() == enteredPosition; }
 	double promptForBodyMass() const;
-	double reviewMassAfterTypeChange(const BodyTypeId newTypeId);
+	double resolveMassForTypeChange(const BodyTypeId newTypeId);
 	Body m_body;
 };
