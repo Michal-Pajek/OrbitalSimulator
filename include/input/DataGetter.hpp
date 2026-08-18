@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <type_traits>
+#include "localization/TextId.hpp"
 #include "math/Vector3D.hpp"
 #include "ui/ConsoleWriter.hpp"
 
@@ -67,6 +68,7 @@ namespace DataGetter
 		return getVector3D([](double, double, double) {return true; });
 	}
 
+	std::size_t getSelectionNumber(const TextId textId, const std::size_t count, bool includingZero = false);
 	std::string getSingleWordText();
 	std::string getFileBaseName();
 } // namespace DataGetter

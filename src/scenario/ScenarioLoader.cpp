@@ -179,9 +179,7 @@ namespace
 	std::optional<fs::path> selectSaveFileFromList(const std::vector<std::string>& fileNames)
 	{
 		printFileNames(fileNames);
-		ConsoleWriter::write(TextId::EnterScenarioNumberOrZeroToCancel, ": ");
-		const auto namesCount{ static_cast<int>(fileNames.size()) };
-		const auto idx{ static_cast<std::size_t>(DataGetter::getValue<int>([namesCount](const int value) {return 0 <= value && value <= namesCount; })) };
+		const auto idx{ DataGetter::getSelectionNumber(TextId::EnterScenarioNumberOrZeroToCancel, fileNames.size(), true)};
 		std::optional<fs::path> result{};
 		if (idx > 0u) {
 			result = buildSaveFilePath(fileNames.at(idx - 1u));

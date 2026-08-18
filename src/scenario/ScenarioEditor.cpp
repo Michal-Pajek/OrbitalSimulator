@@ -74,6 +74,52 @@ std::optional<Scenario> ScenarioEditor::getReviewedScenario()
 	}
 }
 
+bool ScenarioEditor::handleBodiesMenu()
+{
+	bool continueChecking{ true };
+
+	Menu whatToDoWithBodies{ {
+		MenuOption{'A', TextId::Accept,		[&continueChecking]()	{continueChecking = false; }},
+		MenuOption{'B', TextId::AddBody,	[this]()				{addNewBody(); }},
+		MenuOption{'D', TextId::DeleteBody,	[this]()				{deleteSelectedBody(); }},
+		MenuOption{'E', TextId::EditBody,	[this]()				{editSelectedBody(); }}},
+		TextId::QuestionWhatDoYouWantToDoWithBodies };
+	whatToDoWithBodies.execute();
+	return continueChecking;
+}
+
+void ScenarioEditor::addNewBody()
+{
+	auto& bodies{ m_scenario.bodies };
+	const BodyBuilder bodyBuilder{ bodies };
+	bodies.emplace_back(bodyBuilder.createBodyFromInput());
+}
+
+void ScenarioEditor::deleteSelectedBody()
+{
+	auto& bodies{ m_scenario.bodies };
+	bodies.erase(bodies.begin() + promptForBodyIdx());
+	ConsoleWriter::writeLine(TextId::BodyDeleted, '\n');
+}
+
+void ScenarioEditor::editSelectedBody()
+{
+	auto& bodies{ m_scenario.bodies };
+	const auto idx{ promptForBodyIdx() };
+	BodyEditor bodyEditor{ bodies.at(idx), bodies };
+	bodyEditor.editBody();
+	bodies.at(idx) = bodyEditor.takeBody();
+}
+
+void ScenarioEditor::handleEmptyBodies()
+{
+	if (m_scenario.bodies.empty()) {
+		ConsoleWriter::writeLine(TextId::ScenarioMustHaveAtLeastOneBody, ". ", TextId::PressAnyKeyToContinue);
+		getSingleKey();
+		addNewBody();
+	}
+}
+
 void ScenarioEditor::printBodies() const
 {
 	ConsoleWriter::writeHeadline(TextId::CurrentBodiesList);
@@ -90,40 +136,10 @@ void ScenarioEditor::printBodies() const
 void ScenarioEditor::reviewAndEditBodies()
 {
 	bool continueChecking{ true };
-	auto& bodies{ m_scenario.bodies };
 	while (continueChecking) {
-		auto bodyCount{ static_cast<int>(bodies.size()) };
-
-		if (bodyCount == 0) {
-			ConsoleWriter::writeLine(TextId::ScenarioMustHaveAtLeastOneBody, ". ", TextId::PressAnyKeyToContinue);
-			getSingleKey();
-			const BodyBuilder bodyBuilder{ bodies };
-			bodies.emplace_back(bodyBuilder.createBodyFromInput());
-			++bodyCount;
-		}
-
+		handleEmptyBodies();
 		printBodies();
-
-		const auto chooseBodyIdx{ [bodyCount]() {
-			ConsoleWriter::write(TextId::EnterBodyNumber, ": ");
-			return static_cast<size_t>(DataGetter::getValue<int>([bodyCount](const int value) {return 0 < value && value <= bodyCount; }) - 1);
-			} };
-
-		Menu whatToDoWithBodies{ {
-			MenuOption{'A', TextId::Accept,		[&continueChecking]() {continueChecking = false; }},
-			MenuOption{'B', TextId::AddBody,	[&bodies]() {
-				const BodyBuilder bodyBuilder{ bodies };
-				bodies.emplace_back(bodyBuilder.createBodyFromInput()); }},
-			MenuOption{'D', TextId::DeleteBody,	[&bodies, chooseBodyIdx]() {
-				bodies.erase(bodies.begin() + chooseBodyIdx());
-				ConsoleWriter::writeLine(TextId::BodyDeleted, '\n'); }},
-			MenuOption{'E', TextId::EditBody,	[&bodies, chooseBodyIdx]() {
-				const auto idx{ chooseBodyIdx() };
-				BodyEditor bodyEditor{ bodies.at(idx), bodies };
-				bodyEditor.editBody();
-				bodies.at(idx) = bodyEditor.takeBody(); }}},
-			TextId::QuestionWhatDoYouWantToDoWithBodies };
-		whatToDoWithBodies.execute();
+		continueChecking = handleBodiesMenu();
 	}
 }
 
@@ -143,4 +159,9 @@ void ScenarioEditor::reviseScenario()
 	default:
 		throw std::logic_error{ "Wrong decision selected" };
 	}
+}
+
+std::size_t ScenarioEditor::promptForBodyIdx() const
+{
+	return DataGetter::getSelectionNumber(TextId::EnterBodyNumber, m_scenario.bodies.size()) - 1u;
 }
