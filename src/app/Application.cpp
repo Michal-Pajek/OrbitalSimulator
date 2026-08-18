@@ -71,8 +71,7 @@ void Application::buildScenario()
 	enterModule(TextId::ScenarioBuilder);
 
 	try {
-		ScenarioBuilder builder{};
-		auto scenario{ builder.buildScenario() };
+		auto scenario{ ScenarioBuilder::buildScenario() };
 		if (scenario) {
 			ConsoleWriter::writeLine(TextId::ScenarioCreatedSuccessfully);
 			ScenarioHandler handler{ *scenario };
