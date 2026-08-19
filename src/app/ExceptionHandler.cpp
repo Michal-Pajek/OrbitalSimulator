@@ -1,5 +1,6 @@
 #include "app/ExceptionHandler.hpp"
 #include <stdexcept>
+#include "ui/ConsoleWriter.hpp"
 
 namespace ExceptionHandler
 {
@@ -29,6 +30,11 @@ namespace ExceptionHandler
 		if (!condition) {
 			throwException(type, message);
 		}
+	}
+
+	void detail::writeError(std::string_view message)
+	{
+		ConsoleWriter::writeError(message);
 	}
 
 } // ExceptionHandler

@@ -47,12 +47,29 @@ namespace
     {
         try {
             ExceptionHandler::ensure(false, ExceptionType::Runtime, "Expected message");
-
             FAIL() << "Expected exception was not thrown";
         }
         catch (const std::runtime_error& exception) {
             EXPECT_STREQ(exception.what(), "Expected message");
         }
+    }
+
+    TEST(ExceptionHandlerTests, ExecuteRunsAction)
+    {
+        bool executed{ false };
+        ExceptionHandler::execute([&executed] { executed = true; });
+
+        EXPECT_TRUE(executed);
+    }
+
+    TEST(ExceptionHandlerTests, ExecuteCatchesStdException)
+    {
+        EXPECT_NO_THROW(ExceptionHandler::execute([] { throw std::runtime_error{ "Test exception" }; }));
+    }
+
+    TEST(ExceptionHandlerTests, ExecuteCatchesUnknownException)
+    {
+        EXPECT_NO_THROW(ExceptionHandler::execute([] { throw 42; }));
     }
 
 } // anonymous namespace

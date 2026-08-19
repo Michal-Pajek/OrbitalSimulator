@@ -67,8 +67,9 @@ void Application::buildScenario()
 {
 	enterModule(TextId::ScenarioBuilder);
 
-	try {
+	ExceptionHandler::execute([] {
 		auto scenario{ ScenarioBuilder::buildScenario() };
+
 		if (scenario) {
 			ConsoleWriter::writeLine(TextId::ScenarioCreatedSuccessfully);
 			ScenarioHandler handler{ *scenario };
@@ -77,10 +78,7 @@ void Application::buildScenario()
 		else {
 			ConsoleWriter::writeLine('\n', TextId::ScenarioCreationCanceled);
 		}
-	}
-	catch (const std::exception& e) {
-		ConsoleWriter::writeError(e.what());
-	}
+	});
 	exitModule();
 }
 
@@ -99,12 +97,7 @@ void Application::exitModule()
 void Application::loadScenario()
 {
 	clearScreen();
-	try {
-		loadAndHandleScenario();
-	}
-	catch (const std::exception& e) {
-		ConsoleWriter::writeError(e.what());
-	}
+	ExceptionHandler::execute([]() { loadAndHandleScenario(); });
 
 	exitModule();
 }
