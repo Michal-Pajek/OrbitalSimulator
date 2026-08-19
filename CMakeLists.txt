@@ -90,6 +90,7 @@ add_executable(orbital_tests
     tests/BodyTests.cpp
     tests/BodyTypeCatalogTests.cpp
     tests/BodyTypesTests.cpp
+    tests/ExceptionHandlerTests.cpp
     tests/FileNameValidationTests.cpp
     tests/JsonLanguageSettingsParserTests.cpp
     tests/JsonLocalizationParserTests.cpp
