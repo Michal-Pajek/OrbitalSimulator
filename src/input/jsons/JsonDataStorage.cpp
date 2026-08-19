@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include "app/ExceptionHandler.hpp"
+#include "common/RuntimeChecks.hpp"
 #include "input/jsons/JsonLanguageSettingsParser.hpp"
 #include "input/jsons/JsonLocalizationParser.hpp"
 
@@ -18,7 +18,7 @@ namespace
 	std::string readWholeFile(const std::filesystem::path& path)
 	{
 		std::ifstream sourceFile{ path };
-		ExceptionHandler::ensure(sourceFile.is_open(), ExceptionHandler::ExceptionType::Runtime, std::string{ "Could not open JSON file: " + path.string() }.c_str());
+		RuntimeChecks::ensure(sourceFile.is_open(), RuntimeChecks::Type::Runtime, std::string{ "Could not open JSON file: " + path.string() }.c_str());
 		std::stringstream buffer{};
 		buffer << sourceFile.rdbuf();
 		return buffer.str();
@@ -30,7 +30,7 @@ namespace JsonDataStorage
 	void saveLanguageCode(std::string_view languageCode)
 	{
 		std::ofstream file{ "resources/settings.json" };
-		ExceptionHandler::ensure(file.is_open(), ExceptionHandler::ExceptionType::Runtime, "Could not open settings file for writing");
+		RuntimeChecks::ensure(file.is_open(), RuntimeChecks::Type::Runtime, "Could not open settings file for writing");
 
 		file << "{\n";
 		file << " \"language\": \"" << languageCode << "\"\n";

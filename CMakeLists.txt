@@ -19,6 +19,7 @@ add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
     src/app/Menu.cpp
+    src/common/RuntimeChecks.cpp
     src/filesystem/ApplicationPaths.cpp
     src/filesystem/FileNameValidation.cpp
     src/input/BodyMassUnitSelector.cpp
@@ -73,6 +74,7 @@ FetchContent_MakeAvailable(googletest)
 add_executable(orbital_tests
     src/app/ExceptionHandler.cpp
     src/app/Menu.cpp
+    src/common/RuntimeChecks.cpp
     src/filesystem/FileNameValidation.cpp
     src/input/Keyboard.cpp
     src/input/jsons/JsonDataStorage.cpp
@@ -98,6 +100,7 @@ add_executable(orbital_tests
     tests/LocalizationTests.cpp
     tests/MenuTests.cpp
     tests/PhysicsValidationTests.cpp
+    tests/RuntimeChecksTests.cpp
     tests/ScenarioTests.cpp
     tests/SimulationsTests.cpp
     tests/Vector3DTests.cpp

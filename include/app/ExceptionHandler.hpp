@@ -10,17 +10,6 @@ namespace ExceptionHandler
 		void writeError(std::string_view message = "Unknown exception");
 	}
 
-	enum class ExceptionType
-	{
-		Argument,
-		Domain,
-		Logic,
-		Range,
-		Runtime
-	};
-
-	void ensure(const bool condition, const ExceptionType type, const char* message);
-
 	template<typename Action>
 	void execute(Action&& action)
 	{

@@ -1,8 +1,8 @@
 #pragma once
 #include <optional>
 #include <vector>
-#include "app/ExceptionHandler.hpp"
 #include "app/Menu.hpp"
+#include "common/RuntimeChecks.hpp"
 #include "localization/TextId.hpp"
 #include "ui/ConsoleWriter.hpp"
 
@@ -21,7 +21,7 @@ namespace OptionSelector
     SelectionOption<T> selectOption(const std::vector<SelectionOption<T>>& options, const TextId menuTitle)
     {
         const auto size{ options.size() };
-        ExceptionHandler::ensure(size > 0u && size < 10u, ExceptionHandler::ExceptionType::Argument, "Options vector in OptionSelector::selectOption must be between 1 and 9");
+        RuntimeChecks::ensure(size > 0u && size < 10u, RuntimeChecks::Type::Argument, "Options vector in OptionSelector::selectOption must be between 1 and 9");
 
         std::optional<SelectionOption<T>> result{};
         auto key{ '1' };
@@ -35,7 +35,7 @@ namespace OptionSelector
         const Menu menu{ menuOptions, menuTitle };
         menu.execute();
 
-        ExceptionHandler::ensure(result.has_value(), ExceptionHandler::ExceptionType::Logic, "OptionSelector::selectOption: menu finished without selecting an option");
+        RuntimeChecks::ensure(result.has_value(), RuntimeChecks::Type::Logic, "OptionSelector::selectOption: menu finished without selecting an option");
 
         return result.value();
     }

@@ -1,7 +1,7 @@
 #include "scenario/ScenarioEditor.hpp"
 #include <stdexcept>
-#include "app/ExceptionHandler.hpp"
 #include "app/Menu.hpp"
+#include "common/RuntimeChecks.hpp"
 #include "input/Console.hpp"
 #include "input/DataGetter.hpp"
 #include "input/Keyboard.hpp"
@@ -60,7 +60,7 @@ std::optional<Scenario> ScenarioEditor::getReviewedScenario()
 		const auto decision{ getScenarioAcceptanceDecision() };
 		switch (decision) {
 		case Decision::Accept:
-			ExceptionHandler::ensure(!m_scenario.bodies.empty(), ExceptionHandler::ExceptionType::Logic, "Scenario must contain at least one body");
+			RuntimeChecks::ensure(!m_scenario.bodies.empty(), RuntimeChecks::Type::Logic, "Scenario must contain at least one body");
 			return std::move(m_scenario);
 		case Decision::Revise:
 			reviseScenario();
@@ -90,7 +90,7 @@ bool ScenarioEditor::handleBodiesMenu()
 void ScenarioEditor::addNewBody()
 {
 	auto& bodies{ m_scenario.bodies };
-	ExceptionHandler::ensure(bodies.size() < Scenario::MAX_BODY_COUNT, ExceptionHandler::ExceptionType::Logic, "Bodies vector is already full");
+	RuntimeChecks::ensure(bodies.size() < Scenario::MAX_BODY_COUNT, RuntimeChecks::Type::Logic, "Bodies vector is already full");
 	const BodyBuilder bodyBuilder{ bodies };
 	bodies.emplace_back(bodyBuilder.createBodyFromInput());
 }
@@ -98,7 +98,7 @@ void ScenarioEditor::addNewBody()
 void ScenarioEditor::deleteSelectedBody()
 {
 	auto& bodies{ m_scenario.bodies };
-	ExceptionHandler::ensure(!bodies.empty(), ExceptionHandler::ExceptionType::Logic, "There is no body to delete");
+	RuntimeChecks::ensure(!bodies.empty(), RuntimeChecks::Type::Logic, "There is no body to delete");
 	bodies.erase(bodies.begin() + promptForBodyIdx());
 	ConsoleWriter::writeLine(TextId::BodyDeleted, '\n');
 }

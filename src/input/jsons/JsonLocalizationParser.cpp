@@ -1,6 +1,6 @@
 #include "input/jsons/JsonLocalizationParser.hpp"
 #include <string>
-#include "app/ExceptionHandler.hpp"
+#include "common/RuntimeChecks.hpp"
 
 void JsonLocalizationParser::parse()
 {
@@ -23,7 +23,7 @@ void JsonLocalizationParser::parseTexts()
 		const auto value{ getString() };
 		require(!(key.empty() || value.empty()));
 		const auto [it, inserted]{ m_localizationData.insert({ key, value }) };
-		ExceptionHandler::ensure(inserted, ExceptionHandler::ExceptionType::Runtime, std::string{ "Duplicated localization key: " + it->first }.c_str());
+		RuntimeChecks::ensure(inserted, RuntimeChecks::Type::Runtime, std::string{ "Duplicated localization key: " + it->first }.c_str());
 		skipWhiteMarks();
 		ensureCanRead();
 		if (m_data[m_pos] == ',') {

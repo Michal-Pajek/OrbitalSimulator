@@ -1,6 +1,7 @@
 #include "app/Application.hpp"
 #include "app/ExceptionHandler.hpp"
 #include "app/Menu.hpp"
+#include "common/RuntimeChecks.hpp"
 #include "input/Console.hpp"
 #include "input/Keyboard.hpp"
 #include "localization/LocalizationManager.hpp"
@@ -12,6 +13,20 @@
 
 namespace
 {
+	void buildAndHandleScenario()
+	{
+		auto scenario{ ScenarioBuilder::buildScenario() };
+
+		if (scenario) {
+			ConsoleWriter::writeLine(TextId::ScenarioCreatedSuccessfully);
+			ScenarioHandler handler{ *scenario };
+			handler.handleScenario(ScenarioHandlingConfig{ .printSummary = false });
+		}
+		else {
+			ConsoleWriter::writeLine('\n', TextId::ScenarioCreationCanceled);
+		}
+	}
+
 	void loadAndHandleScenario()
 	{
 		auto result{ ScenarioLoader::getScenario() };
@@ -19,7 +34,7 @@ namespace
 		switch (result.status) {
 		case ScenarioLoader::LoadStatus::Loaded:
 		{
-			ExceptionHandler::ensure(result.scenario.has_value(), ExceptionHandler::ExceptionType::Logic, "ScenarioLoader returned Loaded status without a scenario");
+			RuntimeChecks::ensure(result.scenario.has_value(), RuntimeChecks::Type::Logic, "ScenarioLoader returned Loaded status without a scenario");
 
 			ConsoleWriter::writeLine(TextId::ScenarioLoadedSuccessfully, '\n');
 			ScenarioHandler handler{ *result.scenario };
@@ -40,7 +55,7 @@ namespace
 			break;
 		}
 	}
-}
+} // anonymous namespace
 
 void Application::eventLoop()
 {
@@ -66,19 +81,7 @@ void Application::eventLoop()
 void Application::buildScenario()
 {
 	enterModule(TextId::ScenarioBuilder);
-
-	ExceptionHandler::execute([] {
-		auto scenario{ ScenarioBuilder::buildScenario() };
-
-		if (scenario) {
-			ConsoleWriter::writeLine(TextId::ScenarioCreatedSuccessfully);
-			ScenarioHandler handler{ *scenario };
-			handler.handleScenario(ScenarioHandlingConfig{ .printSummary = false });
-		}
-		else {
-			ConsoleWriter::writeLine('\n', TextId::ScenarioCreationCanceled);
-		}
-	});
+	ExceptionHandler::execute(buildAndHandleScenario);
 	exitModule();
 }
 
@@ -97,7 +100,7 @@ void Application::exitModule()
 void Application::loadScenario()
 {
 	clearScreen();
-	ExceptionHandler::execute([]() { loadAndHandleScenario(); });
+	ExceptionHandler::execute(loadAndHandleScenario);
 
 	exitModule();
 }

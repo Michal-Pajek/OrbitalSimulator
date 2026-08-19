@@ -1,7 +1,7 @@
 #include "app/Menu.hpp"
 #include <cctype>
 #include <unordered_set>
-#include "app/ExceptionHandler.hpp"
+#include "common/RuntimeChecks.hpp"
 #include "input/Keyboard.hpp"
 #include "localization/LocalizationManager.hpp"
 #include "ui/ConsoleWriter.hpp"
@@ -9,7 +9,7 @@
 Menu::Menu(const std::vector<MenuOption>& options, const TextId title, const bool isHorizontal) : m_options{options}, m_title{title}, m_isHorizontal{isHorizontal}
 {
 	eraseNonVisibleOptions();
-	ExceptionHandler::ensure(validateMenuOptions(m_options), ExceptionHandler::ExceptionType::Argument, "Menu input is incorrect");
+	RuntimeChecks::ensure(validateMenuOptions(m_options), RuntimeChecks::Type::Argument, "Menu input is incorrect");
 	prepareKeysMap();
 }
 

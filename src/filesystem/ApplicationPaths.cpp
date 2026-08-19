@@ -1,6 +1,6 @@
 #include "filesystem/ApplicationPaths.hpp"
 #include <string>
-#include "app/ExceptionHandler.hpp"
+#include "common/RuntimeChecks.hpp"
 
 #ifdef _WIN32
 #define NOMINMAX
@@ -18,7 +18,7 @@ namespace
 
 		const auto length{ GetModuleFileNameW(nullptr, buffer.data(), static_cast<DWORD>(buffer.size())) };
 
-		ExceptionHandler::ensure(length != 0u && length != buffer.size(), ExceptionHandler::ExceptionType::Runtime, "Failed to determine executable path");
+		RuntimeChecks::ensure(length != 0u && length != buffer.size(), RuntimeChecks::Type::Runtime, "Failed to determine executable path");
 
 		buffer.resize(length);
 
