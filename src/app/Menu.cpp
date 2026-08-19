@@ -8,7 +8,8 @@
 
 Menu::Menu(const std::vector<MenuOption>& options, const TextId title, const bool isHorizontal) : m_options{options}, m_title{title}, m_isHorizontal{isHorizontal}
 {
-	if (!validateMenuOptions(options)) {
+	eraseNonVisibleOptions();
+	if (!validateMenuOptions(m_options)) {
 		throw std::invalid_argument("Menu input is incorrect");
 	}
 	prepareKeysMap();
@@ -61,6 +62,11 @@ bool Menu::validateMenuOptions(const std::vector<MenuOption>& options) const
 		keys.insert(key);
 	}
 	return true;
+}
+
+void Menu::eraseNonVisibleOptions()
+{
+	std::erase_if(m_options, [](const auto& obj) {return !obj.isVisible; });
 }
 
 void Menu::prepareKeysMap()

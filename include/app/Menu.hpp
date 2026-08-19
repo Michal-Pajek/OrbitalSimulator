@@ -10,8 +10,10 @@ struct MenuOption
 	char key;
 	TextId label;
 	std::function<void()> action;
+	bool isVisible;
 	MenuOption() = delete;
-	MenuOption(const char optionKey, const TextId optionLabel, std::function<void()> optionAction) : key{ optionKey }, label{ optionLabel }, action{ std::move(optionAction) } {}
+	MenuOption(const char optionKey, const TextId optionLabel, std::function<void()> optionAction, const bool visibility = true)
+		: key{ optionKey }, label{ optionLabel }, action{ std::move(optionAction) }, isVisible{ visibility } {}
 };
 
 class Menu
@@ -23,6 +25,7 @@ public:
 	static bool yesOrNo(const TextId question);
 private:
 	bool validateMenuOptions(const std::vector<MenuOption>& options) const;
+	void eraseNonVisibleOptions();
 	void prepareKeysMap();
 	void print() const;
 	bool m_isHorizontal;

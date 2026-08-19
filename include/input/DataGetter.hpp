@@ -68,7 +68,7 @@ namespace DataGetter
 		return getVector3D([](double, double, double) {return true; });
 	}
 
-	std::size_t getSelectionNumber(const TextId textId, const std::size_t count, bool includingZero = false);
+	std::size_t getSelectionNumber(const TextId textId, const std::size_t count, bool includeZero = false);
 	std::string getSingleWordText();
 	std::string getFileBaseName();
 } // namespace DataGetter

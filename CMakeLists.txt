@@ -70,7 +70,9 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 add_executable(orbital_tests
+    src/app/Menu.cpp
     src/filesystem/FileNameValidation.cpp
+    src/input/Keyboard.cpp
     src/input/jsons/JsonDataStorage.cpp
     src/input/jsons/JsonLanguageSettingsParser.cpp
     src/input/jsons/JsonLocalizationParser.cpp
@@ -91,6 +93,7 @@ add_executable(orbital_tests
     tests/JsonLocalizationParserTests.cpp
     tests/LocalizationResourcesTests.cpp
     tests/LocalizationTests.cpp
+    tests/MenuTests.cpp
     tests/PhysicsValidationTests.cpp
     tests/ScenarioTests.cpp
     tests/SimulationsTests.cpp

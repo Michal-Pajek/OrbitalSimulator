@@ -76,21 +76,24 @@ std::optional<Scenario> ScenarioEditor::getReviewedScenario()
 
 bool ScenarioEditor::handleBodiesMenu()
 {
-	bool continueChecking{ true };
+	bool shouldContinue{ true };
 
 	Menu whatToDoWithBodies{ {
-		MenuOption{'A', TextId::Accept,		[&continueChecking]()	{continueChecking = false; }},
-		MenuOption{'B', TextId::AddBody,	[this]()				{addNewBody(); }},
-		MenuOption{'D', TextId::DeleteBody,	[this]()				{deleteSelectedBody(); }},
-		MenuOption{'E', TextId::EditBody,	[this]()				{editSelectedBody(); }}},
+		MenuOption{'A', TextId::Accept,		[&shouldContinue]()	{shouldContinue = false; }},
+		MenuOption{'B', TextId::AddBody,	[this]()			{addNewBody(); },				canAddBody()},
+		MenuOption{'D', TextId::DeleteBody,	[this]()			{deleteSelectedBody(); }},
+		MenuOption{'E', TextId::EditBody,	[this]()			{editSelectedBody(); }}},
 		TextId::QuestionWhatDoYouWantToDoWithBodies };
 	whatToDoWithBodies.execute();
-	return continueChecking;
+	return shouldContinue;
 }
 
 void ScenarioEditor::addNewBody()
 {
 	auto& bodies{ m_scenario.bodies };
+	if (bodies.size() >= Scenario::MAX_BODY_COUNT) {
+		throw std::logic_error{ "Bodies vector is already full" };
+	}
 	const BodyBuilder bodyBuilder{ bodies };
 	bodies.emplace_back(bodyBuilder.createBodyFromInput());
 }
@@ -98,6 +101,9 @@ void ScenarioEditor::addNewBody()
 void ScenarioEditor::deleteSelectedBody()
 {
 	auto& bodies{ m_scenario.bodies };
+	if (bodies.empty()) {
+		throw std::logic_error{ "There is no body to delete" };
+	}
 	bodies.erase(bodies.begin() + promptForBodyIdx());
 	ConsoleWriter::writeLine(TextId::BodyDeleted, '\n');
 }
@@ -111,7 +117,7 @@ void ScenarioEditor::editSelectedBody()
 	bodies.at(idx) = bodyEditor.takeBody();
 }
 
-void ScenarioEditor::handleEmptyBodies()
+void ScenarioEditor::ensureAtLeastOneBody()
 {
 	if (m_scenario.bodies.empty()) {
 		ConsoleWriter::writeLine(TextId::ScenarioMustHaveAtLeastOneBody, ". ", TextId::PressAnyKeyToContinue);
@@ -137,7 +143,7 @@ void ScenarioEditor::reviewAndEditBodies()
 {
 	bool continueChecking{ true };
 	while (continueChecking) {
-		handleEmptyBodies();
+		ensureAtLeastOneBody();
 		printBodies();
 		continueChecking = handleBodiesMenu();
 	}
