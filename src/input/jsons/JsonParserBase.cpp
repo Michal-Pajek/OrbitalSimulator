@@ -1,11 +1,10 @@
 #include "input/jsons/JsonParserBase.hpp"
 #include <stdexcept>
+#include "app/ExceptionHandler.hpp"
 
 void JsonParserBase::require(const bool condition)
 {
-	if (!condition) {
-		throw std::runtime_error{ INVALID_FILE };
-	}
+	ExceptionHandler::ensure(condition, ExceptionHandler::ExceptionType::Runtime, INVALID_FILE);
 }
 
 bool JsonParserBase::expectChar(const char ch)
@@ -56,9 +55,7 @@ char JsonParserBase::getEscapedChar()
 
 void JsonParserBase::ensureCanRead() const
 {
-	if (m_pos >= m_size) {
-		throw std::runtime_error{ INVALID_FILE };
-	}
+	ExceptionHandler::ensure(m_pos < m_size, ExceptionHandler::ExceptionType::Runtime, INVALID_FILE);
 }
 
 void JsonParserBase::skipWhiteMarks()

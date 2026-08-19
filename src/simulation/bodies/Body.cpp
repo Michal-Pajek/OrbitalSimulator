@@ -1,7 +1,7 @@
 #include "simulation/bodies/Body.hpp"
 #include <cmath>
 #include <cstddef>
-#include <stdexcept>
+#include "app/ExceptionHandler.hpp"
 #include "localization/TextId.hpp"
 #include "physics/Constants.hpp"
 #include "physics/Validation.hpp"
@@ -12,29 +12,19 @@ namespace
 {
 	void validateMass(const double mass, const BodyTypeId typeId)
 	{
-		if (mass <= 0.0) {
-			throw std::invalid_argument{ "Mass must be positive" };
-		}
-		if (!std::isfinite(mass)) {
-			throw std::invalid_argument{ "Mass must be finite" };
-		}
-		if (!BodyTypeCatalog::isMassInRange(typeId, mass)) {
-			throw std::invalid_argument{ "Mass is out of interval for the specified type" };
-		}
+		ExceptionHandler::ensure(mass > 0.0,									ExceptionHandler::ExceptionType::Argument, "Mass must be positive");
+		ExceptionHandler::ensure(std::isfinite(mass),							ExceptionHandler::ExceptionType::Argument, "Mass must be finite");
+		ExceptionHandler::ensure(BodyTypeCatalog::isMassInRange(typeId, mass),	ExceptionHandler::ExceptionType::Argument, "Mass is out of interval for the specified type");
 	}
 
 	void validateTypeId(const BodyTypeId bodyTypeId)
 	{
-		if (static_cast<std::size_t>(bodyTypeId) >= BODY_TYPE_COUNT) {
-			throw std::invalid_argument{ "typeId out of range" };
-		}
+		ExceptionHandler::ensure(static_cast<std::size_t>(bodyTypeId) < BODY_TYPE_COUNT, ExceptionHandler::ExceptionType::Argument, "typeId out of range");
 	}
 
 	void validateVelocityVector(const Vector3D& velocity)
 	{
-		if (!physics::isSubLightVelocity(velocity)) {
-			throw std::invalid_argument{ "Velocity must be lower than c" };
-		}
+		ExceptionHandler::ensure(physics::isSubLightVelocity(velocity), ExceptionHandler::ExceptionType::Argument, "Velocity must be lower than c");
 	}
 } // anonymous namespace
 
@@ -77,8 +67,6 @@ Vector3D getGravityForceBetween(const Body& a, const Body& b)
 {
 	const auto positionDiff{ b.getPosition() - a.getPosition() };
 	const auto distance{ positionDiff.getLength() };
-	if (distance == 0.0) {
-		throw std::domain_error{ "Distance between two bodies is zero" };
-	}
+	ExceptionHandler::ensure(distance > 0.0, ExceptionHandler::ExceptionType::Domain, "Distance between two bodies is zero");
 	return physics::G_CONST * a.getMass() * b.getMass() * positionDiff / (distance * distance * distance);
 }

@@ -15,7 +15,7 @@ char getSingleKey()
 #include <termios.h>
 #include <unistd.h>
 #include <cstdio>
-#include <stdexcept>
+#include "app/ExceptionHandler.hpp"
 
 namespace
 {
@@ -24,16 +24,12 @@ namespace
     public:
         TerminalRawModeGuard()
         {
-            if (tcgetattr(STDIN_FILENO, &m_oldAttr) == -1) {
-                throw std::runtime_error("tcgetattr failed");
-            }
+            ExceptionHandler::ensure(tcgetattr(STDIN_FILENO, &m_oldAttr) != -1, ExceptionHandler::ExceptionType::Runtime, "tcgetattr failed");
 
             termios newAttr{ m_oldAttr };
             newAttr.c_lflag &= static_cast<tcflag_t>(~(ICANON | ECHO));
 
-            if (tcsetattr(STDIN_FILENO, TCSANOW, &newAttr) == -1) {
-                throw std::runtime_error("tcsetattr failed");
-            }
+            ExceptionHandler::ensure(tcsetattr(STDIN_FILENO, TCSANOW, &newAttr) != -1, ExceptionHandler::ExceptionType::Runtime, "tcsetattr failed");
 
             m_active = true;
         }
@@ -59,9 +55,7 @@ char getSingleKey()
     TerminalRawModeGuard rawModeGuard{};
 
     const int ch{ std::getchar() };
-    if (ch == EOF) {
-        throw std::runtime_error("getchar failed");
-    }
+    ExceptionHandler::ensure(ch != EOF, ExceptionHandler::ExceptionType::Runtime, "getchar failed");
 
     return static_cast<char>(std::toupper(static_cast<unsigned char>(ch)));
 }

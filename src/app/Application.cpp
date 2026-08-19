@@ -1,6 +1,5 @@
 #include "app/Application.hpp"
-#include <exception>
-#include <stdexcept>
+#include "app/ExceptionHandler.hpp"
 #include "app/Menu.hpp"
 #include "input/Console.hpp"
 #include "input/Keyboard.hpp"
@@ -20,9 +19,7 @@ namespace
 		switch (result.status) {
 		case ScenarioLoader::LoadStatus::Loaded:
 		{
-			if (!result.scenario) {
-				throw std::logic_error{ "ScenarioLoader returned Loaded status without a scenario" };
-			}
+			ExceptionHandler::ensure(result.scenario.has_value(), ExceptionHandler::ExceptionType::Logic, "ScenarioLoader returned Loaded status without a scenario");
 
 			ConsoleWriter::writeLine(TextId::ScenarioLoadedSuccessfully, '\n');
 			ScenarioHandler handler{ *result.scenario };

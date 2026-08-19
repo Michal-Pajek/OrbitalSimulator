@@ -1,5 +1,5 @@
 #include "simulation/Simulation.hpp"
-#include <stdexcept>
+#include "app/ExceptionHandler.hpp"
 
 Simulation::Simulation(const std::vector<Body>& bodies)
 {
@@ -8,9 +8,7 @@ Simulation::Simulation(const std::vector<Body>& bodies)
 
 Simulation::Simulation(const std::vector<Body>& bodies, const double dt) : m_dt{ dt }
 {
-	if (dt <= 0.0) {
-		throw std::invalid_argument("dt must be positive");
-	}
+	ExceptionHandler::ensure(dt > 0.0, ExceptionHandler::ExceptionType::Argument, "dt must be positive");
 	setBodies(bodies);
 }
 
@@ -23,9 +21,7 @@ void Simulation::runSteps(const unsigned int n)
 
 void Simulation::step()
 {
-	if (m_bodyStepStates.empty()) {
-		throw std::logic_error("Cannot perform simulation step: no bodies in simulation");
-	}
+	ExceptionHandler::ensure(!m_bodyStepStates.empty(), ExceptionHandler::ExceptionType::Logic, "Cannot perform simulation step: no bodies in simulation");
 	resetForceForAllBodies();
 	calculateForcesBetweenBodies();
 	calculateNextStates();
@@ -45,17 +41,13 @@ void Simulation::setBodies(const std::vector<Body>& bodies)
 
 void Simulation::setDt(const double dt)
 {
-	if (dt <= 0.0) {
-		throw std::invalid_argument("dt must be positive");
-	}
+	ExceptionHandler::ensure(dt > 0.0, ExceptionHandler::ExceptionType::Argument, "dt must be positive");
 	m_dt = dt;
 }
 
 const Body& Simulation::getBody(const size_t idx) const
 {
-	if (idx >= m_bodyStepStates.size()) {
-		throw std::out_of_range("idx is out of m_bodyStepStates range");
-	}
+	ExceptionHandler::ensure(idx < m_bodyStepStates.size(), ExceptionHandler::ExceptionType::Range, "idx is out of m_bodyStepStates range");
 	return m_bodyStepStates[idx].getBody();
 }
 

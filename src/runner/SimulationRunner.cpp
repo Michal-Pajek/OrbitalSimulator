@@ -1,5 +1,5 @@
 #include "runner/SimulationRunner.hpp"
-#include <stdexcept>
+#include "app/ExceptionHandler.hpp"
 #include "recording/Recorder.hpp"
 #include "simulation/Simulation.hpp"
 #include "simulation/SimulationRunConfig.hpp"
@@ -11,9 +11,7 @@ namespace SimulationRunner
 	{
 		const auto steps{ config.stepCount };
 		const auto& bodies{ scenario.bodies };
-		if (!recorder.beginRecording()) {
-			throw std::runtime_error("Could not open output file.");
-		}
+		ExceptionHandler::ensure(recorder.beginRecording(), ExceptionHandler::ExceptionType::Runtime, "Could not open output file");
 		Simulation simulation{ bodies, config.timeStep };
 		recorder.recordInitialState(bodies);
 		for (unsigned int i{}; i < steps;) {

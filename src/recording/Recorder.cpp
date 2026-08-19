@@ -1,6 +1,6 @@
 #include <iomanip>
 #include <ios>
-#include <stdexcept>
+#include "app/ExceptionHandler.hpp"
 #include "filesystem/ApplicationPaths.hpp"
 #include "filesystem/FileNameValidation.hpp"
 #include "recording/Recorder.hpp"
@@ -9,9 +9,7 @@
 
 Recorder::Recorder(const std::string& fileBaseName) : m_fileBaseName{ fileBaseName }
 {
-	if (!FileNameValidation::isValidBaseName(m_fileBaseName)) {
-		throw std::invalid_argument{ "Invalid recording file base name" };
-	}
+	ExceptionHandler::ensure(FileNameValidation::isValidBaseName(m_fileBaseName), ExceptionHandler::ExceptionType::Argument, "Invalid recording file base name");
 }
 
 bool Recorder::beginRecording()

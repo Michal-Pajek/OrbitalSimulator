@@ -4,8 +4,8 @@
 #include <iomanip>
 #include <limits>
 #include <ostream>
-#include <stdexcept>
 #include <string>
+#include "app/ExceptionHandler.hpp"
 #include "filesystem/ApplicationPaths.hpp"
 #include "filesystem/FileNameValidation.hpp"
 #include "scenario/Scenario.hpp"
@@ -46,9 +46,7 @@ namespace
 
 	void validateBaseName(const std::string& name, const char* errorMessage)
 	{
-		if (!FileNameValidation::isValidBaseName(name)) {
-			throw std::invalid_argument{ errorMessage };
-		}
+		ExceptionHandler::ensure(FileNameValidation::isValidBaseName(name), ExceptionHandler::ExceptionType::Argument, errorMessage);
 	}
 
 	void validateNames(const std::string& saveName, const std::string& scenarioName)
@@ -75,17 +73,12 @@ SaveResult save(const Scenario& scenario, const std::string& saveName, Overwrite
 	fs::create_directories(filePath.parent_path());
 
 	std::ofstream file{ filePath };
-	if (!file.is_open()) {
-		throw std::runtime_error{ "Failed to open scenario file" };
-	}
+	ExceptionHandler::ensure(file.is_open(), ExceptionHandler::ExceptionType::Runtime, "Failed to open scenario file");
 
 	serializeScenario(file, scenario);
 
 	file.close();
-
-	if (!file) {
-		throw std::runtime_error{ "Failed to write scenario file" };
-	}
+	ExceptionHandler::ensure(!file.fail(), ExceptionHandler::ExceptionType::Runtime, "Failed to write scenario file");
 
 	return SaveResult::Saved;
 }

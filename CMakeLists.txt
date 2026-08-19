@@ -17,6 +17,7 @@ endfunction()
 add_executable(orbital_simulator
     app/main.cpp
     src/app/Application.cpp
+    src/app/ExceptionHandler.cpp
     src/app/Menu.cpp
     src/filesystem/ApplicationPaths.cpp
     src/filesystem/FileNameValidation.cpp
@@ -70,6 +71,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 add_executable(orbital_tests
+    src/app/ExceptionHandler.cpp
     src/app/Menu.cpp
     src/filesystem/FileNameValidation.cpp
     src/input/Keyboard.cpp

@@ -1,6 +1,6 @@
 #include "simulation/bodies/types/BodyTypeCatalog.hpp"
 #include <cstddef>
-#include <stdexcept>
+#include "app/ExceptionHandler.hpp"
 #include "localization/TextId.hpp"
 #include "physics/Constants.hpp"
 
@@ -22,9 +22,7 @@ const std::array<BodyType, BODY_TYPE_COUNT> BodyTypeCatalog::bodyTypesArray{
 const BodyType& BodyTypeCatalog::getType(const BodyTypeId id)
 {
 	const auto idx{ static_cast<std::size_t>(id) };
-	if (idx >= BODY_TYPE_COUNT) {
-		throw std::logic_error{ "BodyTypeCatalog::getType: unknown BodyTypeId" };
-	}
+	ExceptionHandler::ensure(idx < BODY_TYPE_COUNT, ExceptionHandler::ExceptionType::Logic, "BodyTypeCatalog::getType: unknown BodyTypeId");
 	return bodyTypesArray.at(idx);
 }
 

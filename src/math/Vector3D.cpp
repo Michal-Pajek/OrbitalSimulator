@@ -1,12 +1,10 @@
 #include "math/Vector3D.hpp"
 #include <cmath>
-#include <stdexcept>
+#include "app/ExceptionHandler.hpp"
 
 Vector3D::Vector3D(double x, double y, double z) : m_x{ x }, m_y{ y }, m_z{ z }
 {
-	if (!std::isfinite(x) || !std::isfinite(y) || !std::isfinite(z)) {
-		throw std::invalid_argument{ "All components of the vector must be finite" };
-	}
+	ExceptionHandler::ensure(std::isfinite(x) && std::isfinite(y) && std::isfinite(z), ExceptionHandler::ExceptionType::Argument, "All components of the vector must be finite");
 }
 
 Vector3D& Vector3D::operator+=(const Vector3D& other)
@@ -22,9 +20,7 @@ Vector3D& Vector3D::operator+=(const Vector3D& other)
 
 Vector3D Vector3D::operator/(const double scalar) const
 {
-	if (scalar == 0.0) {
-		throw std::invalid_argument{ "Division of Vector3D by zero" };
-	}
+	ExceptionHandler::ensure(scalar != 0.0, ExceptionHandler::ExceptionType::Argument, "Division of Vector3D by zero");
 	return *this * (1.0 / scalar);
 }
 
