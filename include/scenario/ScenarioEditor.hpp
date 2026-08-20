@@ -1,6 +1,7 @@
 #pragma once
 #include <optional>
 #include <utility>
+
 #include "Scenario.hpp"
 
 class ScenarioEditor

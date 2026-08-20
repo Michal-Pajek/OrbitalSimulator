@@ -1,13 +1,16 @@
 #include "scenario/ScenarioEditor.hpp"
+
 #include <stdexcept>
+
+#include "scenario/ScenarioInput.hpp"
+#include "scenario/ScenarioSummary.hpp"
+
 #include "app/Menu.hpp"
 #include "common/RuntimeChecks.hpp"
 #include "input/Console.hpp"
 #include "input/DataGetter.hpp"
 #include "input/Keyboard.hpp"
 #include "localization/TextId.hpp"
-#include "scenario/ScenarioInput.hpp"
-#include "scenario/ScenarioSummary.hpp"
 #include "simulation/bodies/BodyBuilder.hpp"
 #include "simulation/bodies/BodyEditor.hpp"
 #include "ui/ConsoleWriter.hpp"
@@ -49,12 +52,12 @@ namespace
 		whatToChangeMenu.execute();
 		return result.value();
 	}
-}
+} // anonymous namespace
 
 std::optional<Scenario> ScenarioEditor::getReviewedScenario()
 {
 	while (true) {
-		clearScreen();
+		Console::clearScreen();
 		ScenarioSummary::print(m_scenario);
 
 		const auto decision{ getScenarioAcceptanceDecision() };
@@ -116,7 +119,7 @@ void ScenarioEditor::ensureAtLeastOneBody()
 {
 	if (m_scenario.bodies.empty()) {
 		ConsoleWriter::writeLine(TextId::ScenarioMustHaveAtLeastOneBody, ". ", TextId::PressAnyKeyToContinue);
-		getSingleKey();
+		Keyboard::getSingleKey();
 		addNewBody();
 	}
 }

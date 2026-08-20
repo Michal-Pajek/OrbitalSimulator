@@ -12,4 +12,4 @@ namespace RuntimeChecks
 	};
 
 	void ensure(const bool condition, const Type type, const char* message);
-}
+} // namespace RuntimeChecks

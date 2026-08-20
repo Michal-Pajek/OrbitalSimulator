@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+
 #include "common/RuntimeChecks.hpp"
 
 struct SimulationRunConfig

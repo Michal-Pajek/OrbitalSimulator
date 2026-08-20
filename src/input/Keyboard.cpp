@@ -1,63 +1,76 @@
 #include "input/Keyboard.hpp"
+
 #include <cctype>
 
 #ifdef _WIN32
 
 #include <conio.h>
 
-char getSingleKey()
-{
-    return static_cast<char>(std::toupper(static_cast<unsigned char>(_getch())));
-}
-
 #else
 
 #include <termios.h>
 #include <unistd.h>
 #include <cstdio>
+
 #include "common/RuntimeChecks.hpp"
 
-namespace
+#endif
+
+namespace Keyboard
 {
-    class TerminalRawModeGuard
+
+#ifdef _WIN32
+
+    char getSingleKey()
     {
-    public:
-        TerminalRawModeGuard()
+        return static_cast<char>(std::toupper(static_cast<unsigned char>(_getch())));
+    }
+
+#else
+
+    namespace
+    {
+        class TerminalRawModeGuard
         {
-            RuntimeChecks::ensure(tcgetattr(STDIN_FILENO, &m_oldAttr) != -1, RuntimeChecks::Type::Runtime, "tcgetattr failed");
+        public:
+            TerminalRawModeGuard()
+            {
+                RuntimeChecks::ensure(tcgetattr(STDIN_FILENO, &m_oldAttr) != -1, RuntimeChecks::Type::Runtime, "tcgetattr failed");
 
-            termios newAttr{ m_oldAttr };
-            newAttr.c_lflag &= static_cast<tcflag_t>(~(ICANON | ECHO));
+                termios newAttr{ m_oldAttr };
+                newAttr.c_lflag &= static_cast<tcflag_t>(~(ICANON | ECHO));
 
-            RuntimeChecks::ensure(tcsetattr(STDIN_FILENO, TCSANOW, &newAttr) != -1, RuntimeChecks::Type::Runtime, "tcsetattr failed");
+                RuntimeChecks::ensure(tcsetattr(STDIN_FILENO, TCSANOW, &newAttr) != -1, RuntimeChecks::Type::Runtime, "tcsetattr failed");
 
-            m_active = true;
-        }
-
-        TerminalRawModeGuard(const TerminalRawModeGuard&) = delete;
-        TerminalRawModeGuard& operator=(const TerminalRawModeGuard&) = delete;
-
-        ~TerminalRawModeGuard()
-        {
-            if (m_active) {
-                tcsetattr(STDIN_FILENO, TCSANOW, &m_oldAttr);
+                m_active = true;
             }
-        }
 
-    private:
-        termios m_oldAttr{};
-        bool m_active{ false };
-    };
-} // anonymous namespace
+            TerminalRawModeGuard(const TerminalRawModeGuard&) = delete;
+            TerminalRawModeGuard& operator=(const TerminalRawModeGuard&) = delete;
 
-char getSingleKey()
-{
-    TerminalRawModeGuard rawModeGuard{};
+            ~TerminalRawModeGuard()
+            {
+                if (m_active) {
+                    tcsetattr(STDIN_FILENO, TCSANOW, &m_oldAttr);
+                }
+            }
 
-    const int ch{ std::getchar() };
-    RuntimeChecks::ensure(ch != EOF, RuntimeChecks::Type::Runtime, "getchar failed");
+        private:
+            termios m_oldAttr{};
+            bool m_active{ false };
+        };
+    } // anonymous namespace
 
-    return static_cast<char>(std::toupper(static_cast<unsigned char>(ch)));
-}
+    char getSingleKey()
+    {
+        TerminalRawModeGuard rawModeGuard{};
+
+        const int ch{ std::getchar() };
+        RuntimeChecks::ensure(ch != EOF, RuntimeChecks::Type::Runtime, "getchar failed");
+
+        return static_cast<char>(std::toupper(static_cast<unsigned char>(ch)));
+    }
 
 #endif
+
+} // namespace Keyboard

@@ -1,5 +1,6 @@
 #pragma once
 #include <optional>
+
 #include "Scenario.hpp"
 
 namespace ScenarioLoader
@@ -19,4 +20,4 @@ namespace ScenarioLoader
 	};
 
 	LoadResult getScenario();
-}
+} // namespace ScenarioLoader

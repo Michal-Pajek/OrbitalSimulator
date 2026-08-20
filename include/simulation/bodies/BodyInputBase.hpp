@@ -1,9 +1,12 @@
 #pragma once
 #include <string>
 #include <vector>
+
 #include "Body.hpp"
-#include "math/Vector3D.hpp"
+
 #include "types/BodyType.hpp"
+
+#include "math/Vector3D.hpp"
 
 class BodyInputBase
 {

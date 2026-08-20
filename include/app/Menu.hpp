@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
+
 #include "localization/TextId.hpp"
 
 struct MenuOption

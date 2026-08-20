@@ -1,5 +1,7 @@
 #include "input/jsons/JsonParserBase.hpp"
+
 #include <stdexcept>
+
 #include "common/RuntimeChecks.hpp"
 
 void JsonParserBase::require(const bool condition)

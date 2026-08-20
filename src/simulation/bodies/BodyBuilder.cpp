@@ -1,14 +1,17 @@
 #include "simulation/bodies/BodyBuilder.hpp"
+
 #include <utility>
+
+#include "simulation/bodies/BodyEditor.hpp"
+
 #include "app/Menu.hpp"
 #include "input/Console.hpp"
 #include "localization/TextId.hpp"
-#include "simulation/bodies/BodyEditor.hpp"
 #include "ui/ConsoleWriter.hpp"
 
 Body BodyBuilder::createBodyFromInput() const
 {
-	clearScreen();
+	Console::clearScreen();
 	ConsoleWriter::writeHeadline(TextId::EnterNewBodyData);
 	const auto bodyName{ promptForBodyName() };
 	const auto bodyType{ promptForBodyType() };
@@ -25,7 +28,7 @@ Body BodyBuilder::createBodyFromInput() const
 
 void BodyBuilder::reviewAndEditBody(Body& body) const
 {
-	clearScreen();
+	Console::clearScreen();
 	ConsoleWriter::writeHeadline(TextId::ConfirmBody);
 	while (true) {
 		body.printSummary();

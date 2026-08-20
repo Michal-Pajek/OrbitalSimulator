@@ -1,11 +1,21 @@
 #include "input/Console.hpp"
+
 #include <cstdlib>
 
-void clearScreen()
+namespace Console
 {
+    void clearScreen()
+    {
+
 #ifdef _WIN32
-    std::system("cls");
+
+        std::system("cls");
+
 #else
-    std::system("clear");
+
+        std::system("clear");
+
 #endif
-}
+
+    }
+} // namespace Console

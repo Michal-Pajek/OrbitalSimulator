@@ -1,6 +1,8 @@
 #include "app/Application.hpp"
+
 #include "app/ExceptionHandler.hpp"
 #include "app/Menu.hpp"
+
 #include "common/RuntimeChecks.hpp"
 #include "input/Console.hpp"
 #include "input/Keyboard.hpp"
@@ -60,10 +62,10 @@ namespace
 void Application::eventLoop()
 {
 	const auto closeApplication{ [this]() {
-		clearScreen();
+		Console::clearScreen();
 		if (Menu::yesOrNo(TextId::QuestionDoYouWantToFinish)) {
 			ConsoleWriter::write(TextId::ApplicationFinished, ". ", TextId::PressAnyKeyToContinue);
-			getSingleKey();
+			Keyboard::getSingleKey();
 			m_continue = false;
 		} } };
 	const Menu mainMenu{ {
@@ -73,7 +75,7 @@ void Application::eventLoop()
 			MenuOption{'E', TextId::Exit,				closeApplication}
 			}, TextId::MainMenu};
 	while (m_continue) {
-		clearScreen();
+		Console::clearScreen();
 		mainMenu.execute();
 	}
 }
@@ -87,19 +89,19 @@ void Application::buildScenario()
 
 void Application::enterModule(const TextId titleId)
 {
-	clearScreen();
+	Console::clearScreen();
 	ConsoleWriter::writeHeadline(titleId);
 }
 
 void Application::exitModule()
 {
 	ConsoleWriter::write('\n', TextId::PressAnyKeyToReturnToMainMenu);
-	getSingleKey();
+	Keyboard::getSingleKey();
 }
 
 void Application::loadScenario()
 {
-	clearScreen();
+	Console::clearScreen();
 	ExceptionHandler::execute(loadAndHandleScenario);
 
 	exitModule();
@@ -107,7 +109,7 @@ void Application::loadScenario()
 
 void Application::selectLanguage()
 {
-	clearScreen();
+	Console::clearScreen();
 	auto& localizationManager{ LocalizationManager::getInstance() };
 	const Menu languageMenu{ {
 		MenuOption{'E', TextId::English,	[&localizationManager]() {localizationManager.setLanguage(LocalizationManager::Language::English); } },

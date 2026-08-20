@@ -2,10 +2,13 @@
 #include <string>
 #include <utility>
 #include <vector>
+
 #include "Body.hpp"
 #include "BodyInputBase.hpp"
-#include "math/Vector3D.hpp"
+
 #include "types/BodyType.hpp"
+
+#include "math/Vector3D.hpp"
 
 class BodyEditor : public BodyInputBase
 {

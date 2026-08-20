@@ -1,4 +1,5 @@
 #include "simulation/Simulation.hpp"
+
 #include "common/RuntimeChecks.hpp"
 
 Simulation::Simulation(const std::vector<Body>& bodies)

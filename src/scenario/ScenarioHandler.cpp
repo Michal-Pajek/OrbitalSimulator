@@ -1,12 +1,14 @@
 #include "scenario/ScenarioHandler.hpp"
+
+#include "scenario/Scenario.hpp"
+#include "scenario/ScenarioSaver.hpp"
+#include "scenario/ScenarioSummary.hpp"
+
 #include "app/Menu.hpp"
 #include "input/DataGetter.hpp"
 #include "localization/TextId.hpp"
 #include "recording/Recorder.hpp"
 #include "runner/SimulationRunner.hpp"
-#include "scenario/Scenario.hpp"
-#include "scenario/ScenarioSaver.hpp"
-#include "scenario/ScenarioSummary.hpp"
 #include "simulation/SimulationRunConfigBuilder.hpp"
 #include "ui/ConsoleWriter.hpp"
 
@@ -17,7 +19,7 @@ namespace
 		ConsoleWriter::write(TextId::EnterNewSaveName, ": ");
 		return DataGetter::getFileBaseName();
 	}
-}
+} // anonymous namespace
 
 void ScenarioHandler::handleScenario(const ScenarioHandlingConfig& config) const
 {

@@ -17,4 +17,4 @@ namespace ScenarioSaver
 
 	SaveResult save(const Scenario& scenario, const std::string& saveName, OverwritePolicy policy = OverwritePolicy::Deny);
 	std::string getNextAvailableSaveName(const std::string& baseName);
-}
+} // namespace ScenarioSaver

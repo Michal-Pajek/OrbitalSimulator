@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string_view>
 #include <utility>
+
 #include "localization/LocalizationManager.hpp"
 #include "localization/TextId.hpp"
 
@@ -32,4 +33,4 @@ namespace ConsoleWriter
 		(writeSingle(std::forward<Args>(args)), ...);
 		std::cout << '\n';
 	}
-}
+} // namespace ConsoleWriter

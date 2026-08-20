@@ -1,4 +1,5 @@
 #include "input/BodyMassUnitSelector.hpp"
+
 #include "localization/TextId.hpp"
 #include "physics/Constants.hpp"
 #include "simulation/bodies/types/BodyTypeCatalog.hpp"

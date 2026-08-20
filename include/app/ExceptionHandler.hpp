@@ -8,7 +8,7 @@ namespace ExceptionHandler
 	namespace detail
 	{
 		void writeError(std::string_view message = "Unknown exception");
-	}
+	} // namespace detail
 
 	template<typename Action>
 	void execute(Action&& action)
@@ -23,4 +23,4 @@ namespace ExceptionHandler
 			detail::writeError();
 		}
 	}
-}
+} // namespace ExceptionHandler

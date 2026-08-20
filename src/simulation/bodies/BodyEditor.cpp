@@ -1,5 +1,7 @@
 #include "simulation/bodies/BodyEditor.hpp"
+
 #include "simulation/bodies/types/BodyTypeCatalog.hpp"
+
 #include "app/Menu.hpp"
 #include "input/Console.hpp"
 #include "localization/TextId.hpp"
@@ -7,7 +9,7 @@
 
 void BodyEditor::editBody()
 {
-	clearScreen();
+	Console::clearScreen();
 	ConsoleWriter::writeLine(TextId::YouAreEditingBody, ' ', m_body.getName());
 	const Menu whatToChangeInBody{ {
 			MenuOption{'N', TextId::BodyName,		[this]() {m_body.setName(promptForBodyName()); }},

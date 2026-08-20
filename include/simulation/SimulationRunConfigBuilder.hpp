@@ -4,4 +4,4 @@
 namespace SimulationRunConfigBuilder
 {
 	SimulationRunConfig build();
-};
+} // namespace SimulationRunConfigBuilder

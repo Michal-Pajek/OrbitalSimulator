@@ -1,3 +1,6 @@
 #pragma once
 
-char getSingleKey();
+namespace Keyboard
+{
+	char getSingleKey();
+} // namespace Keyboard

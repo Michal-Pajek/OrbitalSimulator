@@ -1,5 +1,7 @@
 #include "input/jsons/JsonLocalizationParser.hpp"
+
 #include <string>
+
 #include "common/RuntimeChecks.hpp"
 
 void JsonLocalizationParser::parse()

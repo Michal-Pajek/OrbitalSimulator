@@ -1,5 +1,7 @@
 #include "math/Vector3D.hpp"
+
 #include <cmath>
+
 #include "common/RuntimeChecks.hpp"
 
 Vector3D::Vector3D(double x, double y, double z) : m_x{ x }, m_y{ y }, m_z{ z }

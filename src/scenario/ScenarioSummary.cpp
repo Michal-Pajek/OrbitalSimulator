@@ -1,6 +1,8 @@
 #include "scenario/ScenarioSummary.hpp"
-#include "localization/TextId.hpp"
+
 #include "scenario/Scenario.hpp"
+
+#include "localization/TextId.hpp"
 #include "simulation/bodies/Body.hpp"
 #include "ui/ConsoleWriter.hpp"
 
@@ -21,4 +23,4 @@ namespace ScenarioSummary
 	{
 		print(scenario.name, scenario.bodies);
 	}
-}
+} // namespace ScenarioSummary

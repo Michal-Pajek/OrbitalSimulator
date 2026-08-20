@@ -20,4 +20,4 @@ namespace physics {
 	inline constexpr double C_CONST{ 2.99792458e8 };
 	inline constexpr double KMS_MULTIPLIER{ 1e3 };
 	inline constexpr double KKMH_MULTIPLIER{ 10'000.0 / 36.0 };
-}
+} // namespace physics

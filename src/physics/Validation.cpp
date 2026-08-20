@@ -1,5 +1,7 @@
 #include "physics/Validation.hpp"
+
 #include <cmath>
+
 #include "physics/Constants.hpp"
 
 namespace physics
@@ -14,4 +16,4 @@ namespace physics
 	{
 		return isSubLightVelocity(vec.getX(), vec.getY(), vec.getZ());
 	}
-}
+} // namespace physics

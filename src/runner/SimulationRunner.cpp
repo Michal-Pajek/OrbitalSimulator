@@ -1,4 +1,5 @@
 #include "runner/SimulationRunner.hpp"
+
 #include "common/RuntimeChecks.hpp"
 #include "recording/Recorder.hpp"
 #include "simulation/Simulation.hpp"
@@ -19,4 +20,4 @@ namespace SimulationRunner
 			recorder.recordStateAfterStep(simulation, ++i);
 		}
 	}
-}
+} // namespace SimulationRunner

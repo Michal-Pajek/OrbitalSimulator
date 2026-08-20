@@ -1,4 +1,5 @@
 #include "common/RuntimeChecks.hpp"
+
 #include <stdexcept>
 
 namespace RuntimeChecks
@@ -22,7 +23,7 @@ namespace RuntimeChecks
 				throw std::logic_error{ "Unknown RuntimeChecks::Type" };
 			}
 		}
-	}
+	} // anonymous namespace
 
 	void ensure(const bool condition, const Type type, const char* message)
 	{
@@ -30,4 +31,4 @@ namespace RuntimeChecks
 			throwException(type, message);
 		}
 	}
-} // RuntimeChecks
+} // namespace RuntimeChecks

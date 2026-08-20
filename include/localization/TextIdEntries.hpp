@@ -2,6 +2,7 @@
 #include <array>
 #include <cstddef>
 #include <string_view>
+
 #include "TextId.hpp"
 
 namespace TextIdEntries
@@ -145,4 +146,4 @@ namespace TextIdEntries
         return "invalid_text_id";
     }
 
-} // TextIdEntries
+} // namespace TextIdEntries

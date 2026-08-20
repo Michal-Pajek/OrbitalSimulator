@@ -1,9 +1,11 @@
+#include "recording/Recorder.hpp"
+
 #include <iomanip>
 #include <ios>
+
 #include "common/RuntimeChecks.hpp"
 #include "filesystem/ApplicationPaths.hpp"
 #include "filesystem/FileNameValidation.hpp"
-#include "recording/Recorder.hpp"
 #include "simulation/bodies/Body.hpp"
 #include "simulation/Simulation.hpp"
 

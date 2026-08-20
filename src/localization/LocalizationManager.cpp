@@ -1,6 +1,9 @@
 #include "localization/LocalizationManager.hpp"
+
 #include <utility>
+
 #include "localization/TextIdEntries.hpp"
+
 #include "input/jsons/JsonDataStorage.hpp"
 
 LocalizationManager::LocalizationManager()

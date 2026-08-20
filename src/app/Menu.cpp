@@ -1,6 +1,8 @@
 #include "app/Menu.hpp"
+
 #include <cctype>
 #include <unordered_set>
+
 #include "common/RuntimeChecks.hpp"
 #include "input/Keyboard.hpp"
 #include "localization/LocalizationManager.hpp"
@@ -22,7 +24,7 @@ void Menu::execute() const
 	print();
 	char key{};
 	do {
-		key = getSingleKey();
+		key = Keyboard::getSingleKey();
 	} while (m_keys.find(key) == m_keys.end());
 	m_options.at(m_keys.at(key)).action();
 }
@@ -32,9 +34,9 @@ bool Menu::yesOrNo(const TextId question)
 	ConsoleWriter::write(question);
 	const auto yn{ LocalizationManager::getInstance().getYn() };
 	ConsoleWriter::writeYesOrNo(yn);
-	char choice{getSingleKey()};
+	char choice{ Keyboard::getSingleKey() };
 	while (choice != yn.yes && choice != yn.no) {
-		choice = getSingleKey();
+		choice = Keyboard::getSingleKey();
 	}
 	ConsoleWriter::writeLine();
 	return choice == yn.yes;

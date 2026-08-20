@@ -3,6 +3,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+
 #include "common/RuntimeChecks.hpp"
 #include "simulation/bodies/Body.hpp"
 

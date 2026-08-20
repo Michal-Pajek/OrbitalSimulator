@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <type_traits>
+
 #include "localization/TextId.hpp"
 #include "math/Vector3D.hpp"
 #include "ui/ConsoleWriter.hpp"

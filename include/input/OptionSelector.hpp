@@ -1,6 +1,7 @@
 #pragma once
 #include <optional>
 #include <vector>
+
 #include "app/Menu.hpp"
 #include "common/RuntimeChecks.hpp"
 #include "localization/TextId.hpp"
@@ -39,7 +40,7 @@ namespace OptionSelector
 
         return result.value();
     }
-}
+} // namespace OptionSelector
 
 namespace UnitSelector
 {
@@ -51,4 +52,4 @@ namespace UnitSelector
         ConsoleWriter::writeLine(TextId::SelectedUnit, ": ", selectedOption.textId);
         return selectedOption.value;
     }
-}
+} // namespace UnitSelector

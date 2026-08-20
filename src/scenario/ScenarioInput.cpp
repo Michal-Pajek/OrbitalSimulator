@@ -1,7 +1,9 @@
 #include "scenario/ScenarioInput.hpp"
+
+#include "scenario/Scenario.hpp"
+
 #include "input/DataGetter.hpp"
 #include "localization/TextId.hpp"
-#include "scenario/Scenario.hpp"
 #include "simulation/bodies/BodyBuilder.hpp"
 #include "ui/ConsoleWriter.hpp"
 
@@ -27,4 +29,4 @@ namespace ScenarioInput
 
 		return result;
 	}
-}
+} // namespace ScenarioInput

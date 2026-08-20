@@ -4,6 +4,7 @@
 #include <string>
 #include <string_view>
 #include <utility>
+
 #include "TextId.hpp"
 #include "LocalizationTypes.hpp"
 

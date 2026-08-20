@@ -1,6 +1,8 @@
 #include "scenario/ScenarioBuilder.hpp"
+
 #include <optional>
 #include <utility>
+
 #include "scenario/ScenarioEditor.hpp"
 #include "scenario/ScenarioInput.hpp"
 
@@ -13,4 +15,4 @@ namespace ScenarioBuilder
 		ScenarioEditor editor{ {std::move(name), std::move(bodies)} };
 		return editor.getReviewedScenario();
 	}
-}
+} // namespace ScenarioBuilder

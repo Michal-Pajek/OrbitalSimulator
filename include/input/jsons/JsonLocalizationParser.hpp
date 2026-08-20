@@ -1,7 +1,9 @@
 #pragma once
 #include "JsonParserBase.hpp"
+
 #include <string_view>
 #include <utility>
+
 #include "localization/LocalizationTypes.hpp"
 
 class JsonLocalizationParser : private JsonParserBase

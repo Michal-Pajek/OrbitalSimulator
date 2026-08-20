@@ -1,11 +1,14 @@
 #include "simulation/bodies/Body.hpp"
+
 #include <cmath>
 #include <cstddef>
+
+#include "simulation/bodies/types/BodyTypeCatalog.hpp"
+
 #include "common/RuntimeChecks.hpp"
 #include "localization/TextId.hpp"
 #include "physics/Constants.hpp"
 #include "physics/Validation.hpp"
-#include "simulation/bodies/types/BodyTypeCatalog.hpp"
 #include "ui/ConsoleWriter.hpp"
 
 namespace

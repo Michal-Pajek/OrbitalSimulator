@@ -1,32 +1,35 @@
 #include "input/jsons/JsonDataStorage.hpp"
+
 #include <filesystem>
 #include <fstream>
 #include <sstream>
 #include <string>
-#include "common/RuntimeChecks.hpp"
+
 #include "input/jsons/JsonLanguageSettingsParser.hpp"
 #include "input/jsons/JsonLocalizationParser.hpp"
 
-namespace
-{
-	std::filesystem::path getLocalizationPath(std::string_view languageCode)
-	{
-		return std::filesystem::path{ "resources/localization" } /
-			(std::string{ languageCode } + ".json");
-	}
-
-	std::string readWholeFile(const std::filesystem::path& path)
-	{
-		std::ifstream sourceFile{ path };
-		RuntimeChecks::ensure(sourceFile.is_open(), RuntimeChecks::Type::Runtime, std::string{ "Could not open JSON file: " + path.string() }.c_str());
-		std::stringstream buffer{};
-		buffer << sourceFile.rdbuf();
-		return buffer.str();
-	}
-} // anonymous namespace
+#include "common/RuntimeChecks.hpp"
 
 namespace JsonDataStorage
 {
+	namespace
+	{
+		std::filesystem::path getLocalizationPath(std::string_view languageCode)
+		{
+			return std::filesystem::path{ "resources/localization" } /
+				(std::string{ languageCode } + ".json");
+		}
+
+		std::string readWholeFile(const std::filesystem::path& path)
+		{
+			std::ifstream sourceFile{ path };
+			RuntimeChecks::ensure(sourceFile.is_open(), RuntimeChecks::Type::Runtime, std::string{ "Could not open JSON file: " + path.string() }.c_str());
+			std::stringstream buffer{};
+			buffer << sourceFile.rdbuf();
+			return buffer.str();
+		}
+	} // anonymous namespace
+
 	void saveLanguageCode(std::string_view languageCode)
 	{
 		std::ofstream file{ "resources/settings.json" };
@@ -54,4 +57,4 @@ namespace JsonDataStorage
 		parser.parse();
 		return parser.takeLocalizationData();
 	}
-} // JsonDataStorage
+} // namespace JsonDataStorage

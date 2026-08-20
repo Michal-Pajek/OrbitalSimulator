@@ -1,4 +1,5 @@
 #include "app/ExceptionHandler.hpp"
+
 #include "ui/ConsoleWriter.hpp"
 
 namespace ExceptionHandler
@@ -7,4 +8,4 @@ namespace ExceptionHandler
 	{
 		ConsoleWriter::writeError(message);
 	}
-} // ExceptionHandler
+} // namespace ExceptionHandler

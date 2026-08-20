@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <string_view>
+
 #include "localization/LocalizationTypes.hpp"
 
 namespace JsonDataStorage
@@ -8,4 +9,4 @@ namespace JsonDataStorage
 	void saveLanguageCode(std::string_view languageCode);
 	std::string loadLanguageCode();
 	LocalizationMap loadLocalizationData(std::string_view languageCode);
-}
+} // namespace JsonDataStorage

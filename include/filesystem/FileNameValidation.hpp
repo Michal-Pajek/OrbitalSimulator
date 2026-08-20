@@ -4,4 +4,4 @@
 namespace FileNameValidation
 {
 	bool isValidBaseName(std::string_view name);
-}
+} // namespace FileNameValidation

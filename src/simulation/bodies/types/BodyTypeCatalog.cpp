@@ -1,5 +1,7 @@
 #include "simulation/bodies/types/BodyTypeCatalog.hpp"
+
 #include <cstddef>
+
 #include "common/RuntimeChecks.hpp"
 #include "localization/TextId.hpp"
 #include "physics/Constants.hpp"

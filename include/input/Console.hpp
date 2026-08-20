@@ -1,3 +1,6 @@
 #pragma once
 
-void clearScreen();
+namespace Console
+{
+	void clearScreen();
+} // namespace Console

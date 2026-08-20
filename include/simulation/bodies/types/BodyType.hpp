@@ -1,6 +1,7 @@
 #pragma once
 #include <cstddef>
 #include <string_view>
+
 #include "localization/TextId.hpp"
 
 enum class BodyTypeId
@@ -36,7 +37,8 @@ public:
 	TextId getTextId() const { return m_textId; }
 	std::string_view getSerializationKey() const { return m_serializationKey; }
 private:
-	BodyType(const TextId textId, std::string_view serializationKey, const BodyTypeId id, const MassInterval& massInterval) : m_textId{ textId }, m_serializationKey{ serializationKey }, m_id{ id }, m_massInterval{ massInterval } {}
+	BodyType(const TextId textId, std::string_view serializationKey, const BodyTypeId id, const MassInterval& massInterval)
+		: m_textId{ textId }, m_serializationKey{ serializationKey }, m_id{ id }, m_massInterval{ massInterval } {}
 	TextId m_textId;
 	std::string_view m_serializationKey;
 	const BodyTypeId m_id;
