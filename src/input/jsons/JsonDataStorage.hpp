@@ -2,7 +2,7 @@
 #include <string>
 #include <string_view>
 
-#include "localization/LocalizationTypes.hpp"
+#include "localization/core/LocalizationTypes.hpp"
 
 namespace JsonDataStorage
 {

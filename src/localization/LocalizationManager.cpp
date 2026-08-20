@@ -2,7 +2,7 @@
 
 #include <utility>
 
-#include "localization/TextIdEntries.hpp"
+#include "localization/core/TextIdEntries.hpp"
 
 #include "input/jsons/JsonDataStorage.hpp"
 

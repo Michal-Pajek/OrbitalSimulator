@@ -4,7 +4,7 @@
 #include <utility>
 #include <vector>
 
-#include "localization/TextId.hpp"
+#include "localization/core/TextId.hpp"
 
 struct MenuOption
 {

@@ -5,8 +5,8 @@
 #include <string_view>
 #include <utility>
 
-#include "localization/LocalizationTypes.hpp"
-#include "localization/TextId.hpp"
+#include "localization/core/LocalizationTypes.hpp"
+#include "localization/core/TextId.hpp"
 
 class LocalizationManager
 {

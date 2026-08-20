@@ -4,7 +4,7 @@
 
 #include "app/Menu.hpp"
 #include "input/Console.hpp"
-#include "localization/TextId.hpp"
+#include "localization/core/TextId.hpp"
 #include "ui/ConsoleWriter.hpp"
 
 void BodyEditor::editBody()

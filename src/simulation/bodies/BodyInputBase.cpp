@@ -5,7 +5,7 @@
 #include "input/BodyMassUnitSelector.hpp"
 #include "input/DataGetter.hpp"
 #include "input/OptionSelector.hpp"
-#include "localization/TextId.hpp"
+#include "localization/core/TextId.hpp"
 #include "physics/Constants.hpp"
 #include "physics/Validation.hpp"
 #include "ui/ConsoleWriter.hpp"

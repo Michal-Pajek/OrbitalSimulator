@@ -14,6 +14,18 @@ function(copy_resources_to_target target_name)
     )
 endfunction()
 
+add_library(localization_core INTERFACE)
+
+target_sources(localization_core INTERFACE
+    src/localization/core/LocalizationTypes.hpp
+    src/localization/core/TextId.hpp
+    src/localization/core/TextIdEntries.hpp
+)
+
+target_include_directories(localization_core INTERFACE
+    ${PROJECT_SOURCE_DIR}/src
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp

@@ -4,7 +4,7 @@
 #include <string_view>
 #include <utility>
 
-#include "localization/LocalizationTypes.hpp"
+#include "localization/core/LocalizationTypes.hpp"
 
 class JsonLocalizationParser : private JsonParserBase
 {

@@ -4,7 +4,7 @@
 #include <utility>
 
 #include "localization/LocalizationManager.hpp"
-#include "localization/TextId.hpp"
+#include "localization/core/TextId.hpp"
 
 namespace ConsoleWriter
 {

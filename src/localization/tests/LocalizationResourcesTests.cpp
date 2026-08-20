@@ -4,8 +4,8 @@
 #include <string_view>
 
 #include "input/jsons/JsonDataStorage.hpp"
-#include "localization/TextId.hpp"
-#include "localization/TextIdEntries.hpp"
+#include "localization/core/TextId.hpp"
+#include "localization/core/TextIdEntries.hpp"
 
 namespace
 {

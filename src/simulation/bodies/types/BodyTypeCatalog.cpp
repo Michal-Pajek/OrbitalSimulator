@@ -3,7 +3,7 @@
 #include <cstddef>
 
 #include "common/RuntimeChecks.hpp"
-#include "localization/TextId.hpp"
+#include "localization/core/TextId.hpp"
 #include "physics/Constants.hpp"
 
 #define BODY_TYPE_ARGS(name) TextId::name, #name, BodyTypeId::name

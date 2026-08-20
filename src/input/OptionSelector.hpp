@@ -4,7 +4,7 @@
 
 #include "app/Menu.hpp"
 #include "common/RuntimeChecks.hpp"
-#include "localization/TextId.hpp"
+#include "localization/core/TextId.hpp"
 #include "ui/ConsoleWriter.hpp"
 
 namespace OptionSelector

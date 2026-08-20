@@ -10,7 +10,7 @@
 #include "input/Console.hpp"
 #include "input/DataGetter.hpp"
 #include "input/Keyboard.hpp"
-#include "localization/TextId.hpp"
+#include "localization/core/TextId.hpp"
 #include "simulation/bodies/BodyBuilder.hpp"
 #include "simulation/bodies/BodyEditor.hpp"
 #include "ui/ConsoleWriter.hpp"

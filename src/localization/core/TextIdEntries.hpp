@@ -3,7 +3,7 @@
 #include <cstddef>
 #include <string_view>
 
-#include "localization/TextId.hpp"
+#include "localization/core/TextId.hpp"
 
 namespace TextIdEntries
 {

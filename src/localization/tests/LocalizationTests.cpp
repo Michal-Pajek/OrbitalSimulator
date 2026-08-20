@@ -3,8 +3,8 @@
 #include <set>
 #include <string_view>
 
-#include "localization/TextId.hpp"
-#include "localization/TextIdEntries.hpp"
+#include "localization/core/TextId.hpp"
+#include "localization/core/TextIdEntries.hpp"
 
 TEST(LocalizationTests, TextIdEntriesAreOrderedByTextIdValue)
 {

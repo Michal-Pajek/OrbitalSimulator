@@ -6,7 +6,7 @@
 
 #include "app/Menu.hpp"
 #include "input/DataGetter.hpp"
-#include "localization/TextId.hpp"
+#include "localization/core/TextId.hpp"
 #include "recording/Recorder.hpp"
 #include "runner/SimulationRunner.hpp"
 #include "simulation/SimulationRunConfigBuilder.hpp"

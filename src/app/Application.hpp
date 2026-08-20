@@ -1,5 +1,5 @@
 #pragma once
-#include "localization/TextId.hpp"
+#include "localization/core/TextId.hpp"
 
 class Application
 {

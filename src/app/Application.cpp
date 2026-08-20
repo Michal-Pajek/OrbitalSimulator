@@ -7,7 +7,7 @@
 #include "input/Console.hpp"
 #include "input/Keyboard.hpp"
 #include "localization/LocalizationManager.hpp"
-#include "localization/TextId.hpp"
+#include "localization/core/TextId.hpp"
 #include "scenario/ScenarioBuilder.hpp"
 #include "scenario/ScenarioHandler.hpp"
 #include "scenario/ScenarioLoader.hpp"

@@ -2,7 +2,7 @@
 
 #include "scenario/Scenario.hpp"
 
-#include "localization/TextId.hpp"
+#include "localization/core/TextId.hpp"
 #include "simulation/bodies/Body.hpp"
 #include "ui/ConsoleWriter.hpp"
 
