@@ -15,9 +15,9 @@ function(copy_resources_to_target target_name)
 endfunction()
 
 add_executable(orbital_simulator
-    app/main.cpp
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
+    src/app/main.cpp
     src/app/Menu.cpp
     src/common/RuntimeChecks.cpp
     src/filesystem/ApplicationPaths.cpp
@@ -55,7 +55,7 @@ add_executable(orbital_simulator
 )
 
 target_include_directories(orbital_simulator PRIVATE
-    include
+    src
 )
 
 copy_resources_to_target(orbital_simulator)
@@ -89,26 +89,27 @@ add_executable(orbital_tests
     src/simulation/bodies/types/BodyTypeCatalog.cpp
     src/simulation/Simulation.cpp
     src/ui/ConsoleWriter.cpp
-    tests/BodyTests.cpp
-    tests/BodyTypeCatalogTests.cpp
-    tests/BodyTypesTests.cpp
-    tests/ExceptionHandlerTests.cpp
-    tests/FileNameValidationTests.cpp
-    tests/JsonLanguageSettingsParserTests.cpp
-    tests/JsonLocalizationParserTests.cpp
-    tests/LocalizationResourcesTests.cpp
-    tests/LocalizationTests.cpp
-    tests/MenuTests.cpp
-    tests/PhysicsValidationTests.cpp
-    tests/RuntimeChecksTests.cpp
-    tests/ScenarioTests.cpp
-    tests/SimulationsTests.cpp
-    tests/Vector3DTests.cpp
-    tests/support/TestBodyCreator.cpp
+
+    src/simulation/bodies/tests/BodyTests.cpp
+    src/simulation/bodies/types/tests/BodyTypeCatalogTests.cpp
+    src/simulation/bodies/types/tests/BodyTypesTests.cpp
+    src/app/tests/ExceptionHandlerTests.cpp
+    src/filesystem/tests/FileNameValidationTests.cpp
+    src/input/jsons/tests/JsonLanguageSettingsParserTests.cpp
+    src/input/jsons/tests/JsonLocalizationParserTests.cpp
+    src/localization/tests/LocalizationResourcesTests.cpp
+    src/localization/tests/LocalizationTests.cpp
+    src/app/tests/MenuTests.cpp
+    src/physics/tests/PhysicsValidationTests.cpp
+    src/common/tests/RuntimeChecksTests.cpp
+    src/scenario/tests/ScenarioTests.cpp
+    src/simulation/tests/SimulationsTests.cpp
+    src/math/tests/Vector3DTests.cpp
+    src/simulation/bodies/tests/support/TestBodyCreator.cpp
 )
 
 target_include_directories(orbital_tests PRIVATE
-    include
+    src
 )
 
 target_link_libraries(orbital_tests PRIVATE

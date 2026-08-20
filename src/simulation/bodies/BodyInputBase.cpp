@@ -1,11 +1,13 @@
 #include "simulation/bodies/BodyInputBase.hpp"
+
+#include "simulation/bodies/types/BodyTypeCatalog.hpp"
+
 #include "input/BodyMassUnitSelector.hpp"
 #include "input/DataGetter.hpp"
 #include "input/OptionSelector.hpp"
 #include "localization/TextId.hpp"
 #include "physics/Constants.hpp"
 #include "physics/Validation.hpp"
-#include "simulation/bodies/types/BodyTypeCatalog.hpp"
 #include "ui/ConsoleWriter.hpp"
 
 bool BodyInputBase::isBodyNameAlreadyUsed(const std::string& checkedName) const

@@ -1,5 +1,7 @@
 #include "input/DataGetter.hpp"
+
 #include <limits>
+
 #include "filesystem/FileNameValidation.hpp"
 
 namespace DataGetter

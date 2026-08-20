@@ -1,6 +1,7 @@
+#include "simulation/Simulation.hpp"
+
 #include "common/RuntimeChecks.hpp"
 #include "physics/Validation.hpp"
-#include "simulation/Simulation.hpp"
 
 void Simulation::BodyStepState::applyStep()
 {
