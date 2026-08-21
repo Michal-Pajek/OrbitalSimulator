@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include <string_view>
 
-#include "input/jsons/JsonLocalizationParser.hpp"
+#include "localization/json/JsonLocalizationParser.hpp"
 
 TEST(JsonLocalizationParserTests, ParsesOneValidEntry)
 {

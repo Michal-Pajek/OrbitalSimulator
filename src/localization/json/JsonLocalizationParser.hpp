@@ -1,5 +1,5 @@
 #pragma once
-#include "input/jsons/JsonParserBase.hpp"
+#include "localization/json/JsonParserBase.hpp"
 
 #include <string_view>
 #include <utility>

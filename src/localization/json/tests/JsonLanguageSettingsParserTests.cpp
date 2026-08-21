@@ -3,7 +3,7 @@
 #include <string>
 #include <string_view>
 
-#include "input/jsons/JsonLanguageSettingsParser.hpp"
+#include "localization/json/JsonLanguageSettingsParser.hpp"
 
 namespace
 {

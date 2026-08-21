@@ -1,12 +1,12 @@
-#include "input/jsons/JsonDataStorage.hpp"
+#include "localization/json/JsonDataStorage.hpp"
 
 #include <filesystem>
 #include <fstream>
 #include <sstream>
 #include <string>
 
-#include "input/jsons/JsonLanguageSettingsParser.hpp"
-#include "input/jsons/JsonLocalizationParser.hpp"
+#include "localization/json/JsonLanguageSettingsParser.hpp"
+#include "localization/json/JsonLocalizationParser.hpp"
 
 #include "common/RuntimeChecks.hpp"
 

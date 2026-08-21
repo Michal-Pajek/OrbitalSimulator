@@ -4,7 +4,7 @@
 
 #include "localization/core/TextIdEntries.hpp"
 
-#include "input/jsons/JsonDataStorage.hpp"
+#include "localization/json/JsonDataStorage.hpp"
 
 LocalizationManager::LocalizationManager()
 {

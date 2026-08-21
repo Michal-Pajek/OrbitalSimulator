@@ -26,6 +26,21 @@ target_include_directories(localization_core INTERFACE
     ${PROJECT_SOURCE_DIR}/src
 )
 
+add_library(localization_json
+    src/localization/json/JsonDataStorage.cpp
+    src/localization/json/JsonLanguageSettingsParser.cpp
+    src/localization/json/JsonLocalizationParser.cpp
+    src/localization/json/JsonParserBase.cpp
+)
+
+target_include_directories(localization_json PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(localization_json
+    PUBLIC localization_core
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
@@ -37,10 +52,6 @@ add_executable(orbital_simulator
     src/input/BodyMassUnitSelector.cpp
     src/input/Console.cpp
     src/input/DataGetter.cpp
-    src/input/jsons/JsonDataStorage.cpp
-    src/input/jsons/JsonLanguageSettingsParser.cpp
-    src/input/jsons/JsonLocalizationParser.cpp
-    src/input/jsons/JsonParserBase.cpp
     src/input/Keyboard.cpp
     src/localization/LocalizationManager.cpp
     src/math/Vector3D.cpp
@@ -70,6 +81,10 @@ target_include_directories(orbital_simulator PRIVATE
     src
 )
 
+target_link_libraries(orbital_simulator PRIVATE
+    localization_json
+)
+
 copy_resources_to_target(orbital_simulator)
 
 enable_testing()
@@ -89,10 +104,6 @@ add_executable(orbital_tests
     src/common/RuntimeChecks.cpp
     src/filesystem/FileNameValidation.cpp
     src/input/Keyboard.cpp
-    src/input/jsons/JsonDataStorage.cpp
-    src/input/jsons/JsonLanguageSettingsParser.cpp
-    src/input/jsons/JsonLocalizationParser.cpp
-    src/input/jsons/JsonParserBase.cpp
     src/localization/LocalizationManager.cpp
     src/math/Vector3D.cpp
     src/physics/Validation.cpp
@@ -107,8 +118,8 @@ add_executable(orbital_tests
     src/simulation/bodies/types/tests/BodyTypesTests.cpp
     src/app/tests/ExceptionHandlerTests.cpp
     src/filesystem/tests/FileNameValidationTests.cpp
-    src/input/jsons/tests/JsonLanguageSettingsParserTests.cpp
-    src/input/jsons/tests/JsonLocalizationParserTests.cpp
+    src/localization/json/tests/JsonLanguageSettingsParserTests.cpp
+    src/localization/json/tests/JsonLocalizationParserTests.cpp
     src/localization/tests/LocalizationResourcesTests.cpp
     src/localization/tests/LocalizationTests.cpp
     src/app/tests/MenuTests.cpp
@@ -125,6 +136,7 @@ target_include_directories(orbital_tests PRIVATE
 )
 
 target_link_libraries(orbital_tests PRIVATE
+    localization_json
     GTest::gtest_main
 )
 

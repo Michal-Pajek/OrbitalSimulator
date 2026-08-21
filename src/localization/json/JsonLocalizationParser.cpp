@@ -1,4 +1,4 @@
-#include "input/jsons/JsonLocalizationParser.hpp"
+#include "localization/json/JsonLocalizationParser.hpp"
 
 #include <string>
 

@@ -1,4 +1,4 @@
-#include "input/jsons/JsonParserBase.hpp"
+#include "localization/json/JsonParserBase.hpp"
 
 #include <stdexcept>
 

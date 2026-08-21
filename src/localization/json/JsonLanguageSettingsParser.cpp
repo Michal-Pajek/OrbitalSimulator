@@ -1,4 +1,4 @@
-#include "input/jsons/JsonLanguageSettingsParser.hpp"
+#include "localization/json/JsonLanguageSettingsParser.hpp"
 
 void JsonLanguageSettingsParser::parse()
 {
