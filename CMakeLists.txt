@@ -14,6 +14,14 @@ function(copy_resources_to_target target_name)
     )
 endfunction()
 
+add_library(runtime_checks
+    src/common/RuntimeChecks.cpp
+)
+
+target_include_directories(runtime_checks PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
 add_library(localization_core INTERFACE)
 
 target_sources(localization_core INTERFACE
@@ -39,6 +47,7 @@ target_include_directories(localization_json PUBLIC
 
 target_link_libraries(localization_json
     PUBLIC localization_core
+    PRIVATE runtime_checks
 )
 
 add_executable(orbital_simulator
@@ -46,7 +55,6 @@ add_executable(orbital_simulator
     src/app/ExceptionHandler.cpp
     src/app/main.cpp
     src/app/Menu.cpp
-    src/common/RuntimeChecks.cpp
     src/filesystem/ApplicationPaths.cpp
     src/filesystem/FileNameValidation.cpp
     src/input/BodyMassUnitSelector.cpp
@@ -78,11 +86,12 @@ add_executable(orbital_simulator
 )
 
 target_include_directories(orbital_simulator PRIVATE
-    src
+    ${PROJECT_SOURCE_DIR}/src
 )
 
 target_link_libraries(orbital_simulator PRIVATE
     localization_json
+    runtime_checks
 )
 
 copy_resources_to_target(orbital_simulator)
@@ -101,7 +110,6 @@ FetchContent_MakeAvailable(googletest)
 add_executable(orbital_tests
     src/app/ExceptionHandler.cpp
     src/app/Menu.cpp
-    src/common/RuntimeChecks.cpp
     src/filesystem/FileNameValidation.cpp
     src/input/Keyboard.cpp
     src/localization/LocalizationManager.cpp
@@ -132,11 +140,12 @@ add_executable(orbital_tests
 )
 
 target_include_directories(orbital_tests PRIVATE
-    src
+    ${PROJECT_SOURCE_DIR}/src
 )
 
 target_link_libraries(orbital_tests PRIVATE
     localization_json
+    runtime_checks
     GTest::gtest_main
 )
 
