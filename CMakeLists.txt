@@ -87,13 +87,24 @@ target_link_libraries(localization
     PRIVATE localization_json
 )
 
+add_library(filesystem
+    src/filesystem/ApplicationPaths.cpp
+    src/filesystem/FileNameValidation.cpp
+)
+
+target_include_directories(filesystem PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(filesystem
+    PRIVATE runtime_checks
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
     src/app/main.cpp
     src/app/Menu.cpp
-    src/filesystem/ApplicationPaths.cpp
-    src/filesystem/FileNameValidation.cpp
     src/input/BodyMassUnitSelector.cpp
     src/input/Console.cpp
     src/input/DataGetter.cpp
@@ -124,6 +135,7 @@ target_include_directories(orbital_simulator PRIVATE
 )
 
 target_link_libraries(orbital_simulator PRIVATE
+    filesystem
     localization
     math
     physics
@@ -146,7 +158,6 @@ FetchContent_MakeAvailable(googletest)
 add_executable(orbital_tests
     src/app/ExceptionHandler.cpp
     src/app/Menu.cpp
-    src/filesystem/FileNameValidation.cpp
     src/input/Keyboard.cpp
     src/simulation/bodies/Body.cpp
     src/simulation/bodies/BodyStepState.cpp
@@ -177,6 +188,7 @@ target_include_directories(orbital_tests PRIVATE
 )
 
 target_link_libraries(orbital_tests PRIVATE
+    filesystem
     localization
     localization_json
     math
