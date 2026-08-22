@@ -74,6 +74,19 @@ target_link_libraries(physics
     PUBLIC math
 )
 
+add_library(localization
+    src/localization/LocalizationManager.cpp
+)
+
+target_include_directories(localization PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(localization
+    PUBLIC localization_core
+    PRIVATE localization_json
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
@@ -85,7 +98,6 @@ add_executable(orbital_simulator
     src/input/Console.cpp
     src/input/DataGetter.cpp
     src/input/Keyboard.cpp
-    src/localization/LocalizationManager.cpp
     src/platform/ConsoleEncoding.cpp
     src/recording/Recorder.cpp
     src/runner/SimulationRunner.cpp
@@ -112,7 +124,7 @@ target_include_directories(orbital_simulator PRIVATE
 )
 
 target_link_libraries(orbital_simulator PRIVATE
-    localization_json
+    localization
     math
     physics
     runtime_checks
@@ -136,7 +148,6 @@ add_executable(orbital_tests
     src/app/Menu.cpp
     src/filesystem/FileNameValidation.cpp
     src/input/Keyboard.cpp
-    src/localization/LocalizationManager.cpp
     src/simulation/bodies/Body.cpp
     src/simulation/bodies/BodyStepState.cpp
     src/simulation/bodies/types/BodyTypeCatalog.cpp
@@ -166,6 +177,7 @@ target_include_directories(orbital_tests PRIVATE
 )
 
 target_link_libraries(orbital_tests PRIVATE
+    localization
     localization_json
     math
     physics
