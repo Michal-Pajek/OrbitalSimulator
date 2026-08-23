@@ -100,6 +100,14 @@ target_link_libraries(filesystem
     PRIVATE runtime_checks
 )
 
+add_library(platform
+    src/platform/ConsoleEncoding.cpp
+)
+
+target_include_directories(platform PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
@@ -109,7 +117,6 @@ add_executable(orbital_simulator
     src/input/Console.cpp
     src/input/DataGetter.cpp
     src/input/Keyboard.cpp
-    src/platform/ConsoleEncoding.cpp
     src/recording/Recorder.cpp
     src/runner/SimulationRunner.cpp
     src/scenario/ScenarioBuilder.cpp
@@ -135,6 +142,7 @@ target_include_directories(orbital_simulator PRIVATE
 )
 
 target_link_libraries(orbital_simulator PRIVATE
+    platform
     filesystem
     localization
     math
