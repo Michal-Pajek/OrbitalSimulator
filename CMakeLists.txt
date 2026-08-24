@@ -195,13 +195,27 @@ target_link_libraries(recording
     PRIVATE runtime_checks
 )
 
+add_library(input_data
+    src/input/data/DataGetter.cpp
+)
+
+target_include_directories(input_data PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(input_data
+    PUBLIC localization_core
+    PUBLIC math
+    PUBLIC ui
+    PRIVATE filesystem
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
     src/app/main.cpp
     src/app/Menu.cpp
     src/input/BodyMassUnitSelector.cpp
-    src/input/DataGetter.cpp
     src/runner/SimulationRunner.cpp
     src/scenario/ScenarioBuilder.cpp
     src/scenario/ScenarioEditor.cpp
@@ -226,6 +240,7 @@ target_link_libraries(orbital_simulator PRIVATE
     platform
     filesystem
     input_core
+    input_data
     localization
     math
     physics

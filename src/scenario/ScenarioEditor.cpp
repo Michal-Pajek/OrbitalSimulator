@@ -8,7 +8,7 @@
 #include "app/Menu.hpp"
 #include "common/RuntimeChecks.hpp"
 #include "input/core/Console.hpp"
-#include "input/DataGetter.hpp"
+#include "input/data/DataGetter.hpp"
 #include "input/core/Keyboard.hpp"
 #include "localization/core/TextId.hpp"
 #include "simulation/bodies/BodyBuilder.hpp"

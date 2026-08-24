@@ -18,7 +18,7 @@
 #include "app/Menu.hpp"
 #include "filesystem/ApplicationPaths.hpp"
 #include "filesystem/FileNameValidation.hpp"
-#include "input/DataGetter.hpp"
+#include "input/data/DataGetter.hpp"
 #include "localization/core/TextId.hpp"
 #include "math/Vector3D.hpp"
 #include "simulation/bodies/Body.hpp"

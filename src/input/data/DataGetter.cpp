@@ -1,4 +1,4 @@
-#include "input/DataGetter.hpp"
+#include "input/data/DataGetter.hpp"
 
 #include <limits>
 
