@@ -351,6 +351,22 @@ target_link_libraries(input_selection
     PRIVATE physics
 )
 
+add_library(simulation_run_config_builder
+    src/simulation/run_config/builder/SimulationRunConfigBuilder.cpp
+)
+
+target_include_directories(simulation_run_config_builder PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(simulation_run_config_builder
+    PUBLIC simulation_run_config
+    PRIVATE input_data
+    PRIVATE input_selection
+    PRIVATE localization_core
+    PRIVATE ui
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
@@ -362,7 +378,6 @@ add_executable(orbital_simulator
     src/simulation/bodies/BodyBuilder.cpp
     src/simulation/bodies/BodyInputBase.cpp
     src/simulation/bodies/BodyEditor.cpp
-    src/simulation/SimulationRunConfigBuilder.cpp
 )
 
 target_include_directories(orbital_simulator PRIVATE
@@ -389,6 +404,7 @@ target_link_libraries(orbital_simulator PRIVATE
     scenario_summary
     simulation_core
     simulation_run_config
+    simulation_run_config_builder
     ui
     ui_menu
 )

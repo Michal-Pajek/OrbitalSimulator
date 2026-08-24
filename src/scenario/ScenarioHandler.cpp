@@ -9,7 +9,7 @@
 #include "localization/core/TextId.hpp"
 #include "recording/Recorder.hpp"
 #include "runner/SimulationRunner.hpp"
-#include "simulation/SimulationRunConfigBuilder.hpp"
+#include "simulation/run_config/builder/SimulationRunConfigBuilder.hpp"
 #include "ui/ConsoleWriter.hpp"
 
 namespace
