@@ -108,6 +108,18 @@ target_include_directories(platform PUBLIC
     ${PROJECT_SOURCE_DIR}/src
 )
 
+add_library(ui
+    src/ui/ConsoleWriter.cpp
+)
+
+target_include_directories(ui PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(ui
+    PUBLIC localization
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
@@ -134,7 +146,6 @@ add_executable(orbital_simulator
     src/simulation/bodies/types/BodyTypeCatalog.cpp
     src/simulation/Simulation.cpp
     src/simulation/SimulationRunConfigBuilder.cpp
-    src/ui/ConsoleWriter.cpp
 )
 
 target_include_directories(orbital_simulator PRIVATE
@@ -148,6 +159,7 @@ target_link_libraries(orbital_simulator PRIVATE
     math
     physics
     runtime_checks
+    ui
 )
 
 copy_resources_to_target(orbital_simulator)
@@ -171,7 +183,6 @@ add_executable(orbital_tests
     src/simulation/bodies/BodyStepState.cpp
     src/simulation/bodies/types/BodyTypeCatalog.cpp
     src/simulation/Simulation.cpp
-    src/ui/ConsoleWriter.cpp
 
     src/simulation/bodies/tests/BodyTests.cpp
     src/simulation/bodies/types/tests/BodyTypeCatalogTests.cpp
@@ -202,6 +213,7 @@ target_link_libraries(orbital_tests PRIVATE
     math
     physics
     runtime_checks
+    ui
     GTest::gtest_main
 )
 
