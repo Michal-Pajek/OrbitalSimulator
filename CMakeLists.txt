@@ -164,6 +164,22 @@ target_link_libraries(input_core
     PRIVATE runtime_checks
 )
 
+add_library(simulation_core
+    src/simulation/core/BodyStepState.cpp
+    src/simulation/core/Simulation.cpp
+)
+
+target_include_directories(simulation_core PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(simulation_core
+    PUBLIC body
+    PUBLIC math
+    PRIVATE physics
+    PRIVATE runtime_checks
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
@@ -183,8 +199,6 @@ add_executable(orbital_simulator
     src/simulation/bodies/BodyBuilder.cpp
     src/simulation/bodies/BodyInputBase.cpp
     src/simulation/bodies/BodyEditor.cpp
-    src/simulation/bodies/BodyStepState.cpp
-    src/simulation/Simulation.cpp
     src/simulation/SimulationRunConfigBuilder.cpp
 )
 
@@ -202,6 +216,7 @@ target_link_libraries(orbital_simulator PRIVATE
     math
     physics
     runtime_checks
+    simulation_core
     ui
 )
 
@@ -221,8 +236,6 @@ FetchContent_MakeAvailable(googletest)
 add_executable(orbital_tests
     src/app/ExceptionHandler.cpp
     src/app/Menu.cpp
-    src/simulation/bodies/BodyStepState.cpp
-    src/simulation/Simulation.cpp
 
     src/simulation/bodies/tests/BodyTests.cpp
     src/simulation/bodies/types/tests/BodyTypeCatalogTests.cpp
@@ -237,7 +250,7 @@ add_executable(orbital_tests
     src/physics/tests/PhysicsValidationTests.cpp
     src/common/tests/RuntimeChecksTests.cpp
     src/scenario/tests/ScenarioTests.cpp
-    src/simulation/tests/SimulationsTests.cpp
+    src/simulation/core/tests/SimulationsTests.cpp
     src/math/tests/Vector3DTests.cpp
     src/simulation/bodies/tests/support/TestBodyCreator.cpp
 )
@@ -256,6 +269,7 @@ target_link_libraries(orbital_tests PRIVATE
     math
     physics
     runtime_checks
+    simulation_core
     ui
     GTest::gtest_main
 )

@@ -3,6 +3,8 @@
 
 #include "simulation/bodies/Body.hpp"
 
+#include "math/Vector3D.hpp"
+
 class Simulation
 {
 	class BodyStepState;

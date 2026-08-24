@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <vector>
 
-#include "simulation/Simulation.hpp"
+#include "simulation/core/Simulation.hpp"
 
 #include "simulation/bodies/Body.hpp"
 #include "simulation/bodies/tests/support/TestBodyCreator.hpp"
