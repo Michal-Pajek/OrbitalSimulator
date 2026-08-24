@@ -120,6 +120,20 @@ target_link_libraries(ui
     PUBLIC localization
 )
 
+add_library(body_types
+    src/simulation/bodies/types/BodyTypeCatalog.cpp
+)
+
+target_include_directories(body_types PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(body_types
+    PUBLIC localization_core
+    PRIVATE physics
+    PRIVATE runtime_checks
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
@@ -143,7 +157,6 @@ add_executable(orbital_simulator
     src/simulation/bodies/BodyInputBase.cpp
     src/simulation/bodies/BodyEditor.cpp
     src/simulation/bodies/BodyStepState.cpp
-    src/simulation/bodies/types/BodyTypeCatalog.cpp
     src/simulation/Simulation.cpp
     src/simulation/SimulationRunConfigBuilder.cpp
 )
@@ -153,6 +166,7 @@ target_include_directories(orbital_simulator PRIVATE
 )
 
 target_link_libraries(orbital_simulator PRIVATE
+    body_types
     platform
     filesystem
     localization
@@ -181,7 +195,6 @@ add_executable(orbital_tests
     src/input/Keyboard.cpp
     src/simulation/bodies/Body.cpp
     src/simulation/bodies/BodyStepState.cpp
-    src/simulation/bodies/types/BodyTypeCatalog.cpp
     src/simulation/Simulation.cpp
 
     src/simulation/bodies/tests/BodyTests.cpp
@@ -207,6 +220,7 @@ target_include_directories(orbital_tests PRIVATE
 )
 
 target_link_libraries(orbital_tests PRIVATE
+    body_types
     filesystem
     localization
     localization_json
