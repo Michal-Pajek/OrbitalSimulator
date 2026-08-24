@@ -6,7 +6,7 @@
 #include "common/RuntimeChecks.hpp"
 #include "filesystem/ApplicationPaths.hpp"
 #include "filesystem/FileNameValidation.hpp"
-#include "simulation/bodies/Body.hpp"
+#include "bodies/Body.hpp"
 #include "simulation/core/Simulation.hpp"
 
 Recorder::Recorder(const std::string& fileBaseName) : m_fileBaseName{ fileBaseName }

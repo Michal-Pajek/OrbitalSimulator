@@ -121,7 +121,7 @@ target_link_libraries(ui
 )
 
 add_library(body_types
-    src/simulation/bodies/types/BodyTypeCatalog.cpp
+    src/bodies/types/BodyTypeCatalog.cpp
 )
 
 target_include_directories(body_types PUBLIC
@@ -135,7 +135,7 @@ target_link_libraries(body_types
 )
 
 add_library(body
-    src/simulation/bodies/Body.cpp
+    src/bodies/Body.cpp
 )
 
 target_include_directories(body PUBLIC
@@ -367,6 +367,29 @@ target_link_libraries(simulation_run_config_builder
     PRIVATE ui
 )
 
+add_library(body_input
+    src/bodies/input/BodyBuilder.cpp
+    src/bodies/input/BodyEditor.cpp
+    src/bodies/input/BodyInputBase.cpp
+)
+
+target_include_directories(body_input PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(body_input
+    PUBLIC body
+    PUBLIC body_types
+    PUBLIC math
+    PRIVATE input_core
+    PRIVATE input_data
+    PRIVATE input_selection
+    PRIVATE localization_core
+    PRIVATE physics
+    PRIVATE ui
+    PRIVATE ui_menu
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
@@ -375,9 +398,6 @@ add_executable(orbital_simulator
     src/scenario/ScenarioEditor.cpp
     src/scenario/ScenarioHandler.cpp
     src/scenario/ScenarioInput.cpp
-    src/simulation/bodies/BodyBuilder.cpp
-    src/simulation/bodies/BodyInputBase.cpp
-    src/simulation/bodies/BodyEditor.cpp
 )
 
 target_include_directories(orbital_simulator PRIVATE
@@ -386,6 +406,7 @@ target_include_directories(orbital_simulator PRIVATE
 
 target_link_libraries(orbital_simulator PRIVATE
     body
+    body_input
     body_types
     platform
     filesystem
@@ -425,10 +446,11 @@ FetchContent_MakeAvailable(googletest)
 add_executable(orbital_tests
     src/app/ExceptionHandler.cpp
 
-    src/simulation/bodies/tests/BodyTests.cpp
-    src/simulation/bodies/types/tests/BodyTypeCatalogTests.cpp
-    src/simulation/bodies/types/tests/BodyTypesTests.cpp
     src/app/tests/ExceptionHandlerTests.cpp
+    src/bodies/tests/BodyTests.cpp
+    src/bodies/tests/support/TestBodyCreator.cpp
+    src/bodies/types/tests/BodyTypeCatalogTests.cpp
+    src/bodies/types/tests/BodyTypesTests.cpp
     src/filesystem/tests/FileNameValidationTests.cpp
     src/localization/json/tests/JsonLanguageSettingsParserTests.cpp
     src/localization/json/tests/JsonLocalizationParserTests.cpp
@@ -440,7 +462,6 @@ add_executable(orbital_tests
     src/scenario/core/tests/ScenarioTests.cpp
     src/simulation/core/tests/SimulationsTests.cpp
     src/math/tests/Vector3DTests.cpp
-    src/simulation/bodies/tests/support/TestBodyCreator.cpp
 )
 
 target_include_directories(orbital_tests PRIVATE

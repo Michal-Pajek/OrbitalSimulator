@@ -6,7 +6,7 @@
 
 #include "input/selection/OptionSelector.hpp"
 
-#include "simulation/bodies/types/BodyType.hpp"
+#include "bodies/types/BodyType.hpp"
 
 class BodyMassUnitSelector
 {

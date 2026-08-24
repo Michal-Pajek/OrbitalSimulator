@@ -1,8 +1,8 @@
-#include "simulation/bodies/BodyBuilder.hpp"
+#include "bodies/input/BodyBuilder.hpp"
 
 #include <utility>
 
-#include "simulation/bodies/BodyEditor.hpp"
+#include "bodies/input/BodyEditor.hpp"
 
 #include "ui/menu/Menu.hpp"
 #include "input/core/Console.hpp"

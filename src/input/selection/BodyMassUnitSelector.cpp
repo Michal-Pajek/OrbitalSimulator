@@ -2,7 +2,7 @@
 
 #include "localization/core/TextId.hpp"
 #include "physics/Constants.hpp"
-#include "simulation/bodies/types/BodyTypeCatalog.hpp"
+#include "bodies/types/BodyTypeCatalog.hpp"
 
 namespace
 {

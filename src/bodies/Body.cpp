@@ -1,9 +1,9 @@
-#include "simulation/bodies/Body.hpp"
+#include "bodies/Body.hpp"
 
 #include <cmath>
 #include <cstddef>
 
-#include "simulation/bodies/types/BodyTypeCatalog.hpp"
+#include "bodies/types/BodyTypeCatalog.hpp"
 
 #include "common/RuntimeChecks.hpp"
 #include "localization/core/TextId.hpp"

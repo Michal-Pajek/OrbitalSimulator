@@ -21,8 +21,8 @@
 #include "input/data/DataGetter.hpp"
 #include "localization/core/TextId.hpp"
 #include "math/Vector3D.hpp"
-#include "simulation/bodies/Body.hpp"
-#include "simulation/bodies/types/BodyTypeCatalog.hpp"
+#include "bodies/Body.hpp"
+#include "bodies/types/BodyTypeCatalog.hpp"
 #include "ui/ConsoleWriter.hpp"
 
 namespace ScenarioLoader

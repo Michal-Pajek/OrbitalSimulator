@@ -1,4 +1,4 @@
-#include "simulation/bodies/types/BodyTypeCatalog.hpp"
+#include "bodies/types/BodyTypeCatalog.hpp"
 
 #include <cstddef>
 

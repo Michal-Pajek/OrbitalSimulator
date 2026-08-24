@@ -13,8 +13,8 @@
 #include "common/RuntimeChecks.hpp"
 #include "filesystem/ApplicationPaths.hpp"
 #include "filesystem/FileNameValidation.hpp"
-#include "simulation/bodies/Body.hpp"
-#include "simulation/bodies/types/BodyTypeCatalog.hpp"
+#include "bodies/Body.hpp"
+#include "bodies/types/BodyTypeCatalog.hpp"
 
 namespace ScenarioSaver
 {

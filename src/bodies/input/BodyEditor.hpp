@@ -3,10 +3,10 @@
 #include <utility>
 #include <vector>
 
-#include "simulation/bodies/Body.hpp"
-#include "simulation/bodies/BodyInputBase.hpp"
+#include "bodies/Body.hpp"
+#include "bodies/input/BodyInputBase.hpp"
 
-#include "simulation/bodies/types/BodyType.hpp"
+#include "bodies/types/BodyType.hpp"
 
 #include "math/Vector3D.hpp"
 

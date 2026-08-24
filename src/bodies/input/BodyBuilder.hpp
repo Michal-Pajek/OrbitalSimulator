@@ -2,8 +2,8 @@
 #include <string>
 #include <vector>
 
-#include "simulation/bodies/Body.hpp"
-#include "simulation/bodies/BodyInputBase.hpp"
+#include "bodies/Body.hpp"
+#include "bodies/input/BodyInputBase.hpp"
 
 #include "math/Vector3D.hpp"
 

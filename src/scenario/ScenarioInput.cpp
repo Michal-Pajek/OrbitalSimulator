@@ -4,7 +4,7 @@
 
 #include "input/data/DataGetter.hpp"
 #include "localization/core/TextId.hpp"
-#include "simulation/bodies/BodyBuilder.hpp"
+#include "bodies/input/BodyBuilder.hpp"
 #include "ui/ConsoleWriter.hpp"
 
 namespace ScenarioInput

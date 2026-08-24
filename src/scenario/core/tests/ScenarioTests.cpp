@@ -6,8 +6,8 @@
 
 #include "scenario/core/Scenario.hpp"
 
-#include "simulation/bodies/Body.hpp"
-#include "simulation/bodies/tests/support/TestBodyCreator.hpp"
+#include "bodies/Body.hpp"
+#include "bodies/tests/support/TestBodyCreator.hpp"
 
 namespace
 {

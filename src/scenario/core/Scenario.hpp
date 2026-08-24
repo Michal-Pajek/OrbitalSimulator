@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "common/RuntimeChecks.hpp"
-#include "simulation/bodies/Body.hpp"
+#include "bodies/Body.hpp"
 
 struct Scenario
 {

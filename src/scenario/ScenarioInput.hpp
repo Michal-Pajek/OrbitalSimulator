@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-#include "simulation/bodies/Body.hpp"
+#include "bodies/Body.hpp"
 
 namespace ScenarioInput
 {

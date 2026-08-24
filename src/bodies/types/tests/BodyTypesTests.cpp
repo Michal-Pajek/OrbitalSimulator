@@ -2,8 +2,8 @@
 #include <gtest/gtest.h>
 #include <stdexcept>
 
-#include "simulation/bodies/types/BodyType.hpp"
-#include "simulation/bodies/types/BodyTypeCatalog.hpp"
+#include "bodies/types/BodyType.hpp"
+#include "bodies/types/BodyTypeCatalog.hpp"
 
 TEST(BodyTypesTests, GetTypeExceptions)
 {

@@ -11,8 +11,8 @@
 #include "input/data/DataGetter.hpp"
 #include "input/core/Keyboard.hpp"
 #include "localization/core/TextId.hpp"
-#include "simulation/bodies/BodyBuilder.hpp"
-#include "simulation/bodies/BodyEditor.hpp"
+#include "bodies/input/BodyBuilder.hpp"
+#include "bodies/input/BodyEditor.hpp"
 #include "ui/ConsoleWriter.hpp"
 
 namespace

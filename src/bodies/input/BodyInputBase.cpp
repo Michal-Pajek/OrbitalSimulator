@@ -1,6 +1,6 @@
-#include "simulation/bodies/BodyInputBase.hpp"
+#include "bodies/input/BodyInputBase.hpp"
 
-#include "simulation/bodies/types/BodyTypeCatalog.hpp"
+#include "bodies/types/BodyTypeCatalog.hpp"
 
 #include "input/selection/BodyMassUnitSelector.hpp"
 #include "input/data/DataGetter.hpp"

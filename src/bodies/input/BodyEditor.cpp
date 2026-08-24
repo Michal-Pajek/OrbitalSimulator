@@ -1,6 +1,6 @@
-#include "simulation/bodies/BodyEditor.hpp"
+#include "bodies/input/BodyEditor.hpp"
 
-#include "simulation/bodies/types/BodyTypeCatalog.hpp"
+#include "bodies/types/BodyTypeCatalog.hpp"
 
 #include "ui/menu/Menu.hpp"
 #include "input/core/Console.hpp"

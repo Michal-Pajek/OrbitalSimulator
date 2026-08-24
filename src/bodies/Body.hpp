@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-#include "simulation/bodies/types/BodyType.hpp"
+#include "bodies/types/BodyType.hpp"
 
 #include "math/Vector3D.hpp"
 

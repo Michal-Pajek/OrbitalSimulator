@@ -2,9 +2,9 @@
 #include <string>
 #include <vector>
 
-#include "simulation/bodies/Body.hpp"
+#include "bodies/Body.hpp"
 
-#include "simulation/bodies/types/BodyType.hpp"
+#include "bodies/types/BodyType.hpp"
 
 #include "math/Vector3D.hpp"
 
