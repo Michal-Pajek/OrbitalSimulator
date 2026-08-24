@@ -1,4 +1,4 @@
-#include "scenario/ScenarioLoader.hpp"
+#include "scenario/loader/ScenarioLoader.hpp"
 
 #include <algorithm>
 #include <cstddef>

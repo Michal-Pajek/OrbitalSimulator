@@ -10,7 +10,7 @@
 #include "localization/core/TextId.hpp"
 #include "scenario/ScenarioBuilder.hpp"
 #include "scenario/ScenarioHandler.hpp"
-#include "scenario/ScenarioLoader.hpp"
+#include "scenario/loader/ScenarioLoader.hpp"
 #include "ui/ConsoleWriter.hpp"
 
 namespace
