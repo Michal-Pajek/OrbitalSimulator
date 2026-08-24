@@ -3,7 +3,7 @@
 #include <vector>
 
 #include "input/data/DataGetter.hpp"
-#include "input/OptionSelector.hpp"
+#include "input/selection/OptionSelector.hpp"
 #include "localization/core/TextId.hpp"
 #include "ui/ConsoleWriter.hpp"
 

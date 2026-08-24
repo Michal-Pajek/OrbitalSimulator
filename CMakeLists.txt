@@ -334,11 +334,27 @@ target_link_libraries(scenario_loader
     PRIVATE ui_menu
 )
 
+add_library(input_selection
+    src/input/selection/BodyMassUnitSelector.cpp
+)
+
+target_include_directories(input_selection PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(input_selection
+    PUBLIC body_types
+    PUBLIC localization_core
+    PUBLIC runtime_checks
+    PUBLIC ui
+    PUBLIC ui_menu
+    PRIVATE physics
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
     src/app/main.cpp
-    src/input/BodyMassUnitSelector.cpp
     src/scenario/ScenarioBuilder.cpp
     src/scenario/ScenarioEditor.cpp
     src/scenario/ScenarioHandler.cpp
@@ -360,6 +376,7 @@ target_link_libraries(orbital_simulator PRIVATE
     filesystem
     input_core
     input_data
+    input_selection
     localization
     math
     physics

@@ -4,7 +4,7 @@
 #include <optional>
 #include <vector>
 
-#include "input/OptionSelector.hpp"
+#include "input/selection/OptionSelector.hpp"
 
 #include "simulation/bodies/types/BodyType.hpp"
 

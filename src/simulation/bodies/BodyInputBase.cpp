@@ -2,9 +2,9 @@
 
 #include "simulation/bodies/types/BodyTypeCatalog.hpp"
 
-#include "input/BodyMassUnitSelector.hpp"
+#include "input/selection/BodyMassUnitSelector.hpp"
 #include "input/data/DataGetter.hpp"
-#include "input/OptionSelector.hpp"
+#include "input/selection/OptionSelector.hpp"
 #include "localization/core/TextId.hpp"
 #include "physics/Constants.hpp"
 #include "physics/Validation.hpp"
