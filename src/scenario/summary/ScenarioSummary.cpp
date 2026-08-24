@@ -1,9 +1,8 @@
-#include "scenario/ScenarioSummary.hpp"
+#include "scenario/summary/ScenarioSummary.hpp"
 
 #include "scenario/core/Scenario.hpp"
 
 #include "localization/core/TextId.hpp"
-#include "simulation/bodies/Body.hpp"
 #include "ui/ConsoleWriter.hpp"
 
 namespace ScenarioSummary

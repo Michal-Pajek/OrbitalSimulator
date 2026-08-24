@@ -2,7 +2,7 @@
 
 #include "scenario/core/Scenario.hpp"
 #include "scenario/ScenarioSaver.hpp"
-#include "scenario/ScenarioSummary.hpp"
+#include "scenario/summary/ScenarioSummary.hpp"
 
 #include "app/Menu.hpp"
 #include "input/data/DataGetter.hpp"

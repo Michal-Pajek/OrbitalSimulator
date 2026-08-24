@@ -3,7 +3,7 @@
 #include <stdexcept>
 
 #include "scenario/ScenarioInput.hpp"
-#include "scenario/ScenarioSummary.hpp"
+#include "scenario/summary/ScenarioSummary.hpp"
 
 #include "app/Menu.hpp"
 #include "common/RuntimeChecks.hpp"

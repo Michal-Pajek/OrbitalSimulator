@@ -255,6 +255,21 @@ target_link_libraries(runner PRIVATE
     simulation_run_config
 )
 
+add_library(scenario_summary
+    src/scenario/summary/ScenarioSummary.cpp
+)
+
+target_include_directories(scenario_summary PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(scenario_summary
+    PUBLIC body
+    PRIVATE localization_core
+    PRIVATE scenario_core
+    PRIVATE ui
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
@@ -267,7 +282,6 @@ add_executable(orbital_simulator
     src/scenario/ScenarioInput.cpp
     src/scenario/ScenarioLoader.cpp
     src/scenario/ScenarioSaver.cpp
-    src/scenario/ScenarioSummary.cpp
     src/simulation/bodies/BodyBuilder.cpp
     src/simulation/bodies/BodyInputBase.cpp
     src/simulation/bodies/BodyEditor.cpp
@@ -292,6 +306,7 @@ target_link_libraries(orbital_simulator PRIVATE
     runner
     runtime_checks
     scenario_core
+    scenario_summary
     simulation_core
     simulation_run_config
     ui
