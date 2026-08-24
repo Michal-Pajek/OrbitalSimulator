@@ -180,6 +180,21 @@ target_link_libraries(simulation_core
     PRIVATE runtime_checks
 )
 
+add_library(recording
+    src/recording/Recorder.cpp
+)
+
+target_include_directories(recording PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(recording
+    PUBLIC body
+    PUBLIC simulation_core
+    PRIVATE filesystem
+    PRIVATE runtime_checks
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
@@ -187,7 +202,6 @@ add_executable(orbital_simulator
     src/app/Menu.cpp
     src/input/BodyMassUnitSelector.cpp
     src/input/DataGetter.cpp
-    src/recording/Recorder.cpp
     src/runner/SimulationRunner.cpp
     src/scenario/ScenarioBuilder.cpp
     src/scenario/ScenarioEditor.cpp
@@ -215,6 +229,7 @@ target_link_libraries(orbital_simulator PRIVATE
     localization
     math
     physics
+    recording
     runtime_checks
     simulation_core
     ui
