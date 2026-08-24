@@ -13,7 +13,7 @@
 #include <utility>
 #include <vector>
 
-#include "scenario/ScenarioFileFormat.hpp"
+#include "scenario/file_format/ScenarioFileFormat.hpp"
 
 #include "app/Menu.hpp"
 #include "filesystem/ApplicationPaths.hpp"

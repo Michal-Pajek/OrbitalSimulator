@@ -1,4 +1,4 @@
-#include "scenario/ScenarioSaver.hpp"
+#include "scenario/saver/ScenarioSaver.hpp"
 
 #include <filesystem>
 #include <fstream>
@@ -8,7 +8,7 @@
 #include <string>
 
 #include "scenario/core/Scenario.hpp"
-#include "scenario/ScenarioFileFormat.hpp"
+#include "scenario/file_format/ScenarioFileFormat.hpp"
 
 #include "common/RuntimeChecks.hpp"
 #include "filesystem/ApplicationPaths.hpp"

@@ -270,6 +270,33 @@ target_link_libraries(scenario_summary
     PRIVATE ui
 )
 
+add_library(scenario_file_format INTERFACE)
+
+target_sources(scenario_file_format INTERFACE
+    src/scenario/file_format/ScenarioFileFormat.hpp
+)
+
+target_include_directories(scenario_file_format INTERFACE
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+add_library(scenario_saver
+    src/scenario/saver/ScenarioSaver.cpp
+)
+
+target_include_directories(scenario_saver PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(scenario_saver PRIVATE
+    body
+    body_types
+    filesystem
+    runtime_checks
+    scenario_core
+    scenario_file_format
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
@@ -281,7 +308,6 @@ add_executable(orbital_simulator
     src/scenario/ScenarioHandler.cpp
     src/scenario/ScenarioInput.cpp
     src/scenario/ScenarioLoader.cpp
-    src/scenario/ScenarioSaver.cpp
     src/simulation/bodies/BodyBuilder.cpp
     src/simulation/bodies/BodyInputBase.cpp
     src/simulation/bodies/BodyEditor.cpp
@@ -306,6 +332,8 @@ target_link_libraries(orbital_simulator PRIVATE
     runner
     runtime_checks
     scenario_core
+    scenario_file_format
+    scenario_saver
     scenario_summary
     simulation_core
     simulation_run_config

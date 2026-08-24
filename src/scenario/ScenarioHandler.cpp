@@ -1,7 +1,7 @@
 #include "scenario/ScenarioHandler.hpp"
 
 #include "scenario/core/Scenario.hpp"
-#include "scenario/ScenarioSaver.hpp"
+#include "scenario/saver/ScenarioSaver.hpp"
 #include "scenario/summary/ScenarioSummary.hpp"
 
 #include "app/Menu.hpp"
