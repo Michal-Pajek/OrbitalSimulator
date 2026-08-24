@@ -5,7 +5,7 @@
 #include "scenario/ScenarioInput.hpp"
 #include "scenario/summary/ScenarioSummary.hpp"
 
-#include "app/Menu.hpp"
+#include "ui/menu/Menu.hpp"
 #include "common/RuntimeChecks.hpp"
 #include "input/core/Console.hpp"
 #include "input/data/DataGetter.hpp"

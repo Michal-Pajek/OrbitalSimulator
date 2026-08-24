@@ -2,7 +2,7 @@
 
 #include "simulation/bodies/types/BodyTypeCatalog.hpp"
 
-#include "app/Menu.hpp"
+#include "ui/menu/Menu.hpp"
 #include "input/core/Console.hpp"
 #include "localization/core/TextId.hpp"
 #include "ui/ConsoleWriter.hpp"

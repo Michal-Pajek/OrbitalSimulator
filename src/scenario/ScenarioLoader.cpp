@@ -15,7 +15,7 @@
 
 #include "scenario/file_format/ScenarioFileFormat.hpp"
 
-#include "app/Menu.hpp"
+#include "ui/menu/Menu.hpp"
 #include "filesystem/ApplicationPaths.hpp"
 #include "filesystem/FileNameValidation.hpp"
 #include "input/data/DataGetter.hpp"

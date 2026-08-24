@@ -297,11 +297,26 @@ target_link_libraries(scenario_saver PRIVATE
     scenario_file_format
 )
 
+add_library(ui_menu
+    src/ui/menu/Menu.cpp
+)
+
+target_include_directories(ui_menu PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(ui_menu
+    PUBLIC localization_core
+    PRIVATE input_core
+    PRIVATE localization
+    PRIVATE runtime_checks
+    PRIVATE ui
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
     src/app/main.cpp
-    src/app/Menu.cpp
     src/input/BodyMassUnitSelector.cpp
     src/scenario/ScenarioBuilder.cpp
     src/scenario/ScenarioEditor.cpp
@@ -338,6 +353,7 @@ target_link_libraries(orbital_simulator PRIVATE
     simulation_core
     simulation_run_config
     ui
+    ui_menu
 )
 
 copy_resources_to_target(orbital_simulator)
@@ -355,7 +371,6 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(orbital_tests
     src/app/ExceptionHandler.cpp
-    src/app/Menu.cpp
 
     src/simulation/bodies/tests/BodyTests.cpp
     src/simulation/bodies/types/tests/BodyTypeCatalogTests.cpp
@@ -366,7 +381,7 @@ add_executable(orbital_tests
     src/localization/json/tests/JsonLocalizationParserTests.cpp
     src/localization/tests/LocalizationResourcesTests.cpp
     src/localization/tests/LocalizationTests.cpp
-    src/app/tests/MenuTests.cpp
+    src/ui/menu/tests/MenuTests.cpp
     src/physics/tests/PhysicsValidationTests.cpp
     src/common/tests/RuntimeChecksTests.cpp
     src/scenario/core/tests/ScenarioTests.cpp
@@ -392,6 +407,7 @@ target_link_libraries(orbital_tests PRIVATE
     scenario_core
     simulation_core
     ui
+    ui_menu
     GTest::gtest_main
 )
 

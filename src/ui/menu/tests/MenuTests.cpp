@@ -1,4 +1,4 @@
-#include "app/Menu.hpp"
+#include "ui/menu/Menu.hpp"
 
 #include <gtest/gtest.h>
 #include <stdexcept>

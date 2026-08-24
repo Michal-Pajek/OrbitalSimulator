@@ -2,7 +2,7 @@
 #include <optional>
 #include <vector>
 
-#include "app/Menu.hpp"
+#include "ui/menu/Menu.hpp"
 #include "common/RuntimeChecks.hpp"
 #include "localization/core/TextId.hpp"
 #include "ui/ConsoleWriter.hpp"

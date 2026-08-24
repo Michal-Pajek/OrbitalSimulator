@@ -4,7 +4,7 @@
 #include "scenario/saver/ScenarioSaver.hpp"
 #include "scenario/summary/ScenarioSummary.hpp"
 
-#include "app/Menu.hpp"
+#include "ui/menu/Menu.hpp"
 #include "input/data/DataGetter.hpp"
 #include "localization/core/TextId.hpp"
 #include "recording/Recorder.hpp"
