@@ -134,6 +134,23 @@ target_link_libraries(body_types
     PRIVATE runtime_checks
 )
 
+add_library(body
+    src/simulation/bodies/Body.cpp
+)
+
+target_include_directories(body PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(body
+    PUBLIC body_types
+    PUBLIC math
+    PRIVATE localization_core
+    PRIVATE physics
+    PRIVATE runtime_checks
+    PRIVATE ui
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
@@ -152,7 +169,6 @@ add_executable(orbital_simulator
     src/scenario/ScenarioLoader.cpp
     src/scenario/ScenarioSaver.cpp
     src/scenario/ScenarioSummary.cpp
-    src/simulation/bodies/Body.cpp
     src/simulation/bodies/BodyBuilder.cpp
     src/simulation/bodies/BodyInputBase.cpp
     src/simulation/bodies/BodyEditor.cpp
@@ -166,6 +182,7 @@ target_include_directories(orbital_simulator PRIVATE
 )
 
 target_link_libraries(orbital_simulator PRIVATE
+    body
     body_types
     platform
     filesystem
@@ -193,7 +210,6 @@ add_executable(orbital_tests
     src/app/ExceptionHandler.cpp
     src/app/Menu.cpp
     src/input/Keyboard.cpp
-    src/simulation/bodies/Body.cpp
     src/simulation/bodies/BodyStepState.cpp
     src/simulation/Simulation.cpp
 
@@ -220,6 +236,7 @@ target_include_directories(orbital_tests PRIVATE
 )
 
 target_link_libraries(orbital_tests PRIVATE
+    body
     body_types
     filesystem
     localization
