@@ -1,5 +1,5 @@
 #pragma once
-#include "simulation/SimulationRunConfig.hpp"
+#include "simulation/run_config/SimulationRunConfig.hpp"
 
 namespace SimulationRunConfigBuilder
 {

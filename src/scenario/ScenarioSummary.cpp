@@ -1,6 +1,6 @@
 #include "scenario/ScenarioSummary.hpp"
 
-#include "scenario/Scenario.hpp"
+#include "scenario/core/Scenario.hpp"
 
 #include "localization/core/TextId.hpp"
 #include "simulation/bodies/Body.hpp"

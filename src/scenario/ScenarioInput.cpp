@@ -1,6 +1,6 @@
 #include "scenario/ScenarioInput.hpp"
 
-#include "scenario/Scenario.hpp"
+#include "scenario/core/Scenario.hpp"
 
 #include "input/data/DataGetter.hpp"
 #include "localization/core/TextId.hpp"

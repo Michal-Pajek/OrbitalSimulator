@@ -210,13 +210,57 @@ target_link_libraries(input_data
     PRIVATE filesystem
 )
 
+add_library(scenario_core INTERFACE)
+
+target_sources(scenario_core INTERFACE
+    src/scenario/core/Scenario.hpp
+)
+
+target_include_directories(scenario_core INTERFACE
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(scenario_core INTERFACE
+    body
+    runtime_checks
+)
+
+add_library(simulation_run_config INTERFACE)
+
+target_sources(simulation_run_config INTERFACE
+    src/simulation/run_config/SimulationRunConfig.hpp
+)
+
+target_include_directories(simulation_run_config INTERFACE
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(simulation_run_config INTERFACE
+    runtime_checks
+)
+
+add_library(runner
+    src/runner/SimulationRunner.cpp
+)
+
+target_include_directories(runner PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(runner PRIVATE
+    recording
+    runtime_checks
+    scenario_core
+    simulation_core
+    simulation_run_config
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
     src/app/main.cpp
     src/app/Menu.cpp
     src/input/BodyMassUnitSelector.cpp
-    src/runner/SimulationRunner.cpp
     src/scenario/ScenarioBuilder.cpp
     src/scenario/ScenarioEditor.cpp
     src/scenario/ScenarioHandler.cpp
@@ -245,8 +289,11 @@ target_link_libraries(orbital_simulator PRIVATE
     math
     physics
     recording
+    runner
     runtime_checks
+    scenario_core
     simulation_core
+    simulation_run_config
     ui
 )
 
@@ -279,7 +326,7 @@ add_executable(orbital_tests
     src/app/tests/MenuTests.cpp
     src/physics/tests/PhysicsValidationTests.cpp
     src/common/tests/RuntimeChecksTests.cpp
-    src/scenario/tests/ScenarioTests.cpp
+    src/scenario/core/tests/ScenarioTests.cpp
     src/simulation/core/tests/SimulationsTests.cpp
     src/math/tests/Vector3DTests.cpp
     src/simulation/bodies/tests/support/TestBodyCreator.cpp
@@ -299,6 +346,7 @@ target_link_libraries(orbital_tests PRIVATE
     math
     physics
     runtime_checks
+    scenario_core
     simulation_core
     ui
     GTest::gtest_main

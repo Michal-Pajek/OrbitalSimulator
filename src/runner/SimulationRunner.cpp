@@ -3,8 +3,8 @@
 #include "common/RuntimeChecks.hpp"
 #include "recording/Recorder.hpp"
 #include "simulation/core/Simulation.hpp"
-#include "simulation/SimulationRunConfig.hpp"
-#include "scenario/Scenario.hpp"
+#include "simulation/run_config/SimulationRunConfig.hpp"
+#include "scenario/core/Scenario.hpp"
 
 namespace SimulationRunner
 {

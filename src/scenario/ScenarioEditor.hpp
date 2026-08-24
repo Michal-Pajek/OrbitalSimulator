@@ -2,7 +2,7 @@
 #include <optional>
 #include <utility>
 
-#include "scenario/Scenario.hpp"
+#include "scenario/core/Scenario.hpp"
 
 class ScenarioEditor
 {

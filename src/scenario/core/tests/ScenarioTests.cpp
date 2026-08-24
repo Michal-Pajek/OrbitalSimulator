@@ -4,7 +4,7 @@
 #include <utility>
 #include <vector>
 
-#include "scenario/Scenario.hpp"
+#include "scenario/core/Scenario.hpp"
 
 #include "simulation/bodies/Body.hpp"
 #include "simulation/bodies/tests/support/TestBodyCreator.hpp"

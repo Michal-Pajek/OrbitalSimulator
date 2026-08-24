@@ -1,7 +1,7 @@
 #pragma once
 #include <optional>
 
-#include "scenario/Scenario.hpp"
+#include "scenario/core/Scenario.hpp"
 
 namespace ScenarioLoader
 {

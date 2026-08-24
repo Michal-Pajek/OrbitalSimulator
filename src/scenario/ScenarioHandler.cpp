@@ -1,6 +1,6 @@
 #include "scenario/ScenarioHandler.hpp"
 
-#include "scenario/Scenario.hpp"
+#include "scenario/core/Scenario.hpp"
 #include "scenario/ScenarioSaver.hpp"
 #include "scenario/ScenarioSummary.hpp"
 

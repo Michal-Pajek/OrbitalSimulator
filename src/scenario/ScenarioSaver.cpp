@@ -7,7 +7,7 @@
 #include <ostream>
 #include <string>
 
-#include "scenario/Scenario.hpp"
+#include "scenario/core/Scenario.hpp"
 #include "scenario/ScenarioFileFormat.hpp"
 
 #include "common/RuntimeChecks.hpp"
