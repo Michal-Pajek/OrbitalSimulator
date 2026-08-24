@@ -4,7 +4,7 @@
 #include <unordered_set>
 
 #include "common/RuntimeChecks.hpp"
-#include "input/Keyboard.hpp"
+#include "input/core/Keyboard.hpp"
 #include "localization/LocalizationManager.hpp"
 #include "ui/ConsoleWriter.hpp"
 

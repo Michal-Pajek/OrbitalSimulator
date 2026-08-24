@@ -7,9 +7,9 @@
 
 #include "app/Menu.hpp"
 #include "common/RuntimeChecks.hpp"
-#include "input/Console.hpp"
+#include "input/core/Console.hpp"
 #include "input/DataGetter.hpp"
-#include "input/Keyboard.hpp"
+#include "input/core/Keyboard.hpp"
 #include "localization/core/TextId.hpp"
 #include "simulation/bodies/BodyBuilder.hpp"
 #include "simulation/bodies/BodyEditor.hpp"

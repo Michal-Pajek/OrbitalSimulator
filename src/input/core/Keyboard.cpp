@@ -1,4 +1,4 @@
-#include "input/Keyboard.hpp"
+#include "input/core/Keyboard.hpp"
 
 #include <cctype>
 

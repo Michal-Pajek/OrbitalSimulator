@@ -4,8 +4,8 @@
 #include "app/Menu.hpp"
 
 #include "common/RuntimeChecks.hpp"
-#include "input/Console.hpp"
-#include "input/Keyboard.hpp"
+#include "input/core/Console.hpp"
+#include "input/core/Keyboard.hpp"
 #include "localization/LocalizationManager.hpp"
 #include "localization/core/TextId.hpp"
 #include "scenario/ScenarioBuilder.hpp"

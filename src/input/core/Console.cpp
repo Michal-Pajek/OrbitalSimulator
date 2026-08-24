@@ -1,4 +1,4 @@
-#include "input/Console.hpp"
+#include "input/core/Console.hpp"
 
 #include <cstdlib>
 

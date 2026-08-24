@@ -151,15 +151,26 @@ target_link_libraries(body
     PRIVATE ui
 )
 
+add_library(input_core
+    src/input/core/Console.cpp
+    src/input/core/Keyboard.cpp
+)
+
+target_include_directories(input_core PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(input_core
+    PRIVATE runtime_checks
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
     src/app/main.cpp
     src/app/Menu.cpp
     src/input/BodyMassUnitSelector.cpp
-    src/input/Console.cpp
     src/input/DataGetter.cpp
-    src/input/Keyboard.cpp
     src/recording/Recorder.cpp
     src/runner/SimulationRunner.cpp
     src/scenario/ScenarioBuilder.cpp
@@ -186,6 +197,7 @@ target_link_libraries(orbital_simulator PRIVATE
     body_types
     platform
     filesystem
+    input_core
     localization
     math
     physics
@@ -209,7 +221,6 @@ FetchContent_MakeAvailable(googletest)
 add_executable(orbital_tests
     src/app/ExceptionHandler.cpp
     src/app/Menu.cpp
-    src/input/Keyboard.cpp
     src/simulation/bodies/BodyStepState.cpp
     src/simulation/Simulation.cpp
 
@@ -241,6 +252,7 @@ target_link_libraries(orbital_tests PRIVATE
     filesystem
     localization
     localization_json
+    input_core
     math
     physics
     runtime_checks

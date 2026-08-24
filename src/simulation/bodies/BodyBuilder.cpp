@@ -5,7 +5,7 @@
 #include "simulation/bodies/BodyEditor.hpp"
 
 #include "app/Menu.hpp"
-#include "input/Console.hpp"
+#include "input/core/Console.hpp"
 #include "localization/core/TextId.hpp"
 #include "ui/ConsoleWriter.hpp"
 
