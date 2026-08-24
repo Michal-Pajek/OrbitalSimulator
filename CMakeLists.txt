@@ -390,6 +390,23 @@ target_link_libraries(body_input
     PRIVATE ui_menu
 )
 
+add_library(scenario_input
+    src/scenario/input/ScenarioInput.cpp
+)
+
+target_include_directories(scenario_input PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(scenario_input
+    PUBLIC body
+    PRIVATE body_input
+    PRIVATE input_data
+    PRIVATE localization_core
+    PRIVATE scenario_core
+    PRIVATE ui
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
@@ -397,7 +414,6 @@ add_executable(orbital_simulator
     src/scenario/ScenarioBuilder.cpp
     src/scenario/ScenarioEditor.cpp
     src/scenario/ScenarioHandler.cpp
-    src/scenario/ScenarioInput.cpp
 )
 
 target_include_directories(orbital_simulator PRIVATE
@@ -420,6 +436,7 @@ target_link_libraries(orbital_simulator PRIVATE
     runner
     runtime_checks
     scenario_core
+    scenario_input
     scenario_loader
     scenario_saver
     scenario_summary
@@ -451,17 +468,17 @@ add_executable(orbital_tests
     src/bodies/tests/support/TestBodyCreator.cpp
     src/bodies/types/tests/BodyTypeCatalogTests.cpp
     src/bodies/types/tests/BodyTypesTests.cpp
+    src/common/tests/RuntimeChecksTests.cpp
     src/filesystem/tests/FileNameValidationTests.cpp
     src/localization/json/tests/JsonLanguageSettingsParserTests.cpp
     src/localization/json/tests/JsonLocalizationParserTests.cpp
     src/localization/tests/LocalizationResourcesTests.cpp
     src/localization/tests/LocalizationTests.cpp
-    src/ui/menu/tests/MenuTests.cpp
+    src/math/tests/Vector3DTests.cpp
     src/physics/tests/PhysicsValidationTests.cpp
-    src/common/tests/RuntimeChecksTests.cpp
     src/scenario/core/tests/ScenarioTests.cpp
     src/simulation/core/tests/SimulationsTests.cpp
-    src/math/tests/Vector3DTests.cpp
+    src/ui/menu/tests/MenuTests.cpp
 )
 
 target_include_directories(orbital_tests PRIVATE

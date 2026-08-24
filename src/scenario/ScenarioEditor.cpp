@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-#include "scenario/ScenarioInput.hpp"
+#include "scenario/input/ScenarioInput.hpp"
 #include "scenario/summary/ScenarioSummary.hpp"
 
 #include "ui/menu/Menu.hpp"

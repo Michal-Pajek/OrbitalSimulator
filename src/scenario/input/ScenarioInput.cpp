@@ -1,4 +1,4 @@
-#include "scenario/ScenarioInput.hpp"
+#include "scenario/input/ScenarioInput.hpp"
 
 #include "scenario/core/Scenario.hpp"
 

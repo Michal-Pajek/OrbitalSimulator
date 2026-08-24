@@ -4,7 +4,7 @@
 #include <utility>
 
 #include "scenario/ScenarioEditor.hpp"
-#include "scenario/ScenarioInput.hpp"
+#include "scenario/input/ScenarioInput.hpp"
 
 namespace ScenarioBuilder
 {
