@@ -10,3 +10,5 @@ target_include_directories(filesystem PUBLIC
 target_link_libraries(filesystem
     PRIVATE runtime_checks
 )
+
+add_subdirectory(tests)

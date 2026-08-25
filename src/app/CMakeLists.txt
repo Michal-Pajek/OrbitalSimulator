@@ -15,3 +15,5 @@ target_link_libraries(app
     PRIVATE ui
     PRIVATE ui_menu
 )
+
+add_subdirectory(tests)

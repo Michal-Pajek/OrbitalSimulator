@@ -9,3 +9,5 @@ target_include_directories(math PUBLIC
 target_link_libraries(math
     PRIVATE runtime_checks
 )
+
+add_subdirectory(tests)

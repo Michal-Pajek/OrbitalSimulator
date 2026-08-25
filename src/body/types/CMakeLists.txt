@@ -11,3 +11,5 @@ target_link_libraries(body_types
     PRIVATE physics
     PRIVATE runtime_checks
 )
+
+add_subdirectory(tests)

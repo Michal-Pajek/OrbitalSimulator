@@ -13,3 +13,5 @@ target_link_libraries(ui_menu
     PRIVATE runtime_checks
     PRIVATE ui
 )
+
+add_subdirectory(tests)

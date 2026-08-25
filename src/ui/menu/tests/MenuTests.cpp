@@ -1,8 +1,8 @@
-#include "ui/menu/Menu.hpp"
-
 #include <gtest/gtest.h>
 #include <stdexcept>
 #include <vector>
+
+#include "ui/menu/Menu.hpp"
 
 namespace
 {

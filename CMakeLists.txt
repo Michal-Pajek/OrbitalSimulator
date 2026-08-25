@@ -14,6 +14,8 @@ function(copy_resources_to_target target_name)
     )
 endfunction()
 
+add_executable(orbital_tests)
+
 add_subdirectory(src/common)
 add_subdirectory(src/math)
 add_subdirectory(src/physics)
@@ -62,40 +64,7 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(googletest)
 
-add_executable(orbital_tests
-    src/app/tests/ExceptionHandlerTests.cpp
-    src/body/tests/BodyTests.cpp
-    src/body/tests/support/TestBodyCreator.cpp
-    src/body/types/tests/BodyTypeCatalogTests.cpp
-    src/body/types/tests/BodyTypesTests.cpp
-    src/common/runtime_checks/tests/RuntimeChecksTests.cpp
-    src/filesystem/tests/FileNameValidationTests.cpp
-    src/localization/json/tests/JsonLanguageSettingsParserTests.cpp
-    src/localization/json/tests/JsonLocalizationParserTests.cpp
-    src/localization/tests/LocalizationResourcesTests.cpp
-    src/localization/tests/LocalizationTests.cpp
-    src/math/tests/Vector3DTests.cpp
-    src/physics/tests/PhysicsValidationTests.cpp
-    src/scenario/core/tests/ScenarioTests.cpp
-    src/simulation/core/tests/SimulationsTests.cpp
-    src/ui/menu/tests/MenuTests.cpp
-)
-
 target_link_libraries(orbital_tests PRIVATE
-    app
-    body
-    body_types
-    filesystem
-    localization
-    localization_json
-    input_core
-    math
-    physics
-    runtime_checks
-    scenario_core
-    simulation_core
-    ui
-    ui_menu
     GTest::gtest_main
 )
 

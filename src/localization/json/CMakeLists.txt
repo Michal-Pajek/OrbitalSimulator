@@ -13,3 +13,5 @@ target_link_libraries(localization_json
     PUBLIC localization_core
     PRIVATE runtime_checks
 )
+
+add_subdirectory(tests)

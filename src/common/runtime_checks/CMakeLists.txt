@@ -5,3 +5,5 @@ add_library(runtime_checks
 target_include_directories(runtime_checks PUBLIC
     ${PROJECT_SOURCE_DIR}/src
 )
+
+add_subdirectory(tests)

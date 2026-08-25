@@ -18,3 +18,4 @@ target_link_libraries(body
 )
 
 add_subdirectory(input)
+add_subdirectory(tests)

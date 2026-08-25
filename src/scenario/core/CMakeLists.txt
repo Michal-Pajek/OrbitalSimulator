@@ -12,3 +12,5 @@ target_link_libraries(scenario_core INTERFACE
     body
     runtime_checks
 )
+
+add_subdirectory(tests)

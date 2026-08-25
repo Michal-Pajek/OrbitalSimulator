@@ -13,3 +13,5 @@ target_link_libraries(simulation_core
     PRIVATE physics
     PRIVATE runtime_checks
 )
+
+add_subdirectory(tests)

@@ -9,3 +9,5 @@ target_include_directories(physics PUBLIC
 target_link_libraries(physics
     PUBLIC math
 )
+
+add_subdirectory(tests)
