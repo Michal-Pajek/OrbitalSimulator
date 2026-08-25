@@ -1,19 +1,19 @@
-#include "scenario/ScenarioEditor.hpp"
+#include "scenario/editor/ScenarioEditor.hpp"
 
 #include <stdexcept>
 
 #include "scenario/input/ScenarioInput.hpp"
 #include "scenario/summary/ScenarioSummary.hpp"
 
-#include "ui/menu/Menu.hpp"
-#include "common/RuntimeChecks.hpp"
-#include "input/core/Console.hpp"
-#include "input/data/DataGetter.hpp"
-#include "input/core/Keyboard.hpp"
-#include "localization/core/TextId.hpp"
 #include "bodies/input/BodyBuilder.hpp"
 #include "bodies/input/BodyEditor.hpp"
+#include "common/RuntimeChecks.hpp"
+#include "input/core/Console.hpp"
+#include "input/core/Keyboard.hpp"
+#include "input/data/DataGetter.hpp"
+#include "localization/core/TextId.hpp"
 #include "ui/ConsoleWriter.hpp"
+#include "ui/menu/Menu.hpp"
 
 namespace
 {

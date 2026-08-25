@@ -407,12 +407,32 @@ target_link_libraries(scenario_input
     PRIVATE ui
 )
 
+add_library(scenario_editor
+    src/scenario/editor/ScenarioEditor.cpp
+)
+
+target_include_directories(scenario_editor PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(scenario_editor
+    PUBLIC scenario_core
+    PRIVATE body_input
+    PRIVATE input_core
+    PRIVATE input_data
+    PRIVATE localization_core
+    PRIVATE runtime_checks
+    PRIVATE scenario_input
+    PRIVATE scenario_summary
+    PRIVATE ui
+    PRIVATE ui_menu
+)
+
 add_executable(orbital_simulator
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
     src/app/main.cpp
     src/scenario/ScenarioBuilder.cpp
-    src/scenario/ScenarioEditor.cpp
     src/scenario/ScenarioHandler.cpp
 )
 
@@ -436,6 +456,7 @@ target_link_libraries(orbital_simulator PRIVATE
     runner
     runtime_checks
     scenario_core
+    scenario_editor
     scenario_input
     scenario_loader
     scenario_saver

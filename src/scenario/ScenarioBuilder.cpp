@@ -3,7 +3,7 @@
 #include <optional>
 #include <utility>
 
-#include "scenario/ScenarioEditor.hpp"
+#include "scenario/editor/ScenarioEditor.hpp"
 #include "scenario/input/ScenarioInput.hpp"
 
 namespace ScenarioBuilder
