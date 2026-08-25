@@ -1,3 +1,5 @@
+add_subdirectory(types)
+
 add_library(body
     Body.cpp
 )
@@ -14,3 +16,5 @@ target_link_libraries(body
     PRIVATE runtime_checks
     PRIVATE ui
 )
+
+add_subdirectory(input)

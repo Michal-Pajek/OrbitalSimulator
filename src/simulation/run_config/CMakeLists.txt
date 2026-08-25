@@ -11,3 +11,5 @@ target_include_directories(simulation_run_config INTERFACE
 target_link_libraries(simulation_run_config INTERFACE
     runtime_checks
 )
+
+add_subdirectory(builder)

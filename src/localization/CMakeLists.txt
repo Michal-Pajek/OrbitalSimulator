@@ -1,3 +1,6 @@
+add_subdirectory(core)
+add_subdirectory(json)
+
 add_library(localization
     LocalizationManager.cpp
 )
