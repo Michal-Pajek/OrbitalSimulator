@@ -1,4 +1,4 @@
-#include "scenario/ScenarioBuilder.hpp"
+#include "scenario/builder/ScenarioBuilder.hpp"
 
 #include <optional>
 #include <utility>

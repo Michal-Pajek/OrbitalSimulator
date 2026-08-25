@@ -8,7 +8,7 @@
 #include "input/core/Keyboard.hpp"
 #include "localization/LocalizationManager.hpp"
 #include "localization/core/TextId.hpp"
-#include "scenario/ScenarioBuilder.hpp"
+#include "scenario/builder/ScenarioBuilder.hpp"
 #include "scenario/ScenarioHandler.hpp"
 #include "scenario/loader/ScenarioLoader.hpp"
 #include "ui/ConsoleWriter.hpp"
