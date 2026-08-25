@@ -3,61 +3,12 @@
 #include "app/ExceptionHandler.hpp"
 #include "ui/menu/Menu.hpp"
 
-#include "common/RuntimeChecks.hpp"
 #include "input/core/Console.hpp"
 #include "input/core/Keyboard.hpp"
 #include "localization/LocalizationManager.hpp"
 #include "localization/core/TextId.hpp"
-#include "scenario/builder/ScenarioBuilder.hpp"
-#include "scenario/ScenarioHandler.hpp"
-#include "scenario/loader/ScenarioLoader.hpp"
+#include "scenario/handler/ScenarioHandler.hpp"
 #include "ui/ConsoleWriter.hpp"
-
-namespace
-{
-	void buildAndHandleScenario()
-	{
-		auto scenario{ ScenarioBuilder::buildScenario() };
-
-		if (scenario) {
-			ConsoleWriter::writeLine(TextId::ScenarioCreatedSuccessfully);
-			ScenarioHandler handler{ *scenario };
-			handler.handleScenario(ScenarioHandlingConfig{ .printSummary = false });
-		}
-		else {
-			ConsoleWriter::writeLine('\n', TextId::ScenarioCreationCanceled);
-		}
-	}
-
-	void loadAndHandleScenario()
-	{
-		auto result{ ScenarioLoader::getScenario() };
-
-		switch (result.status) {
-		case ScenarioLoader::LoadStatus::Loaded:
-		{
-			RuntimeChecks::ensure(result.scenario.has_value(), RuntimeChecks::Type::Logic, "ScenarioLoader returned Loaded status without a scenario");
-
-			ConsoleWriter::writeLine(TextId::ScenarioLoadedSuccessfully, '\n');
-			ScenarioHandler handler{ *result.scenario };
-			handler.handleScenario(ScenarioHandlingConfig{ .askToSave = false });
-			break;
-		}
-
-		case ScenarioLoader::LoadStatus::Canceled:
-			ConsoleWriter::writeLine(TextId::ScenarioLoadingCanceled);
-			break;
-
-		case ScenarioLoader::LoadStatus::NoSavedScenarios:
-			ConsoleWriter::writeLine(TextId::ThereAreNoSavedScenarios);
-			break;
-
-		case ScenarioLoader::LoadStatus::Failed:
-			ConsoleWriter::writeLine(TextId::ScenarioLoadingFailed);
-			break;
-		}
-	}
-} // anonymous namespace
 
 void Application::eventLoop()
 {
@@ -83,7 +34,7 @@ void Application::eventLoop()
 void Application::buildScenario()
 {
 	enterModule(TextId::ScenarioBuilder);
-	ExceptionHandler::execute(buildAndHandleScenario);
+	ExceptionHandler::execute(ScenarioHandler::buildAndHandleScenario);
 	exitModule();
 }
 
@@ -102,7 +53,7 @@ void Application::exitModule()
 void Application::loadScenario()
 {
 	Console::clearScreen();
-	ExceptionHandler::execute(loadAndHandleScenario);
+	ExceptionHandler::execute(ScenarioHandler::loadAndHandleScenario);
 
 	exitModule();
 }

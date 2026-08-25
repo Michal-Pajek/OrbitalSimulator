@@ -1,16 +1,19 @@
-#include "scenario/ScenarioHandler.hpp"
+#include "scenario/handler/ScenarioHandler.hpp"
 
+#include "scenario/builder/ScenarioBuilder.hpp"
 #include "scenario/core/Scenario.hpp"
+#include "scenario/loader/ScenarioLoader.hpp"
 #include "scenario/saver/ScenarioSaver.hpp"
 #include "scenario/summary/ScenarioSummary.hpp"
 
-#include "ui/menu/Menu.hpp"
+#include "common/RuntimeChecks.hpp"
 #include "input/data/DataGetter.hpp"
 #include "localization/core/TextId.hpp"
 #include "recording/Recorder.hpp"
 #include "runner/SimulationRunner.hpp"
 #include "simulation/run_config/builder/SimulationRunConfigBuilder.hpp"
 #include "ui/ConsoleWriter.hpp"
+#include "ui/menu/Menu.hpp"
 
 namespace
 {
@@ -20,6 +23,49 @@ namespace
 		return DataGetter::getFileBaseName();
 	}
 } // anonymous namespace
+
+void ScenarioHandler::buildAndHandleScenario()
+{
+	auto scenario{ ScenarioBuilder::buildScenario() };
+
+	if (scenario) {
+		ConsoleWriter::writeLine(TextId::ScenarioCreatedSuccessfully);
+		ScenarioHandler handler{ *scenario };
+		handler.handleScenario(ScenarioHandlingConfig{ .printSummary = false });
+	}
+	else {
+		ConsoleWriter::writeLine('\n', TextId::ScenarioCreationCanceled);
+	}
+}
+
+void ScenarioHandler::loadAndHandleScenario()
+{
+	auto result{ ScenarioLoader::getScenario() };
+
+	switch (result.status) {
+	case ScenarioLoader::LoadStatus::Loaded:
+	{
+		RuntimeChecks::ensure(result.scenario.has_value(), RuntimeChecks::Type::Logic, "ScenarioLoader returned Loaded status without a scenario");
+
+		ConsoleWriter::writeLine(TextId::ScenarioLoadedSuccessfully, '\n');
+		ScenarioHandler handler{ *result.scenario };
+		handler.handleScenario(ScenarioHandlingConfig{ .askToSave = false });
+		break;
+	}
+
+	case ScenarioLoader::LoadStatus::Canceled:
+		ConsoleWriter::writeLine(TextId::ScenarioLoadingCanceled);
+		break;
+
+	case ScenarioLoader::LoadStatus::NoSavedScenarios:
+		ConsoleWriter::writeLine(TextId::ThereAreNoSavedScenarios);
+		break;
+
+	case ScenarioLoader::LoadStatus::Failed:
+		ConsoleWriter::writeLine(TextId::ScenarioLoadingFailed);
+		break;
+	}
+}
 
 void ScenarioHandler::handleScenario(const ScenarioHandlingConfig& config) const
 {

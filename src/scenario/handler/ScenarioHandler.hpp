@@ -13,6 +13,8 @@ struct ScenarioHandlingConfig
 class ScenarioHandler
 {
 public:
+	static void buildAndHandleScenario();
+	static void loadAndHandleScenario();
 	explicit ScenarioHandler(const Scenario& scenario) : m_scenario{ scenario } {}
 	void handleScenario(const ScenarioHandlingConfig& config = {}) const;
 private:
