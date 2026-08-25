@@ -494,33 +494,7 @@ target_include_directories(orbital_simulator PRIVATE
 
 target_link_libraries(orbital_simulator PRIVATE
     app
-    body
-    body_input
-    body_types
     platform
-    filesystem
-    input_core
-    input_data
-    input_selection
-    localization
-    math
-    physics
-    recording
-    runner
-    runtime_checks
-    scenario_builder
-    scenario_core
-    scenario_editor
-    scenario_handler
-    scenario_input
-    scenario_loader
-    scenario_saver
-    scenario_summary
-    simulation_core
-    simulation_run_config
-    simulation_run_config_builder
-    ui
-    ui_menu
 )
 
 copy_resources_to_target(orbital_simulator)
