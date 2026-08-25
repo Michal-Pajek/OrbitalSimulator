@@ -466,9 +466,25 @@ target_link_libraries(scenario_handler PRIVATE
     ui_menu
 )
 
-add_executable(orbital_simulator
+add_library(app
     src/app/Application.cpp
     src/app/ExceptionHandler.cpp
+)
+
+target_include_directories(app PUBLIC
+    ${PROJECT_SOURCE_DIR}/src
+)
+
+target_link_libraries(app
+    PUBLIC localization_core
+    PRIVATE input_core
+    PRIVATE localization
+    PRIVATE scenario_handler
+    PRIVATE ui
+    PRIVATE ui_menu
+)
+
+add_executable(orbital_simulator
     src/app/main.cpp
 )
 
@@ -477,6 +493,7 @@ target_include_directories(orbital_simulator PRIVATE
 )
 
 target_link_libraries(orbital_simulator PRIVATE
+    app
     body
     body_input
     body_types
@@ -520,8 +537,6 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 add_executable(orbital_tests
-    src/app/ExceptionHandler.cpp
-
     src/app/tests/ExceptionHandlerTests.cpp
     src/bodies/tests/BodyTests.cpp
     src/bodies/tests/support/TestBodyCreator.cpp
@@ -545,6 +560,7 @@ target_include_directories(orbital_tests PRIVATE
 )
 
 target_link_libraries(orbital_tests PRIVATE
+    app
     body
     body_types
     filesystem

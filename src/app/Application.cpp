@@ -6,7 +6,6 @@
 #include "input/core/Console.hpp"
 #include "input/core/Keyboard.hpp"
 #include "localization/LocalizationManager.hpp"
-#include "localization/core/TextId.hpp"
 #include "scenario/handler/ScenarioHandler.hpp"
 #include "ui/ConsoleWriter.hpp"
 
