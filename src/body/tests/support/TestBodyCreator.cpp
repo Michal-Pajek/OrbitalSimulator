@@ -1,11 +1,11 @@
-#include "bodies/tests/support/TestBodyCreator.hpp"
+#include "body/tests/support/TestBodyCreator.hpp"
 
 #include <cstddef>
 #include <numeric>
 #include <stdexcept>
 
-#include "bodies/types/BodyType.hpp"
-#include "bodies/types/BodyTypeCatalog.hpp"
+#include "body/types/BodyType.hpp"
+#include "body/types/BodyTypeCatalog.hpp"
 
 namespace TestBodyCreator
 {

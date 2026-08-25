@@ -15,15 +15,15 @@
 
 #include "scenario/file_format/ScenarioFileFormat.hpp"
 
-#include "ui/menu/Menu.hpp"
+#include "body/Body.hpp"
+#include "body/types/BodyTypeCatalog.hpp"
 #include "filesystem/ApplicationPaths.hpp"
 #include "filesystem/FileNameValidation.hpp"
 #include "input/data/DataGetter.hpp"
 #include "localization/core/TextId.hpp"
 #include "math/Vector3D.hpp"
-#include "bodies/Body.hpp"
-#include "bodies/types/BodyTypeCatalog.hpp"
 #include "ui/ConsoleWriter.hpp"
+#include "ui/menu/Menu.hpp"
 
 namespace ScenarioLoader
 {

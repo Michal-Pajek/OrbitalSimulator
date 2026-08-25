@@ -2,9 +2,9 @@
 
 #include "scenario/core/Scenario.hpp"
 
+#include "body/input/BodyBuilder.hpp"
 #include "input/data/DataGetter.hpp"
 #include "localization/core/TextId.hpp"
-#include "bodies/input/BodyBuilder.hpp"
 #include "ui/ConsoleWriter.hpp"
 
 namespace ScenarioInput

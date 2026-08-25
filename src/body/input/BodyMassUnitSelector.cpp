@@ -1,8 +1,9 @@
-#include "input/selection/BodyMassUnitSelector.hpp"
+#include "body/input/BodyMassUnitSelector.hpp"
+
+#include "body/types/BodyTypeCatalog.hpp"
 
 #include "localization/core/TextId.hpp"
 #include "physics/Constants.hpp"
-#include "bodies/types/BodyTypeCatalog.hpp"
 
 namespace
 {

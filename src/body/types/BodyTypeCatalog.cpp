@@ -1,8 +1,8 @@
-#include "bodies/types/BodyTypeCatalog.hpp"
+#include "body/types/BodyTypeCatalog.hpp"
 
 #include <cstddef>
 
-#include "common/RuntimeChecks.hpp"
+#include "common/runtime_checks/RuntimeChecks.hpp"
 #include "localization/core/TextId.hpp"
 #include "physics/Constants.hpp"
 

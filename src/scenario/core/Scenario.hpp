@@ -4,8 +4,8 @@
 #include <utility>
 #include <vector>
 
-#include "common/RuntimeChecks.hpp"
-#include "bodies/Body.hpp"
+#include "body/Body.hpp"
+#include "common/runtime_checks/RuntimeChecks.hpp"
 
 struct Scenario
 {

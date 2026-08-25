@@ -1,11 +1,11 @@
-#include "bodies/Body.hpp"
+#include "body/Body.hpp"
 
 #include <cmath>
 #include <cstddef>
 
-#include "bodies/types/BodyTypeCatalog.hpp"
+#include "body/types/BodyTypeCatalog.hpp"
 
-#include "common/RuntimeChecks.hpp"
+#include "common/runtime_checks/RuntimeChecks.hpp"
 #include "localization/core/TextId.hpp"
 #include "physics/Constants.hpp"
 #include "physics/Validation.hpp"

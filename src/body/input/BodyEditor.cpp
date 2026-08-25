@@ -1,11 +1,11 @@
-#include "bodies/input/BodyEditor.hpp"
+#include "body/input/BodyEditor.hpp"
 
-#include "bodies/types/BodyTypeCatalog.hpp"
+#include "body/types/BodyTypeCatalog.hpp"
 
-#include "ui/menu/Menu.hpp"
 #include "input/core/Console.hpp"
 #include "localization/core/TextId.hpp"
 #include "ui/ConsoleWriter.hpp"
+#include "ui/menu/Menu.hpp"
 
 void BodyEditor::editBody()
 {

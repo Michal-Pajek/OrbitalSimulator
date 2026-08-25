@@ -8,7 +8,7 @@
 #include "localization/json/JsonLanguageSettingsParser.hpp"
 #include "localization/json/JsonLocalizationParser.hpp"
 
-#include "common/RuntimeChecks.hpp"
+#include "common/runtime_checks/RuntimeChecks.hpp"
 
 namespace JsonDataStorage
 {

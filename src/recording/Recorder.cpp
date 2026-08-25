@@ -3,10 +3,10 @@
 #include <iomanip>
 #include <ios>
 
-#include "common/RuntimeChecks.hpp"
+#include "body/Body.hpp"
+#include "common/runtime_checks/RuntimeChecks.hpp"
 #include "filesystem/ApplicationPaths.hpp"
 #include "filesystem/FileNameValidation.hpp"
-#include "bodies/Body.hpp"
 #include "simulation/core/Simulation.hpp"
 
 Recorder::Recorder(const std::string& fileBaseName) : m_fileBaseName{ fileBaseName }

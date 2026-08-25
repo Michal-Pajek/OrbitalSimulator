@@ -3,8 +3,8 @@
 #include <string_view>
 #include <utility>
 
-#include "localization/LocalizationManager.hpp"
 #include "localization/core/TextId.hpp"
+#include "localization/LocalizationManager.hpp"
 
 namespace ConsoleWriter
 {

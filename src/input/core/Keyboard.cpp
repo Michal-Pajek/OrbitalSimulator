@@ -12,7 +12,7 @@
 #include <unistd.h>
 #include <cstdio>
 
-#include "common/RuntimeChecks.hpp"
+#include "common/runtime_checks/RuntimeChecks.hpp"
 
 #endif
 

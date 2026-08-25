@@ -15,7 +15,7 @@ function(copy_resources_to_target target_name)
 endfunction()
 
 add_library(runtime_checks
-    src/common/RuntimeChecks.cpp
+    src/common/runtime_checks/RuntimeChecks.cpp
 )
 
 target_include_directories(runtime_checks PUBLIC
@@ -121,7 +121,7 @@ target_link_libraries(ui
 )
 
 add_library(body_types
-    src/bodies/types/BodyTypeCatalog.cpp
+    src/body/types/BodyTypeCatalog.cpp
 )
 
 target_include_directories(body_types PUBLIC
@@ -135,7 +135,7 @@ target_link_libraries(body_types
 )
 
 add_library(body
-    src/bodies/Body.cpp
+    src/body/Body.cpp
 )
 
 target_include_directories(body PUBLIC
@@ -334,21 +334,21 @@ target_link_libraries(scenario_loader
     PRIVATE ui_menu
 )
 
-add_library(input_selection
-    src/input/selection/BodyMassUnitSelector.cpp
+add_library(input_selection INTERFACE)
+
+target_sources(input_selection INTERFACE
+    src/input/selection/OptionSelector.hpp
 )
 
-target_include_directories(input_selection PUBLIC
+target_include_directories(input_selection INTERFACE
     ${PROJECT_SOURCE_DIR}/src
 )
 
-target_link_libraries(input_selection
-    PUBLIC body_types
-    PUBLIC localization_core
-    PUBLIC runtime_checks
-    PUBLIC ui
-    PUBLIC ui_menu
-    PRIVATE physics
+target_link_libraries(input_selection INTERFACE
+    localization_core
+    runtime_checks
+    ui
+    ui_menu
 )
 
 add_library(simulation_run_config_builder
@@ -368,9 +368,10 @@ target_link_libraries(simulation_run_config_builder
 )
 
 add_library(body_input
-    src/bodies/input/BodyBuilder.cpp
-    src/bodies/input/BodyEditor.cpp
-    src/bodies/input/BodyInputBase.cpp
+    src/body/input/BodyBuilder.cpp
+    src/body/input/BodyEditor.cpp
+    src/body/input/BodyInputBase.cpp
+    src/body/input/BodyMassUnitSelector.cpp
 )
 
 target_include_directories(body_input PUBLIC
@@ -380,10 +381,10 @@ target_include_directories(body_input PUBLIC
 target_link_libraries(body_input
     PUBLIC body
     PUBLIC body_types
+    PUBLIC input_selection
     PUBLIC math
     PRIVATE input_core
     PRIVATE input_data
-    PRIVATE input_selection
     PRIVATE localization_core
     PRIVATE physics
     PRIVATE ui
@@ -512,11 +513,11 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(orbital_tests
     src/app/tests/ExceptionHandlerTests.cpp
-    src/bodies/tests/BodyTests.cpp
-    src/bodies/tests/support/TestBodyCreator.cpp
-    src/bodies/types/tests/BodyTypeCatalogTests.cpp
-    src/bodies/types/tests/BodyTypesTests.cpp
-    src/common/tests/RuntimeChecksTests.cpp
+    src/body/tests/BodyTests.cpp
+    src/body/tests/support/TestBodyCreator.cpp
+    src/body/types/tests/BodyTypeCatalogTests.cpp
+    src/body/types/tests/BodyTypesTests.cpp
+    src/common/runtime_checks/tests/RuntimeChecksTests.cpp
     src/filesystem/tests/FileNameValidationTests.cpp
     src/localization/json/tests/JsonLanguageSettingsParserTests.cpp
     src/localization/json/tests/JsonLocalizationParserTests.cpp

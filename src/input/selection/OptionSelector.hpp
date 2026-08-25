@@ -2,10 +2,10 @@
 #include <optional>
 #include <vector>
 
-#include "ui/menu/Menu.hpp"
-#include "common/RuntimeChecks.hpp"
+#include "common/runtime_checks/RuntimeChecks.hpp"
 #include "localization/core/TextId.hpp"
 #include "ui/ConsoleWriter.hpp"
+#include "ui/menu/Menu.hpp"
 
 namespace OptionSelector
 {

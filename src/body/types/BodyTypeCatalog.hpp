@@ -4,7 +4,7 @@
 #include <span>
 #include <string_view>
 
-#include "bodies/types/BodyType.hpp"
+#include "body/types/BodyType.hpp"
 
 class BodyTypeCatalog
 {

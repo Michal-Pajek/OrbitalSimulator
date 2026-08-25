@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "common/RuntimeChecks.hpp"
+#include "common/runtime_checks/RuntimeChecks.hpp"
 
 void JsonLocalizationParser::parse()
 {

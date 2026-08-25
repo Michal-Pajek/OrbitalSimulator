@@ -1,6 +1,6 @@
 #include "simulation/core/Simulation.hpp"
 
-#include "common/RuntimeChecks.hpp"
+#include "common/runtime_checks/RuntimeChecks.hpp"
 
 Simulation::Simulation(const std::vector<Body>& bodies)
 {

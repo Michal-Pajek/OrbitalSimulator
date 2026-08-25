@@ -3,8 +3,8 @@
 #include <map>
 #include <string_view>
 
-#include "bodies/types/BodyType.hpp"
-#include "bodies/types/BodyTypeCatalog.hpp"
+#include "body/types/BodyType.hpp"
+#include "body/types/BodyTypeCatalog.hpp"
 
 TEST(BodyTypeCatalogTests, SerializationKeysRemainBackwardCompatible)
 {

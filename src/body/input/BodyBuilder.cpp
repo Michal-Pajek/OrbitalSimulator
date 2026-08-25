@@ -1,13 +1,13 @@
-#include "bodies/input/BodyBuilder.hpp"
+#include "body/input/BodyBuilder.hpp"
 
 #include <utility>
 
-#include "bodies/input/BodyEditor.hpp"
+#include "body/input/BodyEditor.hpp"
 
-#include "ui/menu/Menu.hpp"
 #include "input/core/Console.hpp"
 #include "localization/core/TextId.hpp"
 #include "ui/ConsoleWriter.hpp"
+#include "ui/menu/Menu.hpp"
 
 Body BodyBuilder::createBodyFromInput() const
 {

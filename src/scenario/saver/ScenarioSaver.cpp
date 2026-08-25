@@ -10,11 +10,11 @@
 #include "scenario/core/Scenario.hpp"
 #include "scenario/file_format/ScenarioFileFormat.hpp"
 
-#include "common/RuntimeChecks.hpp"
+#include "body/Body.hpp"
+#include "body/types/BodyTypeCatalog.hpp"
+#include "common/runtime_checks/RuntimeChecks.hpp"
 #include "filesystem/ApplicationPaths.hpp"
 #include "filesystem/FileNameValidation.hpp"
-#include "bodies/Body.hpp"
-#include "bodies/types/BodyTypeCatalog.hpp"
 
 namespace ScenarioSaver
 {

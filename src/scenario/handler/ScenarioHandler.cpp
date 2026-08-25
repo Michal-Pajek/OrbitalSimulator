@@ -6,7 +6,7 @@
 #include "scenario/saver/ScenarioSaver.hpp"
 #include "scenario/summary/ScenarioSummary.hpp"
 
-#include "common/RuntimeChecks.hpp"
+#include "common/runtime_checks/RuntimeChecks.hpp"
 #include "input/data/DataGetter.hpp"
 #include "localization/core/TextId.hpp"
 #include "recording/Recorder.hpp"

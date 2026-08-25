@@ -3,10 +3,11 @@
 #include <cctype>
 #include <unordered_set>
 
-#include "common/RuntimeChecks.hpp"
+#include "ui/ConsoleWriter.hpp"
+
+#include "common/runtime_checks/RuntimeChecks.hpp"
 #include "input/core/Keyboard.hpp"
 #include "localization/LocalizationManager.hpp"
-#include "ui/ConsoleWriter.hpp"
 
 Menu::Menu(const std::vector<MenuOption>& options, const TextId title, const bool isHorizontal) : m_options{options}, m_title{title}, m_isHorizontal{isHorizontal}
 {

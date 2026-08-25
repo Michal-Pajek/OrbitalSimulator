@@ -5,9 +5,8 @@
 
 #include "simulation/core/Simulation.hpp"
 
-#include "bodies/Body.hpp"
-#include "bodies/tests/support/TestBodyCreator.hpp"
-
+#include "body/Body.hpp"
+#include "body/tests/support/TestBodyCreator.hpp"
 #include "math/Vector3D.hpp"
 
 using TestBodyCreator::createTestBody;

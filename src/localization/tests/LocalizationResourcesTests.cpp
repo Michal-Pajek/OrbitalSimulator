@@ -3,9 +3,9 @@
 #include <string>
 #include <string_view>
 
-#include "localization/json/JsonDataStorage.hpp"
 #include "localization/core/TextId.hpp"
 #include "localization/core/TextIdEntries.hpp"
+#include "localization/json/JsonDataStorage.hpp"
 
 namespace
 {

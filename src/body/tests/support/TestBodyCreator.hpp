@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 
-#include "bodies/Body.hpp"
-#include "bodies/types/BodyType.hpp"
+#include "body/Body.hpp"
+#include "body/types/BodyType.hpp"
 
 #include "math/Vector3D.hpp"
 

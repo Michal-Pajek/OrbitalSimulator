@@ -1,8 +1,9 @@
-#include "bodies/input/BodyInputBase.hpp"
+#include "body/input/BodyInputBase.hpp"
 
-#include "bodies/types/BodyTypeCatalog.hpp"
+#include "body/input/BodyMassUnitSelector.hpp"
 
-#include "input/selection/BodyMassUnitSelector.hpp"
+#include "body/types/BodyTypeCatalog.hpp"
+
 #include "input/data/DataGetter.hpp"
 #include "input/selection/OptionSelector.hpp"
 #include "localization/core/TextId.hpp"

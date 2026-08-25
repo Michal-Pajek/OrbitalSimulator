@@ -4,9 +4,9 @@
 #include <optional>
 #include <vector>
 
-#include "input/selection/OptionSelector.hpp"
+#include "body/types/BodyType.hpp"
 
-#include "bodies/types/BodyType.hpp"
+#include "input/selection/OptionSelector.hpp"
 
 class BodyMassUnitSelector
 {

@@ -2,8 +2,9 @@
 #include <string>
 #include <vector>
 
-#include "bodies/Body.hpp"
-#include "bodies/input/BodyInputBase.hpp"
+#include "body/input/BodyInputBase.hpp"
+
+#include "body/Body.hpp"
 
 #include "math/Vector3D.hpp"
 

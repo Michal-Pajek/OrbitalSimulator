@@ -5,9 +5,9 @@
 #include "scenario/input/ScenarioInput.hpp"
 #include "scenario/summary/ScenarioSummary.hpp"
 
-#include "bodies/input/BodyBuilder.hpp"
-#include "bodies/input/BodyEditor.hpp"
-#include "common/RuntimeChecks.hpp"
+#include "body/input/BodyBuilder.hpp"
+#include "body/input/BodyEditor.hpp"
+#include "common/runtime_checks/RuntimeChecks.hpp"
 #include "input/core/Console.hpp"
 #include "input/core/Keyboard.hpp"
 #include "input/data/DataGetter.hpp"

@@ -3,7 +3,6 @@
 #include <utility>
 
 #include "localization/core/TextIdEntries.hpp"
-
 #include "localization/json/JsonDataStorage.hpp"
 
 LocalizationManager::LocalizationManager()

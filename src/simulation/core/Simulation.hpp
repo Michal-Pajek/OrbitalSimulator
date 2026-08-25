@@ -1,8 +1,7 @@
 #pragma once
 #include <vector>
 
-#include "bodies/Body.hpp"
-
+#include "body/Body.hpp"
 #include "math/Vector3D.hpp"
 
 class Simulation

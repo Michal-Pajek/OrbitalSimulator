@@ -1,13 +1,13 @@
 #include "app/Application.hpp"
 
 #include "app/ExceptionHandler.hpp"
-#include "ui/menu/Menu.hpp"
 
 #include "input/core/Console.hpp"
 #include "input/core/Keyboard.hpp"
 #include "localization/LocalizationManager.hpp"
 #include "scenario/handler/ScenarioHandler.hpp"
 #include "ui/ConsoleWriter.hpp"
+#include "ui/menu/Menu.hpp"
 
 void Application::eventLoop()
 {

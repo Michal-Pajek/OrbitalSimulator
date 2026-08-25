@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-#include "common/RuntimeChecks.hpp"
+#include "common/runtime_checks/RuntimeChecks.hpp"
 
 void JsonParserBase::require(const bool condition)
 {

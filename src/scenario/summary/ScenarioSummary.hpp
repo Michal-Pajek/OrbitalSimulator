@@ -2,7 +2,7 @@
 #include <span>
 #include <string_view>
 
-#include "bodies/Body.hpp"
+#include "body/Body.hpp"
 
 struct Scenario;
 

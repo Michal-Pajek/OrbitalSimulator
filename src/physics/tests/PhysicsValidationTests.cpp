@@ -2,9 +2,10 @@
 #include <gtest/gtest.h>
 #include <limits>
 
-#include "math/Vector3D.hpp"
 #include "physics/Constants.hpp"
 #include "physics/Validation.hpp"
+
+#include "math/Vector3D.hpp"
 
 TEST(PhysicsValidationTests, AcceptsZeroVelocity)
 {

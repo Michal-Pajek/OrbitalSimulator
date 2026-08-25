@@ -4,10 +4,10 @@
 #include <limits>
 #include <stdexcept>
 
-#include "bodies/Body.hpp"
-#include "bodies/tests/support/TestBodyCreator.hpp"
-#include "bodies/types/BodyType.hpp"
-#include "bodies/types/BodyTypeCatalog.hpp"
+#include "body/Body.hpp"
+#include "body/tests/support/TestBodyCreator.hpp"
+#include "body/types/BodyType.hpp"
+#include "body/types/BodyTypeCatalog.hpp"
 
 #include "math/Vector3D.hpp"
 #include "physics/Constants.hpp"
