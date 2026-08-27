@@ -3,7 +3,7 @@
 #include <string_view>
 #include <utility>
 
-namespace ExceptionHandler
+namespace app::exception_handler
 {
 	namespace detail
 	{
@@ -23,4 +23,4 @@ namespace ExceptionHandler
 			detail::writeError();
 		}
 	}
-} // namespace ExceptionHandler
+} // namespace app::exception_handler

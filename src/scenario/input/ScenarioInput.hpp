@@ -7,5 +7,5 @@
 namespace ScenarioInput
 {
 	std::string promptForScenarioName();
-	std::vector<Body> createBodiesFromInput();
+	std::vector<body::Body> createBodiesFromInput();
 } // namespace ScenarioInput

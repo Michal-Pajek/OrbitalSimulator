@@ -5,6 +5,6 @@ int main()
 {
 	ConsoleEncoding::configureUtf8();
 
-	Application app{};
+	app::Application app{};
 	app.eventLoop();
 }

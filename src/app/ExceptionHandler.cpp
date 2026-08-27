@@ -2,10 +2,10 @@
 
 #include "ui/ConsoleWriter.hpp"
 
-namespace ExceptionHandler
+namespace app::exception_handler
 {
 	void detail::writeError(std::string_view message)
 	{
 		ConsoleWriter::writeError(message);
 	}
-} // namespace ExceptionHandler
+} // namespace app::exception_handler

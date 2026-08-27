@@ -27,10 +27,10 @@ namespace ScenarioSaver
 			return ApplicationPaths::scenariosDirectory() / (fileBaseName + std::string{ ScenarioFileFormat::extension });
 		}
 
-		void serializeBody(std::ostream& output, const Body& body)
+		void serializeBody(std::ostream& output, const body::Body& body)
 		{
 			output << body.getName() << '\n'
-				<< BodyTypeCatalog::getSerializationKey(body.getTypeId()) << ' '
+				<< body::BodyTypeCatalog::getSerializationKey(body.getTypeId()) << ' '
 				<< body.getMass() << ' '
 				<< body.getPosition() << ' '
 				<< body.getVelocity() << '\n';

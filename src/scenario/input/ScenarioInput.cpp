@@ -15,15 +15,15 @@ namespace ScenarioInput
 		return DataGetter::getFileBaseName();
 	}
 
-	std::vector<Body> createBodiesFromInput()
+	std::vector<body::Body> createBodiesFromInput()
 	{
-		std::vector<Body> result{};
+		std::vector<body::Body> result{};
 		ConsoleWriter::writeLine();
 		ConsoleWriter::write(TextId::EnterObjectCountNotGreaterThan, ' ', Scenario::MAX_BODY_COUNT, ": ");
 		const auto bodiesCount{ static_cast<unsigned int>(DataGetter::getValue<int>([](const int x) {return x > 0 && x <= static_cast<int>(Scenario::MAX_BODY_COUNT); })) };
 		result.reserve(bodiesCount);
 		for (unsigned int i{}; i < bodiesCount; ++i) {
-			const BodyBuilder bodyBuilder{ result };
+			const body::input::BodyBuilder bodyBuilder{ result };
 			result.emplace_back(bodyBuilder.createBodyFromInput());
 		}
 

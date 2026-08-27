@@ -11,22 +11,22 @@
 
 namespace
 {
-	std::vector<Body> createBodies(const std::size_t count)
+	std::vector<body::Body> createBodies(const std::size_t count)
 	{
-		std::vector<Body> bodies{};
+		std::vector<body::Body> bodies{};
 		bodies.reserve(count);
 
 		for (std::size_t i{}; i < count; ++i) {
-			bodies.push_back(TestBodyCreator::createTestBody(1.0));
+			bodies.push_back(body::tests::createTestBody(1.0));
 		}
 
 		return bodies;
 	}
-}
+} // anonymous namespace
 
 TEST(ScenarioTests, ConstructorThrowsForEmptyBodyList)
 {
-	EXPECT_THROW((Scenario{ "Scenario", std::vector<Body>{} }), std::invalid_argument);
+	EXPECT_THROW((Scenario{ "Scenario", std::vector<body::Body>{} }), std::invalid_argument);
 }
 
 TEST(ScenarioTests, ConstructorAcceptsMaximumBodyCount)

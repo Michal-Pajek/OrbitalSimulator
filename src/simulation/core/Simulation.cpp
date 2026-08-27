@@ -2,12 +2,12 @@
 
 #include "common/runtime_checks/RuntimeChecks.hpp"
 
-Simulation::Simulation(const std::vector<Body>& bodies)
+Simulation::Simulation(const std::vector<body::Body>& bodies)
 {
 	setBodies(bodies);
 }
 
-Simulation::Simulation(const std::vector<Body>& bodies, const double dt) : m_dt{ dt }
+Simulation::Simulation(const std::vector<body::Body>& bodies, const double dt) : m_dt{ dt }
 {
 	RuntimeChecks::ensure(dt > 0.0, RuntimeChecks::Type::Argument, "dt must be positive");
 	setBodies(bodies);
@@ -30,7 +30,7 @@ void Simulation::step()
 	m_time += m_dt;
 }
 
-void Simulation::setBodies(const std::vector<Body>& bodies)
+void Simulation::setBodies(const std::vector<body::Body>& bodies)
 {
 	m_bodyStepStates.clear();
 	m_bodyStepStates.reserve(bodies.size());
@@ -46,7 +46,7 @@ void Simulation::setDt(const double dt)
 	m_dt = dt;
 }
 
-const Body& Simulation::getBody(const size_t idx) const
+const body::Body& Simulation::getBody(const size_t idx) const
 {
 	RuntimeChecks::ensure(idx < m_bodyStepStates.size(), RuntimeChecks::Type::Range, "idx is out of m_bodyStepStates range");
 	return m_bodyStepStates[idx].getBody();

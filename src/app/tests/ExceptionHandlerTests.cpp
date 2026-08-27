@@ -5,12 +5,12 @@
 
 #include "app/ExceptionHandler.hpp"
 
-namespace
+namespace app::tests
 {
     TEST(ExceptionHandlerTests, ExecuteRunsAction)
     {
         bool executed{ false };
-        ExceptionHandler::execute([&executed] { executed = true; });
+        exception_handler::execute([&executed] { executed = true; });
 
         EXPECT_TRUE(executed);
     }
@@ -20,7 +20,7 @@ namespace
         std::ostringstream output{};
         auto* originalBuffer{ std::cout.rdbuf(output.rdbuf()) };
 
-        EXPECT_NO_THROW(ExceptionHandler::execute([] { throw std::runtime_error{ "Test exception" }; }));
+        EXPECT_NO_THROW(exception_handler::execute([] { throw std::runtime_error{ "Test exception" }; }));
 
         std::cout.rdbuf(originalBuffer);
 
@@ -32,11 +32,11 @@ namespace
         std::ostringstream output{};
         auto* originalBuffer{ std::cout.rdbuf(output.rdbuf()) };
 
-        EXPECT_NO_THROW(ExceptionHandler::execute([] { throw 42; }));
+        EXPECT_NO_THROW(exception_handler::execute([] { throw 42; }));
 
         std::cout.rdbuf(originalBuffer);
 
         EXPECT_EQ(output.str(), "ERROR: Unknown exception\n");
     }
 
-} // anonymous namespace
+} // namespace app::tests

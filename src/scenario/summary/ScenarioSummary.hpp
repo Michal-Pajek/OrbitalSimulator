@@ -8,6 +8,6 @@ struct Scenario;
 
 namespace ScenarioSummary
 {
-	void print(std::string_view name, std::span<const Body> bodies);
+	void print(std::string_view name, std::span<const body::Body> bodies);
 	void print(const Scenario& scenario);
 } // namespace ScenarioSummary

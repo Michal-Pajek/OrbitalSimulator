@@ -117,7 +117,7 @@ namespace ScenarioLoader
 			}
 		}
 
-		std::optional<Body> deserializeBody(std::istream& file)
+		std::optional<body::Body> deserializeBody(std::istream& file)
 		{
 			std::string name;
 			std::string bodyDataLine;
@@ -142,7 +142,7 @@ namespace ScenarioLoader
 			}
 
 			const auto bodyTypeIdOpt{
-				BodyTypeCatalog::deserializeKey(serializationKey)
+				body::BodyTypeCatalog::deserializeKey(serializationKey)
 			};
 			const auto positionOpt{ deserializeVector(bodyData) };
 			const auto velocityOpt{ deserializeVector(bodyData) };
@@ -155,7 +155,7 @@ namespace ScenarioLoader
 			}
 
 			try {
-				return Body{
+				return body::Body{
 					name,
 					*bodyTypeIdOpt,
 					mass,
@@ -235,7 +235,7 @@ namespace ScenarioLoader
 			}
 
 			const auto count{ static_cast<std::size_t>(bodiesCount) };
-			std::vector<Body> bodies{};
+			std::vector<body::Body> bodies{};
 			bodies.reserve(count);
 
 			for (std::size_t i{}; i < count; ++i) {

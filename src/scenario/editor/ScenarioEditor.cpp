@@ -94,7 +94,7 @@ void ScenarioEditor::addNewBody()
 {
 	auto& bodies{ m_scenario.bodies };
 	RuntimeChecks::ensure(bodies.size() < Scenario::MAX_BODY_COUNT, RuntimeChecks::Type::Logic, "Bodies vector is already full");
-	const BodyBuilder bodyBuilder{ bodies };
+	const body::input::BodyBuilder bodyBuilder{ bodies };
 	bodies.emplace_back(bodyBuilder.createBodyFromInput());
 }
 
@@ -110,7 +110,7 @@ void ScenarioEditor::editSelectedBody()
 {
 	auto& bodies{ m_scenario.bodies };
 	const auto idx{ promptForBodyIdx() };
-	BodyEditor bodyEditor{ bodies.at(idx), bodies };
+	body::input::BodyEditor bodyEditor{ bodies.at(idx), bodies };
 	bodyEditor.editBody();
 	bodies.at(idx) = bodyEditor.takeBody();
 }

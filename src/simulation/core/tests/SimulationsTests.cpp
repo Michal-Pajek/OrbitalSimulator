@@ -9,28 +9,26 @@
 #include "body/tests/support/TestBodyCreator.hpp"
 #include "math/Vector3D.hpp"
 
-using TestBodyCreator::createTestBody;
-
 constexpr double EPSILON{ 1e-9 };
 
 namespace
 {
 
-	std::vector<Body> createVectorWithTwoAsymmetricBodies()
+	std::vector<body::Body> createVectorWithTwoAsymmetricBodies()
 	{
-		std::vector<Body> bodyVec{};
+		std::vector<body::Body> bodyVec{};
 		bodyVec.reserve(2u);
-		bodyVec.emplace_back(createTestBody(1e8, Vector3D{ 2.0, 3.0, 0.0 }, Vector3D{ 4.0, 5.0, 0.0 }, "body1"));
-		bodyVec.emplace_back(createTestBody(6e8, Vector3D{ 7.0, 8.0, 0.0 }, Vector3D{ 9.0, 10.0, 0.0 }, "body2"));
+		bodyVec.emplace_back(body::tests::createTestBody(1e8, Vector3D{ 2.0, 3.0, 0.0 }, Vector3D{ 4.0, 5.0, 0.0 }, "body1"));
+		bodyVec.emplace_back(body::tests::createTestBody(6e8, Vector3D{ 7.0, 8.0, 0.0 }, Vector3D{ 9.0, 10.0, 0.0 }, "body2"));
 		return bodyVec;
 	}
 
-	std::vector<Body> createVectorWithTwoSymmetricBodies()
+	std::vector<body::Body> createVectorWithTwoSymmetricBodies()
 	{
-		std::vector<Body> bodyVec{};
+		std::vector<body::Body> bodyVec{};
 		bodyVec.reserve(2u);
-		bodyVec.emplace_back(createTestBody(1e9, Vector3D{ 10.0, 0.0, 0.0 }, Vector3D{ -2.0, 0.0, 0.0 }));
-		bodyVec.emplace_back(createTestBody(1e9, Vector3D{ 0.0, 10.0, 0.0 }, Vector3D{ 2.0, 0.0, 0.0 }));
+		bodyVec.emplace_back(body::tests::createTestBody(1e9, Vector3D{ 10.0, 0.0, 0.0 }, Vector3D{ -2.0, 0.0, 0.0 }));
+		bodyVec.emplace_back(body::tests::createTestBody(1e9, Vector3D{ 0.0, 10.0, 0.0 }, Vector3D{ 2.0, 0.0, 0.0 }));
 		return bodyVec;
 	}
 
@@ -59,15 +57,15 @@ namespace
 
 TEST(SimulationTests, ReturnsCorrectBodyCount)
 {
-	std::vector<Body> bodyVec{};
+	std::vector<body::Body> bodyVec{};
 	Simulation simulation1{ bodyVec };
 	EXPECT_EQ(simulation1.getBodyCount(), 0u);
 
-	bodyVec.emplace_back(createTestBody(1.0, Vector3D{ 2.0, 3.0, 0.0 }, Vector3D{ 4.0, 5.0, 0.0 }));
+	bodyVec.emplace_back(body::tests::createTestBody(1.0, Vector3D{ 2.0, 3.0, 0.0 }, Vector3D{ 4.0, 5.0, 0.0 }));
 	simulation1.setBodies(bodyVec);
 	EXPECT_EQ(simulation1.getBodyCount(), 1u);
 
-	bodyVec.emplace_back(createTestBody(6.0, Vector3D{ 7.0, 8.0, 0.0 }, Vector3D{ 9.0, 10.0, 0.0 }));
+	bodyVec.emplace_back(body::tests::createTestBody(6.0, Vector3D{ 7.0, 8.0, 0.0 }, Vector3D{ 9.0, 10.0, 0.0 }));
 	const Simulation simulation2{ bodyVec };
 	EXPECT_EQ(simulation2.getBodyCount(), 2u);
 }
@@ -156,14 +154,14 @@ TEST(SimulationTests, ResetsTimeAfterSettingBodies)
 
 TEST(SimulationTests, ThrowsWhenSteppingEmptySimulation)
 {
-	const std::vector<Body> bodyVec{};
+	const std::vector<body::Body> bodyVec{};
 	Simulation simulation{ bodyVec };
 	EXPECT_THROW(simulation.step(), std::logic_error);
 }
 
 TEST(SimulationTests, ThrowsForNonPositiveDt)
 {
-	const std::vector<Body> bodyVec{};
+	const std::vector<body::Body> bodyVec{};
 	EXPECT_THROW((Simulation{ bodyVec, 0.0 }), std::invalid_argument);
 
 	Simulation simulation{ bodyVec };

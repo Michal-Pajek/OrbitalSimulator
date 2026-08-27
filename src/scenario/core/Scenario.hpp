@@ -9,7 +9,7 @@
 
 struct Scenario
 {
-	Scenario(std::string scenarioName, std::vector<Body> scenarioBodies)
+	Scenario(std::string scenarioName, std::vector<body::Body> scenarioBodies)
 		: name{ std::move(scenarioName) }, bodies{ std::move(scenarioBodies) }
 	{
 		RuntimeChecks::ensure(!name.empty(),					RuntimeChecks::Type::Argument, "Scenario name must not be empty");
@@ -20,5 +20,5 @@ struct Scenario
 	static constexpr std::size_t MAX_BODY_COUNT{ 20u };
 
 	std::string name{};
-	std::vector<Body> bodies{};
+	std::vector<body::Body> bodies{};
 };

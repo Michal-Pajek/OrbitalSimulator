@@ -7,7 +7,7 @@
 
 namespace ScenarioSummary
 {
-	void print(const std::string_view name, const std::span<const Body> bodies)
+	void print(const std::string_view name, const std::span<const body::Body> bodies)
 	{
 		ConsoleWriter::writeHeadline(TextId::CurrentScenarioSummary);
 		ConsoleWriter::writeLine(TextId::ScenarioName, ":\t", name);

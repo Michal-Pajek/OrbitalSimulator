@@ -7,7 +7,7 @@
 #include "body/types/BodyType.hpp"
 #include "body/types/BodyTypeCatalog.hpp"
 
-namespace TestBodyCreator
+namespace body::tests
 {
 	namespace
 	{
@@ -33,4 +33,4 @@ namespace TestBodyCreator
 		const auto typeId{ getMatchingBodyTypeId(mass) };
 		return Body{ name, typeId, mass, position, velocity };
 	}
-} // namespace TestBodyCreator
+} // namespace body::tests

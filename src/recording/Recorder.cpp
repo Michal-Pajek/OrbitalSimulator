@@ -32,7 +32,7 @@ bool Recorder::beginRecording()
 	return false;
 }
 
-void Recorder::recordInitialState(const std::vector<Body>& bodies)
+void Recorder::recordInitialState(const std::vector<body::Body>& bodies)
 {
 	for (const auto& body : bodies) {
 		writeInitialSnapshotToCSV(body);
@@ -48,7 +48,7 @@ void Recorder::recordStateAfterStep(const Simulation& simulation, const unsigned
 	}
 }
 
-void Recorder::writeBodyStateToFile(const Body& body)
+void Recorder::writeBodyStateToFile(const body::Body& body)
 {
 	constexpr auto SEPARATOR{ ',' };
 	m_file << body.getName() << SEPARATOR;
@@ -62,7 +62,7 @@ void Recorder::writeBodyStateToFile(const Body& body)
 	m_file << vel.getZ() << '\n';
 }
 
-void Recorder::writeSingleSnapshotToCSV(const Body& body, const unsigned int stepNo, const double time)
+void Recorder::writeSingleSnapshotToCSV(const body::Body& body, const unsigned int stepNo, const double time)
 {
 	constexpr auto SEPARATOR{ ',' };
 	m_file << stepNo << SEPARATOR << time << SEPARATOR;
