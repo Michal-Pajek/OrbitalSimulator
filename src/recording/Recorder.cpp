@@ -11,7 +11,7 @@
 
 Recorder::Recorder(const std::string& fileBaseName) : m_fileBaseName{ fileBaseName }
 {
-	RuntimeChecks::ensure(FileNameValidation::isValidBaseName(m_fileBaseName), RuntimeChecks::Type::Argument, "Invalid recording file base name");
+	runtime_checks::ensure(filesystem::validation::isValidBaseName(m_fileBaseName), runtime_checks::Type::Argument, "Invalid recording file base name");
 }
 
 bool Recorder::beginRecording()
@@ -71,5 +71,5 @@ void Recorder::writeSingleSnapshotToCSV(const body::Body& body, const unsigned i
 
 std::filesystem::path Recorder::getPath() const
 {
-	return ApplicationPaths::simulationsDirectory() / (m_fileBaseName + ".csv");
+	return filesystem::paths::simulationsDirectory() / (m_fileBaseName + ".csv");
 }

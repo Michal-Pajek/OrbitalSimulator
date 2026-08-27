@@ -6,7 +6,7 @@
 
 Vector3D::Vector3D(double x, double y, double z) : m_x{ x }, m_y{ y }, m_z{ z }
 {
-	RuntimeChecks::ensure(std::isfinite(x) && std::isfinite(y) && std::isfinite(z), RuntimeChecks::Type::Argument, "All components of the vector must be finite");
+	runtime_checks::ensure(std::isfinite(x) && std::isfinite(y) && std::isfinite(z), runtime_checks::Type::Argument, "All components of the vector must be finite");
 }
 
 Vector3D& Vector3D::operator+=(const Vector3D& other)
@@ -22,7 +22,7 @@ Vector3D& Vector3D::operator+=(const Vector3D& other)
 
 Vector3D Vector3D::operator/(const double scalar) const
 {
-	RuntimeChecks::ensure(scalar != 0.0, RuntimeChecks::Type::Argument, "Division of Vector3D by zero");
+	runtime_checks::ensure(scalar != 0.0, runtime_checks::Type::Argument, "Division of Vector3D by zero");
 	return *this * (1.0 / scalar);
 }
 

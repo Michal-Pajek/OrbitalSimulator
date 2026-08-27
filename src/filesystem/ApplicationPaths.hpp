@@ -1,9 +1,9 @@
 #pragma once
 #include <filesystem>
 
-namespace ApplicationPaths
+namespace filesystem::paths
 {
 	const std::filesystem::path& executableDirectory();
 	std::filesystem::path scenariosDirectory();
 	std::filesystem::path simulationsDirectory();
-} // namespace ApplicationPaths
+} // namespace filesystem::paths

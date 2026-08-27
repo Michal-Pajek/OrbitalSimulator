@@ -25,7 +25,7 @@ void JsonLocalizationParser::parseTexts()
 		const auto value{ getString() };
 		require(!(key.empty() || value.empty()));
 		const auto [it, inserted]{ m_localizationData.insert({ key, value }) };
-		RuntimeChecks::ensure(inserted, RuntimeChecks::Type::Runtime, std::string{ "Duplicated localization key: " + it->first }.c_str());
+		runtime_checks::ensure(inserted, runtime_checks::Type::Runtime, std::string{ "Duplicated localization key: " + it->first }.c_str());
 		skipWhiteMarks();
 		ensureCanRead();
 		if (m_data[m_pos] == ',') {

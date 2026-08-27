@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Console
+namespace input::console
 {
 	void clearScreen();
-} // namespace Console
+} // namespace input::console

@@ -12,7 +12,7 @@ namespace SimulationRunner
 	{
 		const auto steps{ config.stepCount };
 		const auto& bodies{ scenario.bodies };
-		RuntimeChecks::ensure(recorder.beginRecording(), RuntimeChecks::Type::Runtime, "Could not open output file");
+		runtime_checks::ensure(recorder.beginRecording(), runtime_checks::Type::Runtime, "Could not open output file");
 		Simulation simulation{ bodies, config.timeStep };
 		recorder.recordInitialState(bodies);
 		for (unsigned int i{}; i < steps;) {

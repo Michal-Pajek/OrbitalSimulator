@@ -57,13 +57,13 @@ namespace
 std::optional<Scenario> ScenarioEditor::getReviewedScenario()
 {
 	while (true) {
-		Console::clearScreen();
+		input::console::clearScreen();
 		ScenarioSummary::print(m_scenario);
 
 		const auto decision{ getScenarioAcceptanceDecision() };
 		switch (decision) {
 		case Decision::Accept:
-			RuntimeChecks::ensure(!m_scenario.bodies.empty(), RuntimeChecks::Type::Logic, "Scenario must contain at least one body");
+			runtime_checks::ensure(!m_scenario.bodies.empty(), runtime_checks::Type::Logic, "Scenario must contain at least one body");
 			return std::move(m_scenario);
 		case Decision::Revise:
 			reviseScenario();
@@ -93,7 +93,7 @@ bool ScenarioEditor::handleBodiesMenu()
 void ScenarioEditor::addNewBody()
 {
 	auto& bodies{ m_scenario.bodies };
-	RuntimeChecks::ensure(bodies.size() < Scenario::MAX_BODY_COUNT, RuntimeChecks::Type::Logic, "Bodies vector is already full");
+	runtime_checks::ensure(bodies.size() < Scenario::MAX_BODY_COUNT, runtime_checks::Type::Logic, "Bodies vector is already full");
 	const body::input::BodyBuilder bodyBuilder{ bodies };
 	bodies.emplace_back(bodyBuilder.createBodyFromInput());
 }
@@ -101,7 +101,7 @@ void ScenarioEditor::addNewBody()
 void ScenarioEditor::deleteSelectedBody()
 {
 	auto& bodies{ m_scenario.bodies };
-	RuntimeChecks::ensure(!bodies.empty(), RuntimeChecks::Type::Logic, "There is no body to delete");
+	runtime_checks::ensure(!bodies.empty(), runtime_checks::Type::Logic, "There is no body to delete");
 	bodies.erase(bodies.begin() + promptForBodyIdx());
 	ConsoleWriter::writeLine(TextId::BodyDeleted, '\n');
 }
@@ -119,7 +119,7 @@ void ScenarioEditor::ensureAtLeastOneBody()
 {
 	if (m_scenario.bodies.empty()) {
 		ConsoleWriter::writeLine(TextId::ScenarioMustHaveAtLeastOneBody, ". ", TextId::PressAnyKeyToContinue);
-		Keyboard::getSingleKey();
+		input::keyboard::getSingleKey();
 		addNewBody();
 	}
 }
@@ -167,5 +167,5 @@ void ScenarioEditor::reviseScenario()
 
 std::size_t ScenarioEditor::promptForBodyIdx() const
 {
-	return DataGetter::getSelectionNumber(TextId::EnterBodyNumber, m_scenario.bodies.size()) - 1u;
+	return input::data::getSelectionNumber(TextId::EnterBodyNumber, m_scenario.bodies.size()) - 1u;
 }

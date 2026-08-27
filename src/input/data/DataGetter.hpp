@@ -7,7 +7,7 @@
 #include "math/Vector3D.hpp"
 #include "ui/ConsoleWriter.hpp"
 
-namespace DataGetter
+namespace input::data
 {
 	namespace detail
 	{
@@ -72,4 +72,4 @@ namespace DataGetter
 	std::size_t getSelectionNumber(const TextId textId, const std::size_t count, bool includeZero = false);
 	std::string getSingleWordText();
 	std::string getFileBaseName();
-} // namespace DataGetter
+} // namespace input::data

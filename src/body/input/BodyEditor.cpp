@@ -11,7 +11,7 @@ namespace body::input
 {
 	void BodyEditor::editBody()
 	{
-		Console::clearScreen();
+		::input::console::clearScreen();
 		ConsoleWriter::writeLine(TextId::YouAreEditingBody, ' ', m_body.getName());
 		const Menu whatToChangeInBody{ {
 				MenuOption{'N', TextId::BodyName,		[this]() {m_body.setName(promptForBodyName()); }},

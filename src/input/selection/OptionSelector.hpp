@@ -7,7 +7,7 @@
 #include "ui/ConsoleWriter.hpp"
 #include "ui/menu/Menu.hpp"
 
-namespace OptionSelector
+namespace input::selection
 {
     template <typename T>
     struct SelectionOption
@@ -22,7 +22,7 @@ namespace OptionSelector
     SelectionOption<T> selectOption(const std::vector<SelectionOption<T>>& options, const TextId menuTitle)
     {
         const auto size{ options.size() };
-        RuntimeChecks::ensure(size > 0u && size < 10u, RuntimeChecks::Type::Argument, "Options vector in OptionSelector::selectOption must be between 1 and 9");
+        runtime_checks::ensure(size > 0u && size < 10u, runtime_checks::Type::Argument, "Options vector in input::selection::selectOption must be between 1 and 9");
 
         std::optional<SelectionOption<T>> result{};
         auto key{ '1' };
@@ -36,20 +36,20 @@ namespace OptionSelector
         const Menu menu{ menuOptions, menuTitle };
         menu.execute();
 
-        RuntimeChecks::ensure(result.has_value(), RuntimeChecks::Type::Logic, "OptionSelector::selectOption: menu finished without selecting an option");
+        runtime_checks::ensure(result.has_value(), runtime_checks::Type::Logic, "input::selection::selectOption: menu finished without selecting an option");
 
         return result.value();
     }
-} // namespace OptionSelector
 
-namespace UnitSelector
-{
-    using UnitOption = OptionSelector::SelectionOption<double>;
-
-    inline double selectUnitMultiplier(const std::vector<UnitOption>& options, const TextId menuTitle)
+    namespace unit
     {
-        const auto selectedOption{ OptionSelector::selectOption(options, menuTitle) };
-        ConsoleWriter::writeLine(TextId::SelectedUnit, ": ", selectedOption.textId);
-        return selectedOption.value;
-    }
-} // namespace UnitSelector
+        using UnitOption = SelectionOption<double>;
+
+        inline double selectUnitMultiplier(const std::vector<UnitOption>& options, const TextId menuTitle)
+        {
+            const auto selectedOption{ selectOption(options, menuTitle) };
+            ConsoleWriter::writeLine(TextId::SelectedUnit, ": ", selectedOption.textId);
+            return selectedOption.value;
+        }
+    } // namespace unit
+} // namespace input::selection

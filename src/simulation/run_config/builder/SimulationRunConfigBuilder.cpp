@@ -14,20 +14,20 @@ namespace SimulationRunConfigBuilder
 		double promptForTimeStep()
 		{
 			ConsoleWriter::writeLine();
-			const auto timeMultiplier{ UnitSelector::selectUnitMultiplier(std::vector<UnitSelector::UnitOption>{
+			const auto timeMultiplier{ input::selection::unit::selectUnitMultiplier(std::vector<input::selection::unit::UnitOption>{
 				{TextId::Second,	1.0},
 				{TextId::Minute,	60.0},
 				{TextId::Hour,		3600.0},
 				{TextId::Day,		86400.0}},
 				TextId::SelectTimeUnitForTimeStep) };
 			ConsoleWriter::write(TextId::EnterTimeStep, " (", TextId::PositiveNumber, "): ");
-			return timeMultiplier * DataGetter::getValue<double>([](const double x) { return x > 0.0; });
+			return timeMultiplier * input::data::getValue<double>([](const double x) { return x > 0.0; });
 		}
 
 		unsigned int promptForStepCount()
 		{
 			ConsoleWriter::write('\n', TextId::EnterStepCount, ": ");
-			return static_cast<unsigned int>(DataGetter::getValue<int>([](const int x) {return x > 0; }));
+			return static_cast<unsigned int>(input::data::getValue<int>([](const int x) {return x > 0; }));
 		}
 	} // anonymous namespace
 

@@ -26,7 +26,7 @@ namespace body
 	const BodyType& BodyTypeCatalog::getType(const BodyTypeId id)
 	{
 		const auto idx{ static_cast<std::size_t>(id) };
-		RuntimeChecks::ensure(idx < BODY_TYPE_COUNT, RuntimeChecks::Type::Logic, "BodyTypeCatalog::getType: unknown BodyTypeId");
+		runtime_checks::ensure(idx < BODY_TYPE_COUNT, runtime_checks::Type::Logic, "BodyTypeCatalog::getType: unknown BodyTypeId");
 		return bodyTypesArray.at(idx);
 	}
 

@@ -12,7 +12,7 @@
 
 #endif
 
-namespace ApplicationPaths
+namespace filesystem::paths
 {
 	namespace
 	{
@@ -25,7 +25,7 @@ namespace ApplicationPaths
 
 			std::wstring buffer(32768, L'\0');
 			const auto length{ GetModuleFileNameW(nullptr, buffer.data(), static_cast<DWORD>(buffer.size())) };
-			RuntimeChecks::ensure(length != 0u && length != buffer.size(), RuntimeChecks::Type::Runtime, "Failed to determine executable path");
+			runtime_checks::ensure(length != 0u && length != buffer.size(), runtime_checks::Type::Runtime, "Failed to determine executable path");
 			buffer.resize(length);
 			return fs::path{ buffer }.parent_path();
 
@@ -57,4 +57,4 @@ namespace ApplicationPaths
 	{
 		return executableDirectory() / "simulations";
 	}
-} // namespace ApplicationPaths
+} // namespace filesystem::paths

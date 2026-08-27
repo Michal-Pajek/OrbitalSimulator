@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <cctype>
 
-namespace FileNameValidation
+namespace filesystem::validation
 {
 	namespace
 	{
@@ -69,4 +69,4 @@ namespace FileNameValidation
 			return unsignedChar < 32 || forbiddenChars.find(ch) != std::string_view::npos;
 			});
 	}
-} // namespace FileNameValidation
+} // namespace filesystem::validation

@@ -20,7 +20,7 @@ namespace
 	std::string getNewSaveName()
 	{
 		ConsoleWriter::write(TextId::EnterNewSaveName, ": ");
-		return DataGetter::getFileBaseName();
+		return input::data::getFileBaseName();
 	}
 } // anonymous namespace
 
@@ -45,7 +45,7 @@ void ScenarioHandler::loadAndHandleScenario()
 	switch (result.status) {
 	case ScenarioLoader::LoadStatus::Loaded:
 	{
-		RuntimeChecks::ensure(result.scenario.has_value(), RuntimeChecks::Type::Logic, "ScenarioLoader returned Loaded status without a scenario");
+		runtime_checks::ensure(result.scenario.has_value(), runtime_checks::Type::Logic, "ScenarioLoader returned Loaded status without a scenario");
 
 		ConsoleWriter::writeLine(TextId::ScenarioLoadedSuccessfully, '\n');
 		ScenarioHandler handler{ *result.scenario };

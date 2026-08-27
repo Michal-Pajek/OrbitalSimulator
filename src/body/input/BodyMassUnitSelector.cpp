@@ -33,7 +33,7 @@ namespace body::input
 	}
 
 	double BodyMassUnitSelector::selectMassMultiplier(const BodyTypeId bodyTypeId) {
-		return UnitSelector::selectUnitMultiplier(getUnitsFor(bodyTypeId), TextId::SelectMassUnit);
+		return ::input::selection::unit::selectUnitMultiplier(getUnitsFor(bodyTypeId), TextId::SelectMassUnit);
 	}
 
 	auto BodyMassUnitSelector::getUnitsFor(const BodyTypeId bodyTypeId) -> const UnitVector& {

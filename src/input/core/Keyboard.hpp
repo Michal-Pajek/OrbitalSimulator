@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Keyboard
+namespace input::keyboard
 {
 	char getSingleKey();
-} // namespace Keyboard
+} // namespace input::keyboard

@@ -4,7 +4,7 @@
 
 #include "filesystem/FileNameValidation.hpp"
 
-namespace DataGetter
+namespace input::data
 {
 	bool detail::recoverFromInputFailure()
 	{
@@ -39,7 +39,7 @@ namespace DataGetter
 	std::string getFileBaseName()
 	{
 		return detail::getValidatedInput<std::string>([](const std::string& text) {
-			return FileNameValidation::isValidBaseName(text);
+			return filesystem::validation::isValidBaseName(text);
 			});
 	}
-} // namespace DataGetter
+} // namespace input::data

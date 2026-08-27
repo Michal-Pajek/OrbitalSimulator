@@ -16,7 +16,7 @@ namespace body::input
 		static BodyMassUnitSelector& getInstance();
 		double selectMassMultiplier(const BodyTypeId bodyTypeId);
 	private:
-		using UnitVector = std::vector<UnitSelector::UnitOption>;
+		using UnitVector = std::vector<::input::selection::unit::UnitOption>;
 		using UnitCache = std::array<std::optional<UnitVector>, BODY_TYPE_COUNT>;
 		BodyMassUnitSelector() = default;
 		BodyMassUnitSelector(const BodyMassUnitSelector&) = delete;

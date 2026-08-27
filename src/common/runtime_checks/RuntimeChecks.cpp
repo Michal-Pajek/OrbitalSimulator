@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-namespace RuntimeChecks
+namespace runtime_checks
 {
 	namespace
 	{
@@ -31,4 +31,4 @@ namespace RuntimeChecks
 			throwException(type, message);
 		}
 	}
-} // namespace RuntimeChecks
+} // namespace runtime_checks

@@ -12,9 +12,9 @@ struct Scenario
 	Scenario(std::string scenarioName, std::vector<body::Body> scenarioBodies)
 		: name{ std::move(scenarioName) }, bodies{ std::move(scenarioBodies) }
 	{
-		RuntimeChecks::ensure(!name.empty(),					RuntimeChecks::Type::Argument, "Scenario name must not be empty");
-		RuntimeChecks::ensure(!bodies.empty(),					RuntimeChecks::Type::Argument, "Scenario must have at least one body");
-		RuntimeChecks::ensure(bodies.size() <= MAX_BODY_COUNT,	RuntimeChecks::Type::Argument, "Scenario cannot contain more than the maximum number of bodies");
+		runtime_checks::ensure(!name.empty(),					runtime_checks::Type::Argument, "Scenario name must not be empty");
+		runtime_checks::ensure(!bodies.empty(),					runtime_checks::Type::Argument, "Scenario must have at least one body");
+		runtime_checks::ensure(bodies.size() <= MAX_BODY_COUNT,	runtime_checks::Type::Argument, "Scenario cannot contain more than the maximum number of bodies");
 	}
 
 	static constexpr std::size_t MAX_BODY_COUNT{ 20u };

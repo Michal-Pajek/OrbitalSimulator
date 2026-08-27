@@ -24,7 +24,7 @@ namespace ScenarioSaver
 
 		fs::path buildFilePath(const std::string& fileBaseName)
 		{
-			return ApplicationPaths::scenariosDirectory() / (fileBaseName + std::string{ ScenarioFileFormat::extension });
+			return filesystem::paths::scenariosDirectory() / (fileBaseName + std::string{ ScenarioFileFormat::extension });
 		}
 
 		void serializeBody(std::ostream& output, const body::Body& body)
@@ -51,7 +51,7 @@ namespace ScenarioSaver
 
 		void validateBaseName(const std::string& name, const char* errorMessage)
 		{
-			RuntimeChecks::ensure(FileNameValidation::isValidBaseName(name), RuntimeChecks::Type::Argument, errorMessage);
+			runtime_checks::ensure(filesystem::validation::isValidBaseName(name), runtime_checks::Type::Argument, errorMessage);
 		}
 
 		void validateNames(const std::string& saveName, const std::string& scenarioName)
@@ -75,12 +75,12 @@ namespace ScenarioSaver
 		fs::create_directories(filePath.parent_path());
 
 		std::ofstream file{ filePath };
-		RuntimeChecks::ensure(file.is_open(), RuntimeChecks::Type::Runtime, "Failed to open scenario file");
+		runtime_checks::ensure(file.is_open(), runtime_checks::Type::Runtime, "Failed to open scenario file");
 
 		serializeScenario(file, scenario);
 
 		file.close();
-		RuntimeChecks::ensure(!file.fail(), RuntimeChecks::Type::Runtime, "Failed to write scenario file");
+		runtime_checks::ensure(!file.fail(), runtime_checks::Type::Runtime, "Failed to write scenario file");
 
 		return SaveResult::Saved;
 	}

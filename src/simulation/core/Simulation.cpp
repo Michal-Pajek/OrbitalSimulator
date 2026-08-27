@@ -9,7 +9,7 @@ Simulation::Simulation(const std::vector<body::Body>& bodies)
 
 Simulation::Simulation(const std::vector<body::Body>& bodies, const double dt) : m_dt{ dt }
 {
-	RuntimeChecks::ensure(dt > 0.0, RuntimeChecks::Type::Argument, "dt must be positive");
+	runtime_checks::ensure(dt > 0.0, runtime_checks::Type::Argument, "dt must be positive");
 	setBodies(bodies);
 }
 
@@ -22,7 +22,7 @@ void Simulation::runSteps(const unsigned int n)
 
 void Simulation::step()
 {
-	RuntimeChecks::ensure(!m_bodyStepStates.empty(), RuntimeChecks::Type::Logic, "Cannot perform simulation step: no bodies in simulation");
+	runtime_checks::ensure(!m_bodyStepStates.empty(), runtime_checks::Type::Logic, "Cannot perform simulation step: no bodies in simulation");
 	resetForceForAllBodies();
 	calculateForcesBetweenBodies();
 	calculateNextStates();
@@ -42,13 +42,13 @@ void Simulation::setBodies(const std::vector<body::Body>& bodies)
 
 void Simulation::setDt(const double dt)
 {
-	RuntimeChecks::ensure(dt > 0.0, RuntimeChecks::Type::Argument, "dt must be positive");
+	runtime_checks::ensure(dt > 0.0, runtime_checks::Type::Argument, "dt must be positive");
 	m_dt = dt;
 }
 
 const body::Body& Simulation::getBody(const size_t idx) const
 {
-	RuntimeChecks::ensure(idx < m_bodyStepStates.size(), RuntimeChecks::Type::Range, "idx is out of m_bodyStepStates range");
+	runtime_checks::ensure(idx < m_bodyStepStates.size(), runtime_checks::Type::Range, "idx is out of m_bodyStepStates range");
 	return m_bodyStepStates[idx].getBody();
 }
 

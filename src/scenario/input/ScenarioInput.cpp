@@ -12,7 +12,7 @@ namespace ScenarioInput
 	std::string promptForScenarioName()
 	{
 		ConsoleWriter::write(TextId::EnterScenarioName, ": ");
-		return DataGetter::getFileBaseName();
+		return input::data::getFileBaseName();
 	}
 
 	std::vector<body::Body> createBodiesFromInput()
@@ -20,7 +20,7 @@ namespace ScenarioInput
 		std::vector<body::Body> result{};
 		ConsoleWriter::writeLine();
 		ConsoleWriter::write(TextId::EnterObjectCountNotGreaterThan, ' ', Scenario::MAX_BODY_COUNT, ": ");
-		const auto bodiesCount{ static_cast<unsigned int>(DataGetter::getValue<int>([](const int x) {return x > 0 && x <= static_cast<int>(Scenario::MAX_BODY_COUNT); })) };
+		const auto bodiesCount{ static_cast<unsigned int>(input::data::getValue<int>([](const int x) {return x > 0 && x <= static_cast<int>(Scenario::MAX_BODY_COUNT); })) };
 		result.reserve(bodiesCount);
 		for (unsigned int i{}; i < bodiesCount; ++i) {
 			const body::input::BodyBuilder bodyBuilder{ result };

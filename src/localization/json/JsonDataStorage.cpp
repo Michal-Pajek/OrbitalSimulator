@@ -23,7 +23,7 @@ namespace JsonDataStorage
 		std::string readWholeFile(const std::filesystem::path& path)
 		{
 			std::ifstream sourceFile{ path };
-			RuntimeChecks::ensure(sourceFile.is_open(), RuntimeChecks::Type::Runtime, std::string{ "Could not open JSON file: " + path.string() }.c_str());
+			runtime_checks::ensure(sourceFile.is_open(), runtime_checks::Type::Runtime, std::string{ "Could not open JSON file: " + path.string() }.c_str());
 			std::stringstream buffer{};
 			buffer << sourceFile.rdbuf();
 			return buffer.str();
@@ -33,7 +33,7 @@ namespace JsonDataStorage
 	void saveLanguageCode(std::string_view languageCode)
 	{
 		std::ofstream file{ "resources/settings.json" };
-		RuntimeChecks::ensure(file.is_open(), RuntimeChecks::Type::Runtime, "Could not open settings file for writing");
+		runtime_checks::ensure(file.is_open(), runtime_checks::Type::Runtime, "Could not open settings file for writing");
 
 		file << "{\n";
 		file << " \"language\": \"" << languageCode << "\"\n";

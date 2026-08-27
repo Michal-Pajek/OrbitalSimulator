@@ -1,7 +1,7 @@
 #pragma once
 #include <string_view>
 
-namespace FileNameValidation
+namespace filesystem::validation
 {
 	bool isValidBaseName(std::string_view name);
-} // namespace FileNameValidation
+} // namespace filesystem::validation

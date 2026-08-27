@@ -16,7 +16,7 @@
 
 #endif
 
-namespace Keyboard
+namespace input::keyboard
 {
 
 #ifdef _WIN32
@@ -73,4 +73,4 @@ namespace Keyboard
 
 #endif
 
-} // namespace Keyboard
+} // namespace input::keyboard

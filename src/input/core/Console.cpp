@@ -2,7 +2,7 @@
 
 #include <cstdlib>
 
-namespace Console
+namespace input::console
 {
     void clearScreen()
     {
@@ -18,4 +18,4 @@ namespace Console
 #endif
 
     }
-} // namespace Console
+} // namespace input::console

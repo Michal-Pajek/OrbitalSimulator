@@ -1,6 +1,6 @@
 #pragma once
 
-namespace RuntimeChecks
+namespace runtime_checks
 {
 	enum class Type
 	{
@@ -12,4 +12,4 @@ namespace RuntimeChecks
 	};
 
 	void ensure(const bool condition, const Type type, const char* message);
-} // namespace RuntimeChecks
+} // namespace runtime_checks

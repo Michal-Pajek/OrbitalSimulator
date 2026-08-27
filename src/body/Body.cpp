@@ -17,19 +17,19 @@ namespace body
 	{
 		void validateMass(const double mass, const BodyTypeId typeId)
 		{
-			RuntimeChecks::ensure(mass > 0.0, RuntimeChecks::Type::Argument, "Mass must be positive");
-			RuntimeChecks::ensure(std::isfinite(mass), RuntimeChecks::Type::Argument, "Mass must be finite");
-			RuntimeChecks::ensure(BodyTypeCatalog::isMassInRange(typeId, mass), RuntimeChecks::Type::Argument, "Mass is out of interval for the specified type");
+			runtime_checks::ensure(mass > 0.0,										runtime_checks::Type::Argument, "Mass must be positive");
+			runtime_checks::ensure(std::isfinite(mass),								runtime_checks::Type::Argument, "Mass must be finite");
+			runtime_checks::ensure(BodyTypeCatalog::isMassInRange(typeId, mass),	runtime_checks::Type::Argument, "Mass is out of interval for the specified type");
 		}
 
 		void validateTypeId(const BodyTypeId bodyTypeId)
 		{
-			RuntimeChecks::ensure(static_cast<std::size_t>(bodyTypeId) < BODY_TYPE_COUNT, RuntimeChecks::Type::Argument, "typeId out of range");
+			runtime_checks::ensure(static_cast<std::size_t>(bodyTypeId) < BODY_TYPE_COUNT, runtime_checks::Type::Argument, "typeId out of range");
 		}
 
 		void validateVelocityVector(const Vector3D& velocity)
 		{
-			RuntimeChecks::ensure(physics::isSubLightVelocity(velocity), RuntimeChecks::Type::Argument, "Velocity must be lower than c");
+			runtime_checks::ensure(physics::isSubLightVelocity(velocity), runtime_checks::Type::Argument, "Velocity must be lower than c");
 		}
 	} // anonymous namespace
 
@@ -72,7 +72,7 @@ namespace body
 	{
 		const auto positionDiff{ b.getPosition() - a.getPosition() };
 		const auto distance{ positionDiff.getLength() };
-		RuntimeChecks::ensure(distance > 0.0, RuntimeChecks::Type::Domain, "Distance between two bodies is zero");
+		runtime_checks::ensure(distance > 0.0, runtime_checks::Type::Domain, "Distance between two bodies is zero");
 		return physics::G_CONST * a.getMass() * b.getMass() * positionDiff / (distance * distance * distance);
 	}
 } // namespace body

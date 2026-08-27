@@ -13,7 +13,7 @@ namespace body::input
 {
 	Body BodyBuilder::createBodyFromInput() const
 	{
-		Console::clearScreen();
+		::input::console::clearScreen();
 		ConsoleWriter::writeHeadline(TextId::EnterNewBodyData);
 		const auto bodyName{ promptForBodyName() };
 		const auto bodyType{ promptForBodyType() };
@@ -30,7 +30,7 @@ namespace body::input
 
 	void BodyBuilder::reviewAndEditBody(Body& body) const
 	{
-		Console::clearScreen();
+		::input::console::clearScreen();
 		ConsoleWriter::writeHeadline(TextId::ConfirmBody);
 		while (true) {
 			body.printSummary();

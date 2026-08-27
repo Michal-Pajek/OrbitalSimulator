@@ -14,10 +14,10 @@ namespace app
 	void Application::eventLoop()
 	{
 		const auto closeApplication{ [this]() {
-			Console::clearScreen();
+			input::console::clearScreen();
 			if (Menu::yesOrNo(TextId::QuestionDoYouWantToFinish)) {
 				ConsoleWriter::write(TextId::ApplicationFinished, ". ", TextId::PressAnyKeyToContinue);
-				Keyboard::getSingleKey();
+				input::keyboard::getSingleKey();
 				m_continue = false;
 			} } };
 		const Menu mainMenu{ {
@@ -27,7 +27,7 @@ namespace app
 				MenuOption{'E', TextId::Exit,				closeApplication}
 				}, TextId::MainMenu };
 		while (m_continue) {
-			Console::clearScreen();
+			input::console::clearScreen();
 			mainMenu.execute();
 		}
 	}
@@ -41,19 +41,19 @@ namespace app
 
 	void Application::enterModule(const TextId titleId)
 	{
-		Console::clearScreen();
+		input::console::clearScreen();
 		ConsoleWriter::writeHeadline(titleId);
 	}
 
 	void Application::exitModule()
 	{
 		ConsoleWriter::write('\n', TextId::PressAnyKeyToReturnToMainMenu);
-		Keyboard::getSingleKey();
+		input::keyboard::getSingleKey();
 	}
 
 	void Application::loadScenario()
 	{
-		Console::clearScreen();
+		input::console::clearScreen();
 		exception_handler::execute(ScenarioHandler::loadAndHandleScenario);
 
 		exitModule();
@@ -61,7 +61,7 @@ namespace app
 
 	void Application::selectLanguage()
 	{
-		Console::clearScreen();
+		input::console::clearScreen();
 		auto& localizationManager{ LocalizationManager::getInstance() };
 		const Menu languageMenu{ {
 			MenuOption{'E', TextId::English,	[&localizationManager]() {localizationManager.setLanguage(LocalizationManager::Language::English); } },

@@ -12,7 +12,7 @@
 Menu::Menu(const std::vector<MenuOption>& options, const TextId title, const bool isHorizontal) : m_options{options}, m_title{title}, m_isHorizontal{isHorizontal}
 {
 	eraseNonVisibleOptions();
-	RuntimeChecks::ensure(validateMenuOptions(m_options), RuntimeChecks::Type::Argument, "Menu input is incorrect");
+	runtime_checks::ensure(validateMenuOptions(m_options), runtime_checks::Type::Argument, "Menu input is incorrect");
 	prepareKeysMap();
 }
 
@@ -25,7 +25,7 @@ void Menu::execute() const
 	print();
 	char key{};
 	do {
-		key = Keyboard::getSingleKey();
+		key = input::keyboard::getSingleKey();
 	} while (m_keys.find(key) == m_keys.end());
 	m_options.at(m_keys.at(key)).action();
 }
@@ -35,9 +35,9 @@ bool Menu::yesOrNo(const TextId question)
 	ConsoleWriter::write(question);
 	const auto yn{ LocalizationManager::getInstance().getYn() };
 	ConsoleWriter::writeYesOrNo(yn);
-	char choice{ Keyboard::getSingleKey() };
+	char choice{ input::keyboard::getSingleKey() };
 	while (choice != yn.yes && choice != yn.no) {
-		choice = Keyboard::getSingleKey();
+		choice = input::keyboard::getSingleKey();
 	}
 	ConsoleWriter::writeLine();
 	return choice == yn.yes;

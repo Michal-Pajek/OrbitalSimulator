@@ -6,7 +6,7 @@
 
 void JsonParserBase::require(const bool condition)
 {
-	RuntimeChecks::ensure(condition, RuntimeChecks::Type::Runtime, INVALID_FILE);
+	runtime_checks::ensure(condition, runtime_checks::Type::Runtime, INVALID_FILE);
 }
 
 bool JsonParserBase::expectChar(const char ch)
@@ -57,7 +57,7 @@ char JsonParserBase::getEscapedChar()
 
 void JsonParserBase::ensureCanRead() const
 {
-	RuntimeChecks::ensure(m_pos < m_size, RuntimeChecks::Type::Runtime, INVALID_FILE);
+	runtime_checks::ensure(m_pos < m_size, runtime_checks::Type::Runtime, INVALID_FILE);
 }
 
 void JsonParserBase::skipWhiteMarks()

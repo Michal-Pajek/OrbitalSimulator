@@ -16,7 +16,7 @@ void Simulation::BodyStepState::calculateNextPosition(const double dt)
 	const auto newPos{ position + velocity * dt + 0.5 * m_acceleration * dt * dt };
 	const auto newVel{ velocity + m_acceleration * dt };
 
-	RuntimeChecks::ensure(physics::isSubLightVelocity(newVel), RuntimeChecks::Type::Runtime, "Current velocity is not below the speed of light");
+	runtime_checks::ensure(physics::isSubLightVelocity(newVel), runtime_checks::Type::Runtime, "Current velocity is not below the speed of light");
 
 	m_newPos = newPos;
 	m_newVel = newVel;

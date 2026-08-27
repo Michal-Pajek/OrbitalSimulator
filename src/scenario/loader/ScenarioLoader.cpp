@@ -178,13 +178,13 @@ namespace ScenarioLoader
 
 		fs::path buildSaveFilePath(const std::string& fileBaseName)
 		{
-			return ApplicationPaths::scenariosDirectory() / (fileBaseName + std::string{ ScenarioFileFormat::extension });
+			return filesystem::paths::scenariosDirectory() / (fileBaseName + std::string{ ScenarioFileFormat::extension });
 		}
 
 		std::optional<fs::path> selectSaveFileFromList(const std::vector<std::string>& fileNames)
 		{
 			printFileNames(fileNames);
-			const auto idx{ DataGetter::getSelectionNumber(TextId::EnterScenarioNumberOrZeroToCancel, fileNames.size(), true)};
+			const auto idx{ input::data::getSelectionNumber(TextId::EnterScenarioNumberOrZeroToCancel, fileNames.size(), true)};
 			std::optional<fs::path> result{};
 			if (idx > 0u) {
 				result = buildSaveFilePath(fileNames.at(idx - 1u));
@@ -215,7 +215,7 @@ namespace ScenarioLoader
 
 			removeTrailingCarriageReturn(scenarioName);
 
-			if (!FileNameValidation::isValidBaseName(scenarioName)) {
+			if (!filesystem::validation::isValidBaseName(scenarioName)) {
 				return {};
 			}
 
@@ -257,7 +257,7 @@ namespace ScenarioLoader
 
 		std::vector<std::string> findSaveFiles()
 		{
-			const auto folderPath{ ApplicationPaths::scenariosDirectory() };
+			const auto folderPath{ filesystem::paths::scenariosDirectory() };
 			std::vector<std::string> result{};
 			try {
 				for (const auto& entry : fs::directory_iterator{ folderPath }) {

@@ -33,19 +33,19 @@ namespace body::input
 		const auto max{ massInterval.max / massMultiplier };
 		ConsoleWriter::write(TextId::EnterBodyMass, " (", TextId::Interval, ' ', min, " - ", max, "): ");
 
-		return massMultiplier * DataGetter::getValue<double>([min, max](const double x) {return x >= min && x <= max; });
+		return massMultiplier * ::input::data::getValue<double>([min, max](const double x) {return x >= min && x <= max; });
 	}
 
 	std::string BodyInputBase::promptForBodyName() const
 	{
 		ConsoleWriter::write(TextId::EnterOneWordName, ": ");
-		auto enteredName{ DataGetter::getSingleWordText() };
+		auto enteredName{ ::input::data::getSingleWordText() };
 		if (isSameAsCurrentName(enteredName)) {
 			return enteredName;
 		}
 		while (isBodyNameAlreadyUsed(enteredName)) {
 			ConsoleWriter::write(TextId::BodyNameAlreadyUsedEnterAnother, ": ");
-			enteredName = DataGetter::getSingleWordText();
+			enteredName = ::input::data::getSingleWordText();
 		}
 		return enteredName;
 	}
@@ -53,12 +53,12 @@ namespace body::input
 	BodyTypeId BodyInputBase::promptForBodyType() const
 	{
 		const auto bodyTypes{ BodyTypeCatalog::getAvailableTypes() };
-		std::vector<OptionSelector::SelectionOption<BodyTypeId>> options{};
+		std::vector<::input::selection::SelectionOption<BodyTypeId>> options{};
 		options.reserve(bodyTypes.size());
 		for (const auto& bodyType : bodyTypes) {
 			options.emplace_back(bodyType.getTextId(), bodyType.getId());
 		}
-		const auto selectedOption{ OptionSelector::selectOption(options, TextId::SelectBodyType) };
+		const auto selectedOption{ ::input::selection::selectOption(options, TextId::SelectBodyType) };
 		ConsoleWriter::writeLine(TextId::SelectedBodyType, ": ", selectedOption.textId);
 		return selectedOption.value;
 	}
@@ -66,7 +66,7 @@ namespace body::input
 	Vector3D BodyInputBase::promptForBodyPosition() const
 	{
 		ConsoleWriter::writeLine();
-		const auto distanceMultiplier{ UnitSelector::selectUnitMultiplier(std::vector<UnitSelector::UnitOption>{
+		const auto distanceMultiplier{ ::input::selection::unit::selectUnitMultiplier(std::vector<::input::selection::unit::UnitOption>{
 			{TextId::Metre,							1.0},
 			{TextId::Kilometre,						physics::KM_MULTIPLIER},
 			{TextId::ThousandKilometre,				physics::KKM_MULTIPLIER},
@@ -76,13 +76,13 @@ namespace body::input
 			TextId::SelectDistanceUnit) };
 
 		ConsoleWriter::write(TextId::EnterPositionVector, ": ");
-		auto enteredPosition{ distanceMultiplier * DataGetter::getVector3D() };
+		auto enteredPosition{ distanceMultiplier * ::input::data::getVector3D() };
 		if (isSameAsCurrentPosition(enteredPosition)) {
 			return enteredPosition;
 		}
 		while (isBodyPositionAlreadyUsed(enteredPosition)) {
 			ConsoleWriter::write(TextId::BodyPositionAlreadyOccupiedEnterAnother, ": ");
-			enteredPosition = distanceMultiplier * DataGetter::getVector3D();
+			enteredPosition = distanceMultiplier * ::input::data::getVector3D();
 		}
 		return enteredPosition;
 	}
@@ -90,7 +90,7 @@ namespace body::input
 	Vector3D BodyInputBase::promptForBodyVelocity() const
 	{
 		ConsoleWriter::writeLine();
-		const auto velocityMultiplier{ UnitSelector::selectUnitMultiplier(std::vector<UnitSelector::UnitOption>{
+		const auto velocityMultiplier{ ::input::selection::unit::selectUnitMultiplier(std::vector<::input::selection::unit::UnitOption>{
 			{TextId::MetrePerSecond,			1.0},
 			{TextId::KilometrePerSecond,		physics::KMS_MULTIPLIER},
 			{TextId::ThousandKilometrePerHour,	physics::KKMH_MULTIPLIER},
@@ -98,7 +98,7 @@ namespace body::input
 			TextId::SelectSpeedUnit) };
 
 		ConsoleWriter::write(TextId::EnterVelocityVector, ": ");
-		return velocityMultiplier * DataGetter::getVector3D([velocityMultiplier](const double x, const double y, const double z) {
+		return velocityMultiplier * ::input::data::getVector3D([velocityMultiplier](const double x, const double y, const double z) {
 			return physics::isSubLightVelocity(
 				x * velocityMultiplier,
 				y * velocityMultiplier,
