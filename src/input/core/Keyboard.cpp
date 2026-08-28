@@ -35,12 +35,12 @@ namespace input::keyboard
         public:
             TerminalRawModeGuard()
             {
-                RuntimeChecks::ensure(tcgetattr(STDIN_FILENO, &m_oldAttr) != -1, RuntimeChecks::Type::Runtime, "tcgetattr failed");
+                runtime_checks::ensure(tcgetattr(STDIN_FILENO, &m_oldAttr) != -1, runtime_checks::Type::Runtime, "tcgetattr failed");
 
                 termios newAttr{ m_oldAttr };
                 newAttr.c_lflag &= static_cast<tcflag_t>(~(ICANON | ECHO));
 
-                RuntimeChecks::ensure(tcsetattr(STDIN_FILENO, TCSANOW, &newAttr) != -1, RuntimeChecks::Type::Runtime, "tcsetattr failed");
+                runtime_checks::ensure(tcsetattr(STDIN_FILENO, TCSANOW, &newAttr) != -1, runtime_checks::Type::Runtime, "tcsetattr failed");
 
                 m_active = true;
             }
@@ -66,7 +66,7 @@ namespace input::keyboard
         TerminalRawModeGuard rawModeGuard{};
 
         const int ch{ std::getchar() };
-        RuntimeChecks::ensure(ch != EOF, RuntimeChecks::Type::Runtime, "getchar failed");
+        runtime_checks::ensure(ch != EOF, runtime_checks::Type::Runtime, "getchar failed");
 
         return static_cast<char>(std::toupper(static_cast<unsigned char>(ch)));
     }

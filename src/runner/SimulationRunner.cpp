@@ -1,7 +1,7 @@
 #include "runner/SimulationRunner.hpp"
 
 #include "common/runtime_checks/RuntimeChecks.hpp"
-#include "recording/recorder.hpp"
+#include "recording/Recorder.hpp"
 #include "simulation/core/Simulation.hpp"
 #include "simulation/run_config/SimulationRunConfig.hpp"
 #include "scenario/core/Scenario.hpp"
