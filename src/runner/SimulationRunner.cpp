@@ -1,14 +1,14 @@
 #include "runner/SimulationRunner.hpp"
 
 #include "common/runtime_checks/RuntimeChecks.hpp"
-#include "recording/Recorder.hpp"
+#include "recording/recorder.hpp"
 #include "simulation/core/Simulation.hpp"
 #include "simulation/run_config/SimulationRunConfig.hpp"
 #include "scenario/core/Scenario.hpp"
 
 namespace SimulationRunner
 {
-	void runAndRecord(Recorder& recorder, const Scenario& scenario, const SimulationRunConfig& config)
+	void runAndRecord(recording::Recorder& recorder, const Scenario& scenario, const SimulationRunConfig& config)
 	{
 		const auto steps{ config.stepCount };
 		const auto& bodies{ scenario.bodies };

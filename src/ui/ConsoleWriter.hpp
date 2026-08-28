@@ -9,11 +9,11 @@
 namespace ConsoleWriter
 {
 	void writeError(const std::string_view text);
-	void writeHeadline(const TextId titleId);
-	void writeMenuOption(const TextId textId, const char key, const char separator);
-	void writeMenuTitle(const TextId titleId);
-	void writeSingle(TextId id);
-	void writeYesOrNo(const LocalizationManager::YesAndNo& yn);
+	void writeHeadline(const localization::TextId titleId);
+	void writeMenuOption(const localization::TextId textId, const char key, const char separator);
+	void writeMenuTitle(const localization::TextId titleId);
+	void writeSingle(localization::TextId id);
+	void writeYesOrNo(const localization::LocalizationManager::YesAndNo& yn);
 
 	template <typename T>
 	void writeSingle(const T& value)

@@ -27,13 +27,13 @@ namespace body
 			runtime_checks::ensure(static_cast<std::size_t>(bodyTypeId) < BODY_TYPE_COUNT, runtime_checks::Type::Argument, "typeId out of range");
 		}
 
-		void validateVelocityVector(const Vector3D& velocity)
+		void validateVelocityVector(const math::Vector3D& velocity)
 		{
 			runtime_checks::ensure(physics::isSubLightVelocity(velocity), runtime_checks::Type::Argument, "Velocity must be lower than c");
 		}
 	} // anonymous namespace
 
-	Body::Body(const std::string& name, BodyTypeId typeId, double mass, const Vector3D& position, const Vector3D& velocity)
+	Body::Body(const std::string& name, BodyTypeId typeId, double mass, const math::Vector3D& position, const math::Vector3D& velocity)
 		: m_name{ name }, m_typeId{ typeId }, m_mass{ mass }, m_position{ position }, m_velocity{ velocity }
 	{
 		validateTypeId(typeId);
@@ -44,7 +44,7 @@ namespace body
 	void Body::printSummary(const bool oneLine) const
 	{
 		const auto sep{ oneLine ? '\t' : '\n' };
-		ConsoleWriter::writeLine(m_name, " (", BodyTypeCatalog::getType(m_typeId).getTextId(), ')', sep, TextId::Mass, " (kg): ", m_mass, sep, TextId::Position, " (m): ", m_position, sep, TextId::Velocity, " (m/s): ", m_velocity);
+		ConsoleWriter::writeLine(m_name, " (", BodyTypeCatalog::getType(m_typeId).getTextId(), ')', sep, localization::TextId::Mass, " (kg): ", m_mass, sep, localization::TextId::Position, " (m): ", m_position, sep, localization::TextId::Velocity, " (m/s): ", m_velocity);
 	}
 
 	void Body::setMass(const double mass)
@@ -62,13 +62,13 @@ namespace body
 		m_mass = mass;
 	}
 
-	void Body::setVelocity(const Vector3D& velocity)
+	void Body::setVelocity(const math::Vector3D& velocity)
 	{
 		validateVelocityVector(velocity);
 		m_velocity = velocity;
 	}
 
-	Vector3D getGravityForceBetween(const Body& a, const Body& b)
+	math::Vector3D getGravityForceBetween(const Body& a, const Body& b)
 	{
 		const auto positionDiff{ b.getPosition() - a.getPosition() };
 		const auto distance{ positionDiff.getLength() };

@@ -9,9 +9,9 @@ namespace ScenarioSummary
 {
 	void print(const std::string_view name, const std::span<const body::Body> bodies)
 	{
-		ConsoleWriter::writeHeadline(TextId::CurrentScenarioSummary);
-		ConsoleWriter::writeLine(TextId::ScenarioName, ":\t", name);
-		ConsoleWriter::writeLine(TextId::Bodies, ':');
+		ConsoleWriter::writeHeadline(localization::TextId::CurrentScenarioSummary);
+		ConsoleWriter::writeLine(localization::TextId::ScenarioName, ":\t", name);
+		ConsoleWriter::writeLine(localization::TextId::Bodies, ':');
 		for (const auto& body : bodies) {
 			body.printSummary(true);
 		}

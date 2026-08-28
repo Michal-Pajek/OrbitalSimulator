@@ -9,5 +9,5 @@
 namespace body::tests
 {
 	double getProperMass(const BodyTypeId id);
-	Body createTestBody(const double mass, const Vector3D& position = {}, const Vector3D& velocity = {}, const std::string& name = "TEST_BODY");
+	Body createTestBody(const double mass, const math::Vector3D& position = {}, const math::Vector3D& velocity = {}, const std::string& name = "TEST_BODY");
 } // namespace body::tests

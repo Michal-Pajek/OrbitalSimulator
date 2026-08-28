@@ -21,7 +21,7 @@ namespace input::data
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	}
 
-	std::size_t getSelectionNumber(const TextId textId, const std::size_t count, bool includeZero)
+	std::size_t getSelectionNumber(const localization::TextId textId, const std::size_t count, bool includeZero)
 	{
 		ConsoleWriter::write(textId, ": ");
 		return static_cast<std::size_t>(getValue<int>([countInt = static_cast<int>(count), includeZero](const int value) {

@@ -81,7 +81,7 @@ namespace ScenarioLoader
 			return true;
 		}
 
-		std::optional<Vector3D> deserializeVector(std::istream& file)
+		std::optional<math::Vector3D> deserializeVector(std::istream& file)
 		{
 			char openingBracket{};
 			char firstSeparator{};
@@ -110,7 +110,7 @@ namespace ScenarioLoader
 			}
 
 			try {
-				return Vector3D{ x, y, z };
+				return math::Vector3D{ x, y, z };
 			}
 			catch (const std::invalid_argument&) {
 				return {};
@@ -184,7 +184,7 @@ namespace ScenarioLoader
 		std::optional<fs::path> selectSaveFileFromList(const std::vector<std::string>& fileNames)
 		{
 			printFileNames(fileNames);
-			const auto idx{ input::data::getSelectionNumber(TextId::EnterScenarioNumberOrZeroToCancel, fileNames.size(), true)};
+			const auto idx{ input::data::getSelectionNumber(localization::TextId::EnterScenarioNumberOrZeroToCancel, fileNames.size(), true)};
 			std::optional<fs::path> result{};
 			if (idx > 0u) {
 				result = buildSaveFilePath(fileNames.at(idx - 1u));
@@ -196,9 +196,9 @@ namespace ScenarioLoader
 		{
 			const auto count{ fileNames.size() };
 			if (count == 1u) {
-				ConsoleWriter::writeLine(TextId::ThereIsOnlyOneSavedScenario, ": ", fileNames.front());
+				ConsoleWriter::writeLine(localization::TextId::ThereIsOnlyOneSavedScenario, ": ", fileNames.front());
 				std::optional<fs::path> result{};
-				if (Menu::yesOrNo(TextId::QuestionDoYouWantToLoadIt)) {
+				if (Menu::yesOrNo(localization::TextId::QuestionDoYouWantToLoadIt)) {
 					result = buildSaveFilePath(fileNames.front());
 				}
 				return result;

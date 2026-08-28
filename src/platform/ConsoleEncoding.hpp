@@ -1,6 +1,6 @@
 #pragma once
 
-namespace ConsoleEncoding
+namespace platform::console
 {
 	void configureUtf8();
-} // namespace ConsoleEncoding
+} // namespace platform::console

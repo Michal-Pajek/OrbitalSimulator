@@ -12,19 +12,19 @@ namespace body::input
 	void BodyEditor::editBody()
 	{
 		::input::console::clearScreen();
-		ConsoleWriter::writeLine(TextId::YouAreEditingBody, ' ', m_body.getName());
+		ConsoleWriter::writeLine(localization::TextId::YouAreEditingBody, ' ', m_body.getName());
 		const Menu whatToChangeInBody{ {
-				MenuOption{'N', TextId::BodyName,		[this]() {m_body.setName(promptForBodyName()); }},
-				MenuOption{'T', TextId::BodyType,		[this]() {
+				MenuOption{'N', localization::TextId::BodyName,		[this]() {m_body.setName(promptForBodyName()); }},
+				MenuOption{'T', localization::TextId::BodyType,		[this]() {
 					const auto newTypeId{ promptForBodyType() };
 					const auto newMass{ resolveMassForTypeChange(newTypeId) };
 					m_body.setTypeAndMass(newTypeId, newMass);
 				}},
-				MenuOption{'M', TextId::BodyMass,		[this]() {m_body.setMass(promptForBodyMass()); }},
-				MenuOption{'P', TextId::BodyPosition,	[this]() {m_body.setPosition(promptForBodyPosition()); }},
-				MenuOption{'V', TextId::BodyVelocity,	[this]() {m_body.setVelocity(promptForBodyVelocity()); }},
-				MenuOption{'B', TextId::Back,			[]() {}}},
-				TextId::QuestionWhatDoYouWantToChangeInBody };
+				MenuOption{'M', localization::TextId::BodyMass,		[this]() {m_body.setMass(promptForBodyMass()); }},
+				MenuOption{'P', localization::TextId::BodyPosition,	[this]() {m_body.setPosition(promptForBodyPosition()); }},
+				MenuOption{'V', localization::TextId::BodyVelocity,	[this]() {m_body.setVelocity(promptForBodyVelocity()); }},
+				MenuOption{'B', localization::TextId::Back,			[]() {}}},
+				localization::TextId::QuestionWhatDoYouWantToChangeInBody };
 		whatToChangeInBody.execute();
 	}
 
@@ -38,13 +38,13 @@ namespace body::input
 		const auto currentMass{ m_body.getMass() };
 
 		if (!BodyTypeCatalog::isMassInRange(newTypeId, currentMass)) {
-			ConsoleWriter::writeLine(TextId::BodyMassOutOfInterval);
+			ConsoleWriter::writeLine(localization::TextId::BodyMassOutOfInterval);
 			return promptForBodyMass(newTypeId);
 		}
 
-		ConsoleWriter::writeLine(TextId::CurrentBodyMassIsWithinTheRangeForThisType);
+		ConsoleWriter::writeLine(localization::TextId::CurrentBodyMassIsWithinTheRangeForThisType);
 
-		if (!Menu::yesOrNo(TextId::QuestionDoYouStillWantToEnterNewValue)) {
+		if (!Menu::yesOrNo(localization::TextId::QuestionDoYouStillWantToEnterNewValue)) {
 			return currentMass;
 		}
 

@@ -11,19 +11,19 @@ namespace body::input
 	{
 		struct MassUnit
 		{
-			TextId name;
+			localization::TextId name;
 			double mass;
 		};
 
 		constexpr std::array massUnitsArray{
-			MassUnit{.name{TextId::Kilogram},		.mass{1.0}},
-			MassUnit{.name{TextId::Ton},			.mass{physics::TON}},
-			MassUnit{.name{TextId::Kiloton},		.mass{physics::KILOTON}},
-			MassUnit{.name{TextId::Megaton},		.mass{physics::MEGATON}},
-			MassUnit{.name{TextId::MoonMass},		.mass{physics::MOON_MASS}},
-			MassUnit{.name{TextId::EarthMass},		.mass{physics::EARTH_MASS}},
-			MassUnit{.name{TextId::JupiterMass},	.mass{physics::JUPITER_MASS}},
-			MassUnit{.name{TextId::SolarMass},		.mass{physics::SOLAR_MASS}}
+			MassUnit{.name{localization::TextId::Kilogram},		.mass{1.0}},
+			MassUnit{.name{localization::TextId::Ton},			.mass{physics::TON}},
+			MassUnit{.name{localization::TextId::Kiloton},		.mass{physics::KILOTON}},
+			MassUnit{.name{localization::TextId::Megaton},		.mass{physics::MEGATON}},
+			MassUnit{.name{localization::TextId::MoonMass},		.mass{physics::MOON_MASS}},
+			MassUnit{.name{localization::TextId::EarthMass},	.mass{physics::EARTH_MASS}},
+			MassUnit{.name{localization::TextId::JupiterMass},	.mass{physics::JUPITER_MASS}},
+			MassUnit{.name{localization::TextId::SolarMass},	.mass{physics::SOLAR_MASS}}
 		};
 	} // anonymous namespace
 
@@ -33,7 +33,7 @@ namespace body::input
 	}
 
 	double BodyMassUnitSelector::selectMassMultiplier(const BodyTypeId bodyTypeId) {
-		return ::input::selection::unit::selectUnitMultiplier(getUnitsFor(bodyTypeId), TextId::SelectMassUnit);
+		return ::input::selection::unit::selectUnitMultiplier(getUnitsFor(bodyTypeId), localization::TextId::SelectMassUnit);
 	}
 
 	auto BodyMassUnitSelector::getUnitsFor(const BodyTypeId bodyTypeId) -> const UnitVector& {
@@ -57,7 +57,7 @@ namespace body::input
 			}
 		}
 		if (result.empty()) {
-			result.emplace_back(TextId::Kilogram, 1.0);
+			result.emplace_back(localization::TextId::Kilogram, 1.0);
 		}
 		return result;
 	}

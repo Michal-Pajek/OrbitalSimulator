@@ -9,7 +9,7 @@ namespace app
 		void eventLoop();
 	private:
 		static void buildScenario();
-		static void enterModule(const TextId titleId);
+		static void enterModule(const localization::TextId titleId);
 		static void exitModule();
 		static void loadScenario();
 		static void selectLanguage();

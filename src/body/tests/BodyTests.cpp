@@ -22,7 +22,7 @@ namespace body::tests
 	TEST(GravityForceTests, CorrectDirectionHorizontal)
 	{
 		const auto A{ createTestBody(10.0) };
-		const auto B{ createTestBody(12.0, Vector3D{10.0, 0.0, 0.0}) };
+		const auto B{ createTestBody(12.0, math::Vector3D{10.0, 0.0, 0.0}) };
 		const auto force{ getGravityForceBetween(A, B) };
 		EXPECT_GT(force.getX(), 0.0);
 		EXPECT_NEAR(force.getY(), 0.0, EPSILON);
@@ -31,7 +31,7 @@ namespace body::tests
 	TEST(GravityForceTests, CorrectDirectionVertical)
 	{
 		const auto A{ createTestBody(10.0) };
-		const auto B{ createTestBody(12.0, Vector3D{0.0, 10.0, 0.0}) };
+		const auto B{ createTestBody(12.0, math::Vector3D{0.0, 10.0, 0.0}) };
 		const auto force{ getGravityForceBetween(A, B) };
 		EXPECT_NEAR(force.getX(), 0.0, EPSILON);
 		EXPECT_GT(force.getY(), 0.0);
@@ -41,7 +41,7 @@ namespace body::tests
 	TEST(GravityForceTests, ForceValueCalculationWorksCorrectly)
 	{
 		const auto A{ createTestBody(2.0) };
-		const auto B{ createTestBody(3.0, Vector3D{2.0, 0.0, 0.0}) };
+		const auto B{ createTestBody(3.0, math::Vector3D{2.0, 0.0, 0.0}) };
 		const auto force{ getGravityForceBetween(A, B) };
 		EXPECT_NEAR(force.getX(), 1.5 * physics::G_CONST, EPSILON);
 		EXPECT_NEAR(force.getY(), 0.0, EPSILON);
@@ -50,8 +50,8 @@ namespace body::tests
 
 	TEST(GravityForceTests, ObeysThirdNewtonianRule)
 	{
-		const auto A{ createTestBody(2.0, Vector3D{0.0, 10.0, 5.0}) };
-		const auto B{ createTestBody(3.0, Vector3D{2.0, 0.0, 0.0}) };
+		const auto A{ createTestBody(2.0, math::Vector3D{0.0, 10.0, 5.0}) };
+		const auto B{ createTestBody(3.0, math::Vector3D{2.0, 0.0, 0.0}) };
 		const auto forceAB{ getGravityForceBetween(A, B) };
 		const auto forceBA{ getGravityForceBetween(B, A) };
 		EXPECT_NEAR(forceAB.getX(), -forceBA.getX(), EPSILON);
@@ -63,20 +63,20 @@ namespace body::tests
 	{
 		for (std::size_t id{}; id < BODY_TYPE_COUNT; ++id) {
 			const auto bodyTypeId{ static_cast<BodyTypeId>(id) };
-			const Body body{ "A", bodyTypeId, getProperMass(bodyTypeId), Vector3D{}, Vector3D{} };
+			const Body body{ "A", bodyTypeId, getProperMass(bodyTypeId), math::Vector3D{}, math::Vector3D{} };
 			EXPECT_EQ(body.getTypeId(), bodyTypeId);
 		}
 	}
 
 	TEST(BodyTests, ConstructorThrowsForInvalidBodyTypeId)
 	{
-		EXPECT_THROW((Body{ "A", static_cast<BodyTypeId>(BODY_TYPE_COUNT), 1.0, Vector3D{}, Vector3D{} }), std::invalid_argument);
+		EXPECT_THROW((Body{ "A", static_cast<BodyTypeId>(BODY_TYPE_COUNT), 1.0, math::Vector3D{}, math::Vector3D{} }), std::invalid_argument);
 	}
 
 	TEST(BodyTests, ConstructorThrowsForNonPositiveMass)
 	{
-		EXPECT_THROW((Body{ "A", BodyTypeId::Meteor, 0.0, Vector3D{}, Vector3D{} }), std::invalid_argument);
-		EXPECT_THROW((Body{ "A", BodyTypeId::Meteor, -1.0, Vector3D{}, Vector3D{} }), std::invalid_argument);
+		EXPECT_THROW((Body{ "A", BodyTypeId::Meteor, 0.0, math::Vector3D{}, math::Vector3D{} }), std::invalid_argument);
+		EXPECT_THROW((Body{ "A", BodyTypeId::Meteor, -1.0, math::Vector3D{}, math::Vector3D{} }), std::invalid_argument);
 	}
 
 	TEST(BodyTests, SetMassThrowsForNonPositiveMass)
@@ -133,9 +133,9 @@ namespace body::tests
 		constexpr auto infinity{ std::numeric_limits<double>::infinity() };
 		constexpr auto nan{ std::numeric_limits<double>::quiet_NaN() };
 
-		EXPECT_THROW((Body{ "A", BodyTypeId::Meteor, infinity, Vector3D{}, Vector3D{} }), std::invalid_argument);
-		EXPECT_THROW((Body{ "A", BodyTypeId::Meteor, -infinity, Vector3D{}, Vector3D{} }), std::invalid_argument);
-		EXPECT_THROW((Body{ "A", BodyTypeId::Meteor, nan, Vector3D{}, Vector3D{} }), std::invalid_argument);
+		EXPECT_THROW((Body{ "A", BodyTypeId::Meteor, infinity, math::Vector3D{}, math::Vector3D{} }), std::invalid_argument);
+		EXPECT_THROW((Body{ "A", BodyTypeId::Meteor, -infinity, math::Vector3D{}, math::Vector3D{} }), std::invalid_argument);
+		EXPECT_THROW((Body{ "A", BodyTypeId::Meteor, nan, math::Vector3D{}, math::Vector3D{} }), std::invalid_argument);
 	}
 
 	TEST(BodyTests, ConstructorThrowsForMassOutsideTypeInterval)
@@ -151,8 +151,8 @@ namespace body::tests
 				<< "Body type id: "
 				<< id);
 
-			EXPECT_THROW((Body{ "A", bodyTypeId, massTooLow, Vector3D{}, Vector3D{} }), std::invalid_argument);
-			EXPECT_THROW((Body{ "A", bodyTypeId, massTooHigh, Vector3D{}, Vector3D{} }), std::invalid_argument);
+			EXPECT_THROW((Body{ "A", bodyTypeId, massTooLow, math::Vector3D{}, math::Vector3D{} }), std::invalid_argument);
+			EXPECT_THROW((Body{ "A", bodyTypeId, massTooHigh, math::Vector3D{}, math::Vector3D{} }), std::invalid_argument);
 		}
 	}
 
@@ -165,7 +165,7 @@ namespace body::tests
 			const auto massTooLow{ std::nextafter(min, 0.0) };
 			const auto massTooHigh{ std::nextafter(max,std::numeric_limits<double>::infinity()) };
 
-			Body body{ "A", bodyTypeId, initialMass, Vector3D{}, Vector3D{} };
+			Body body{ "A", bodyTypeId, initialMass, math::Vector3D{}, math::Vector3D{} };
 
 			SCOPED_TRACE(
 				::testing::Message{}
@@ -195,7 +195,7 @@ namespace body::tests
 	TEST(BodyTests, SetVelocityChangesVelocity)
 	{
 		auto body{ createTestBody(1.0) };
-		const Vector3D velocity{ 10.0, 20.0, 30.0 };
+		const math::Vector3D velocity{ 10.0, 20.0, 30.0 };
 
 		body.setVelocity(velocity);
 
@@ -204,10 +204,10 @@ namespace body::tests
 
 	TEST(BodyTests, SetVelocityRejectsSpeedOfLightAndPreservesState)
 	{
-		const Vector3D initialVelocity{ 10.0, 20.0, 30.0 };
-		auto body{ createTestBody(1.0, Vector3D{}, initialVelocity) };
+		const math::Vector3D initialVelocity{ 10.0, 20.0, 30.0 };
+		auto body{ createTestBody(1.0, math::Vector3D{}, initialVelocity) };
 
-		const Vector3D invalidVelocity{ physics::C_CONST, 0.0, 0.0 };
+		const math::Vector3D invalidVelocity{ physics::C_CONST, 0.0, 0.0 };
 
 		EXPECT_THROW(body.setVelocity(invalidVelocity), std::invalid_argument);
 		EXPECT_EQ(body.getVelocity(), initialVelocity);
@@ -215,6 +215,6 @@ namespace body::tests
 
 	TEST(BodyTests, ConstructorRejectsSpeedOfLightVelocity)
 	{
-		EXPECT_THROW((Body{ "A", BodyTypeId::Meteor, 1.0, Vector3D{}, Vector3D{ physics::C_CONST, 0.0, 0.0 } }), std::invalid_argument);
+		EXPECT_THROW((Body{ "A", BodyTypeId::Meteor, 1.0, math::Vector3D{}, math::Vector3D{ physics::C_CONST, 0.0, 0.0 } }), std::invalid_argument);
 	}
 } // namespace body::tests

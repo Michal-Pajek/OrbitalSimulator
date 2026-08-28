@@ -15,17 +15,17 @@ namespace app
 	{
 		const auto closeApplication{ [this]() {
 			input::console::clearScreen();
-			if (Menu::yesOrNo(TextId::QuestionDoYouWantToFinish)) {
-				ConsoleWriter::write(TextId::ApplicationFinished, ". ", TextId::PressAnyKeyToContinue);
+			if (Menu::yesOrNo(localization::TextId::QuestionDoYouWantToFinish)) {
+				ConsoleWriter::write(localization::TextId::ApplicationFinished, ". ", localization::TextId::PressAnyKeyToContinue);
 				input::keyboard::getSingleKey();
 				m_continue = false;
 			} } };
 		const Menu mainMenu{ {
-				MenuOption{'B', TextId::ScenarioBuilder,	Application::buildScenario},
-				MenuOption{'O', TextId::LoadScenario,		Application::loadScenario},
-				MenuOption{'L', TextId::SelectLanguage,		Application::selectLanguage},
-				MenuOption{'E', TextId::Exit,				closeApplication}
-				}, TextId::MainMenu };
+				MenuOption{'B', localization::TextId::ScenarioBuilder,	Application::buildScenario},
+				MenuOption{'O', localization::TextId::LoadScenario,		Application::loadScenario},
+				MenuOption{'L', localization::TextId::SelectLanguage,	Application::selectLanguage},
+				MenuOption{'E', localization::TextId::Exit,				closeApplication}
+				}, localization::TextId::MainMenu };
 		while (m_continue) {
 			input::console::clearScreen();
 			mainMenu.execute();
@@ -34,12 +34,12 @@ namespace app
 
 	void Application::buildScenario()
 	{
-		enterModule(TextId::ScenarioBuilder);
+		enterModule(localization::TextId::ScenarioBuilder);
 		exception_handler::execute(ScenarioHandler::buildAndHandleScenario);
 		exitModule();
 	}
 
-	void Application::enterModule(const TextId titleId)
+	void Application::enterModule(const localization::TextId titleId)
 	{
 		input::console::clearScreen();
 		ConsoleWriter::writeHeadline(titleId);
@@ -47,7 +47,7 @@ namespace app
 
 	void Application::exitModule()
 	{
-		ConsoleWriter::write('\n', TextId::PressAnyKeyToReturnToMainMenu);
+		ConsoleWriter::write('\n', localization::TextId::PressAnyKeyToReturnToMainMenu);
 		input::keyboard::getSingleKey();
 	}
 
@@ -62,13 +62,13 @@ namespace app
 	void Application::selectLanguage()
 	{
 		input::console::clearScreen();
-		auto& localizationManager{ LocalizationManager::getInstance() };
+		auto& localizationManager{ localization::LocalizationManager::getInstance() };
 		const Menu languageMenu{ {
-			MenuOption{'E', TextId::English,	[&localizationManager]() {localizationManager.setLanguage(LocalizationManager::Language::English); } },
-			MenuOption{'P', TextId::Polish,		[&localizationManager]() {localizationManager.setLanguage(LocalizationManager::Language::Polish); } }
-			}, TextId::SelectLanguage };
+			MenuOption{'E', localization::TextId::English,	[&localizationManager]() {localizationManager.setLanguage(localization::LocalizationManager::Language::English); } },
+			MenuOption{'P', localization::TextId::Polish,		[&localizationManager]() {localizationManager.setLanguage(localization::LocalizationManager::Language::Polish); } }
+			}, localization::TextId::SelectLanguage };
 		languageMenu.execute();
-		ConsoleWriter::writeLine('\n', TextId::SelectedLanguage, ": ", localizationManager.getCurrentLanguageTextId());
+		ConsoleWriter::writeLine('\n', localization::TextId::SelectedLanguage, ": ", localizationManager.getCurrentLanguageTextId());
 		exitModule();
 	}
 } // namespace app

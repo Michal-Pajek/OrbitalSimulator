@@ -18,8 +18,8 @@ namespace
 	{
 		std::vector<body::Body> bodyVec{};
 		bodyVec.reserve(2u);
-		bodyVec.emplace_back(body::tests::createTestBody(1e8, Vector3D{ 2.0, 3.0, 0.0 }, Vector3D{ 4.0, 5.0, 0.0 }, "body1"));
-		bodyVec.emplace_back(body::tests::createTestBody(6e8, Vector3D{ 7.0, 8.0, 0.0 }, Vector3D{ 9.0, 10.0, 0.0 }, "body2"));
+		bodyVec.emplace_back(body::tests::createTestBody(1e8, math::Vector3D{ 2.0, 3.0, 0.0 }, math::Vector3D{ 4.0, 5.0, 0.0 }, "body1"));
+		bodyVec.emplace_back(body::tests::createTestBody(6e8, math::Vector3D{ 7.0, 8.0, 0.0 }, math::Vector3D{ 9.0, 10.0, 0.0 }, "body2"));
 		return bodyVec;
 	}
 
@@ -27,14 +27,14 @@ namespace
 	{
 		std::vector<body::Body> bodyVec{};
 		bodyVec.reserve(2u);
-		bodyVec.emplace_back(body::tests::createTestBody(1e9, Vector3D{ 10.0, 0.0, 0.0 }, Vector3D{ -2.0, 0.0, 0.0 }));
-		bodyVec.emplace_back(body::tests::createTestBody(1e9, Vector3D{ 0.0, 10.0, 0.0 }, Vector3D{ 2.0, 0.0, 0.0 }));
+		bodyVec.emplace_back(body::tests::createTestBody(1e9, math::Vector3D{ 10.0, 0.0, 0.0 }, math::Vector3D{ -2.0, 0.0, 0.0 }));
+		bodyVec.emplace_back(body::tests::createTestBody(1e9, math::Vector3D{ 0.0, 10.0, 0.0 }, math::Vector3D{ 2.0, 0.0, 0.0 }));
 		return bodyVec;
 	}
 
-	Vector3D calculateTotalMomentum(const Simulation& simulation)
+	math::Vector3D calculateTotalMomentum(const Simulation& simulation)
 	{
-		Vector3D result{};
+		math::Vector3D result{};
 		const auto size{ simulation.getBodyCount() };
 		for (size_t i{}; i < size; ++i) {
 			const auto& body{ simulation.getBody(i) };
@@ -61,11 +61,11 @@ TEST(SimulationTests, ReturnsCorrectBodyCount)
 	Simulation simulation1{ bodyVec };
 	EXPECT_EQ(simulation1.getBodyCount(), 0u);
 
-	bodyVec.emplace_back(body::tests::createTestBody(1.0, Vector3D{ 2.0, 3.0, 0.0 }, Vector3D{ 4.0, 5.0, 0.0 }));
+	bodyVec.emplace_back(body::tests::createTestBody(1.0, math::Vector3D{ 2.0, 3.0, 0.0 }, math::Vector3D{ 4.0, 5.0, 0.0 }));
 	simulation1.setBodies(bodyVec);
 	EXPECT_EQ(simulation1.getBodyCount(), 1u);
 
-	bodyVec.emplace_back(body::tests::createTestBody(6.0, Vector3D{ 7.0, 8.0, 0.0 }, Vector3D{ 9.0, 10.0, 0.0 }));
+	bodyVec.emplace_back(body::tests::createTestBody(6.0, math::Vector3D{ 7.0, 8.0, 0.0 }, math::Vector3D{ 9.0, 10.0, 0.0 }));
 	const Simulation simulation2{ bodyVec };
 	EXPECT_EQ(simulation2.getBodyCount(), 2u);
 }

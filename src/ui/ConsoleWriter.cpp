@@ -9,27 +9,27 @@ namespace ConsoleWriter
 		writeLine("ERROR: ", text);
 	}
 
-	void writeHeadline(const TextId titleId)
+	void writeHeadline(const localization::TextId titleId)
 	{
 		write("\t=== ", titleId, " ===\n\n");
 	}
 
-	void writeMenuOption(const TextId textId, const char key, const char separator)
+	void writeMenuOption(const localization::TextId textId, const char key, const char separator)
 	{
 		write("\t[ ", key, " ]\t", textId, separator);
 	}
 
-	void writeMenuTitle(const TextId titleId)
+	void writeMenuTitle(const localization::TextId titleId)
 	{
 		writeLine("=== ", titleId, " ===");
 	}
 
-	void writeSingle(const TextId textId)
+	void writeSingle(const localization::TextId textId)
 	{
-		std::cout << LocalizationManager::getInstance().get(textId);
+		std::cout << localization::LocalizationManager::getInstance().get(textId);
 	}
 
-	void writeYesOrNo(const LocalizationManager::YesAndNo& yn)
+	void writeYesOrNo(const localization::LocalizationManager::YesAndNo& yn)
 	{
 		write(" [", yn.yes, " / ", yn.no, "]: ");
 	}

@@ -33,10 +33,10 @@ namespace
 	{
 		std::optional<Decision> result{};
 		const Menu scenarioAcceptanceMenu{ {
-			MenuOption{'A', TextId::Accept,	[&result]() {result = Decision::Accept; }},
-			MenuOption{'R', TextId::Revise,	[&result]() {result = Decision::Revise; }},
-			MenuOption{'C', TextId::Cancel,	[&result]() {result = Decision::Cancel; }}},
-			TextId::QuestionWhatDoYouWantToDo };
+			MenuOption{'A', localization::TextId::Accept,	[&result]() {result = Decision::Accept; }},
+			MenuOption{'R', localization::TextId::Revise,	[&result]() {result = Decision::Revise; }},
+			MenuOption{'C', localization::TextId::Cancel,	[&result]() {result = Decision::Cancel; }}},
+			localization::TextId::QuestionWhatDoYouWantToDo };
 		scenarioAcceptanceMenu.execute();
 		return result.value();
 	}
@@ -45,10 +45,10 @@ namespace
 	{
 		std::optional<PartToChange> result{};
 		const Menu whatToChangeMenu{ {
-			MenuOption{'N',	TextId::ScenarioName,	[&result]() {result = PartToChange::ScenarioName; }},
-			MenuOption{'B', TextId::Bodies,			[&result]() {result = PartToChange::Bodies; }},
-			MenuOption{'C', TextId::Cancel,			[&result]() {result = PartToChange::Cancel; }}},
-			TextId::QuestionWhatDoYouWantToChange };
+			MenuOption{'N',	localization::TextId::ScenarioName,	[&result]() {result = PartToChange::ScenarioName; }},
+			MenuOption{'B', localization::TextId::Bodies,		[&result]() {result = PartToChange::Bodies; }},
+			MenuOption{'C', localization::TextId::Cancel,		[&result]() {result = PartToChange::Cancel; }}},
+			localization::TextId::QuestionWhatDoYouWantToChange };
 		whatToChangeMenu.execute();
 		return result.value();
 	}
@@ -81,11 +81,11 @@ bool ScenarioEditor::handleBodiesMenu()
 	bool shouldContinue{ true };
 
 	Menu whatToDoWithBodies{ {
-		MenuOption{'A', TextId::Accept,		[&shouldContinue]()	{shouldContinue = false; }},
-		MenuOption{'B', TextId::AddBody,	[this]()			{addNewBody(); },				canAddBody()},
-		MenuOption{'D', TextId::DeleteBody,	[this]()			{deleteSelectedBody(); }},
-		MenuOption{'E', TextId::EditBody,	[this]()			{editSelectedBody(); }}},
-		TextId::QuestionWhatDoYouWantToDoWithBodies };
+		MenuOption{'A', localization::TextId::Accept,		[&shouldContinue]()	{shouldContinue = false; }},
+		MenuOption{'B', localization::TextId::AddBody,		[this]()			{addNewBody(); },				canAddBody()},
+		MenuOption{'D', localization::TextId::DeleteBody,	[this]()			{deleteSelectedBody(); }},
+		MenuOption{'E', localization::TextId::EditBody,		[this]()			{editSelectedBody(); }}},
+		localization::TextId::QuestionWhatDoYouWantToDoWithBodies };
 	whatToDoWithBodies.execute();
 	return shouldContinue;
 }
@@ -103,7 +103,7 @@ void ScenarioEditor::deleteSelectedBody()
 	auto& bodies{ m_scenario.bodies };
 	runtime_checks::ensure(!bodies.empty(), runtime_checks::Type::Logic, "There is no body to delete");
 	bodies.erase(bodies.begin() + promptForBodyIdx());
-	ConsoleWriter::writeLine(TextId::BodyDeleted, '\n');
+	ConsoleWriter::writeLine(localization::TextId::BodyDeleted, '\n');
 }
 
 void ScenarioEditor::editSelectedBody()
@@ -118,7 +118,7 @@ void ScenarioEditor::editSelectedBody()
 void ScenarioEditor::ensureAtLeastOneBody()
 {
 	if (m_scenario.bodies.empty()) {
-		ConsoleWriter::writeLine(TextId::ScenarioMustHaveAtLeastOneBody, ". ", TextId::PressAnyKeyToContinue);
+		ConsoleWriter::writeLine(localization::TextId::ScenarioMustHaveAtLeastOneBody, ". ", localization::TextId::PressAnyKeyToContinue);
 		input::keyboard::getSingleKey();
 		addNewBody();
 	}
@@ -126,9 +126,9 @@ void ScenarioEditor::ensureAtLeastOneBody()
 
 void ScenarioEditor::printBodies() const
 {
-	ConsoleWriter::writeHeadline(TextId::CurrentBodiesList);
+	ConsoleWriter::writeHeadline(localization::TextId::CurrentBodiesList);
 	const auto& bodies{ m_scenario.bodies };
-	ConsoleWriter::writeLine(TextId::ObjectCount, ":\t", bodies.size());
+	ConsoleWriter::writeLine(localization::TextId::ObjectCount, ":\t", bodies.size());
 	auto counter{ 1 };
 
 	for (const auto& body : bodies) {
@@ -167,5 +167,5 @@ void ScenarioEditor::reviseScenario()
 
 std::size_t ScenarioEditor::promptForBodyIdx() const
 {
-	return input::data::getSelectionNumber(TextId::EnterBodyNumber, m_scenario.bodies.size()) - 1u;
+	return input::data::getSelectionNumber(localization::TextId::EnterBodyNumber, m_scenario.bodies.size()) - 1u;
 }

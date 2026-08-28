@@ -19,7 +19,7 @@ namespace
 {
 	std::string getNewSaveName()
 	{
-		ConsoleWriter::write(TextId::EnterNewSaveName, ": ");
+		ConsoleWriter::write(localization::TextId::EnterNewSaveName, ": ");
 		return input::data::getFileBaseName();
 	}
 } // anonymous namespace
@@ -29,12 +29,12 @@ void ScenarioHandler::buildAndHandleScenario()
 	auto scenario{ ScenarioBuilder::buildScenario() };
 
 	if (scenario) {
-		ConsoleWriter::writeLine(TextId::ScenarioCreatedSuccessfully);
+		ConsoleWriter::writeLine(localization::TextId::ScenarioCreatedSuccessfully);
 		ScenarioHandler handler{ *scenario };
 		handler.handleScenario(ScenarioHandlingConfig{ .printSummary = false });
 	}
 	else {
-		ConsoleWriter::writeLine('\n', TextId::ScenarioCreationCanceled);
+		ConsoleWriter::writeLine('\n', localization::TextId::ScenarioCreationCanceled);
 	}
 }
 
@@ -47,22 +47,22 @@ void ScenarioHandler::loadAndHandleScenario()
 	{
 		runtime_checks::ensure(result.scenario.has_value(), runtime_checks::Type::Logic, "ScenarioLoader returned Loaded status without a scenario");
 
-		ConsoleWriter::writeLine(TextId::ScenarioLoadedSuccessfully, '\n');
+		ConsoleWriter::writeLine(localization::TextId::ScenarioLoadedSuccessfully, '\n');
 		ScenarioHandler handler{ *result.scenario };
 		handler.handleScenario(ScenarioHandlingConfig{ .askToSave = false });
 		break;
 	}
 
 	case ScenarioLoader::LoadStatus::Canceled:
-		ConsoleWriter::writeLine(TextId::ScenarioLoadingCanceled);
+		ConsoleWriter::writeLine(localization::TextId::ScenarioLoadingCanceled);
 		break;
 
 	case ScenarioLoader::LoadStatus::NoSavedScenarios:
-		ConsoleWriter::writeLine(TextId::ThereAreNoSavedScenarios);
+		ConsoleWriter::writeLine(localization::TextId::ThereAreNoSavedScenarios);
 		break;
 
 	case ScenarioLoader::LoadStatus::Failed:
-		ConsoleWriter::writeLine(TextId::ScenarioLoadingFailed);
+		ConsoleWriter::writeLine(localization::TextId::ScenarioLoadingFailed);
 		break;
 	}
 }
@@ -74,11 +74,11 @@ void ScenarioHandler::handleScenario(const ScenarioHandlingConfig& config) const
 	}
 
 	if (config.askToSave &&
-		Menu::yesOrNo(TextId::QuestionDoYouWantToSaveTheScenario)) {
+		Menu::yesOrNo(localization::TextId::QuestionDoYouWantToSaveTheScenario)) {
 		saveScenario();
 	}
 	if (config.askToRun &&
-		Menu::yesOrNo(TextId::QuestionDoYouWantToRunTheSimulationNow)) {
+		Menu::yesOrNo(localization::TextId::QuestionDoYouWantToRunTheSimulationNow)) {
 		runSimulationForScenario();
 	}
 }
@@ -86,14 +86,14 @@ void ScenarioHandler::handleScenario(const ScenarioHandlingConfig& config) const
 void ScenarioHandler::runSimulationForScenario() const
 {
 	const auto runConfig{ SimulationRunConfigBuilder::build() };
-	Recorder recorder{ m_scenario.name };
+	recording::Recorder recorder{ m_scenario.name };
 	SimulationRunner::runAndRecord(recorder, m_scenario, runConfig);
 }
 
 void ScenarioHandler::saveScenario() const
 {
-	ConsoleWriter::writeLine(TextId::DefaultSaveNameIs, ": ", m_scenario.name);
-	saveScenario(Menu::yesOrNo(TextId::QuestionDoYouWantToUseThisSaveName) ? m_scenario.name : getNewSaveName());
+	ConsoleWriter::writeLine(localization::TextId::DefaultSaveNameIs, ": ", m_scenario.name);
+	saveScenario(Menu::yesOrNo(localization::TextId::QuestionDoYouWantToUseThisSaveName) ? m_scenario.name : getNewSaveName());
 }
 
 void ScenarioHandler::saveScenario(const std::string& initialSaveName) const
@@ -102,21 +102,21 @@ void ScenarioHandler::saveScenario(const std::string& initialSaveName) const
 	auto result{ ScenarioSaver::save(m_scenario, saveName) };
 	bool shouldContinueSaving{ true };
 	while (result == ScenarioSaver::SaveResult::FileAlreadyExists && shouldContinueSaving) {
-		ConsoleWriter::writeLine(TextId::ThisSaveNameAlreadyExists);
+		ConsoleWriter::writeLine(localization::TextId::ThisSaveNameAlreadyExists);
 		const Menu saveConflictMenu{ {
-			MenuOption{'O', TextId::Overwrite,			[this, &result, &saveName]() {
+			MenuOption{'O', localization::TextId::Overwrite,		[this, &result, &saveName]() {
 				result = ScenarioSaver::save(m_scenario, saveName, ScenarioSaver::OverwritePolicy::Allow); }},
-			MenuOption{'N', TextId::EnterNewSaveName,	[this, &result, &saveName]() {
+			MenuOption{'N', localization::TextId::EnterNewSaveName,	[this, &result, &saveName]() {
 				saveName = getNewSaveName();
 				result = ScenarioSaver::save(m_scenario, saveName); }},
-			MenuOption{'V', TextId::SaveAsNewVersion,	[this, &result, &saveName]() {
+			MenuOption{'V', localization::TextId::SaveAsNewVersion,	[this, &result, &saveName]() {
 				saveName = ScenarioSaver::getNextAvailableSaveName(saveName);
 				result = ScenarioSaver::save(m_scenario, saveName);	}},
-			MenuOption{'C', TextId::Cancel,				[&shouldContinueSaving]() {shouldContinueSaving = false; }}},
-			TextId::QuestionWhatDoYouWantToDo };
+			MenuOption{'C', localization::TextId::Cancel,			[&shouldContinueSaving]() {shouldContinueSaving = false; }}},
+			localization::TextId::QuestionWhatDoYouWantToDo };
 		saveConflictMenu.execute();
 	}
 	if (result == ScenarioSaver::SaveResult::Saved) {
-		ConsoleWriter::writeLine(TextId::ScenarioSavedSuccessfully);
+		ConsoleWriter::writeLine(localization::TextId::ScenarioSavedSuccessfully);
 	}
 }

@@ -6,7 +6,7 @@
 
 #endif
 
-namespace ConsoleEncoding
+namespace platform::console
 {
 	void configureUtf8()
 	{
@@ -19,4 +19,4 @@ namespace ConsoleEncoding
 #endif
 
 	}
-} // namespace ConsoleEncoding
+} // namespace platform::console

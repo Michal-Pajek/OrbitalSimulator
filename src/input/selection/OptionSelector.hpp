@@ -13,13 +13,13 @@ namespace input::selection
     struct SelectionOption
     {
         SelectionOption() = delete;
-        SelectionOption(TextId optionTextId, T optionValue) : textId{ optionTextId }, value{ optionValue } {}
-        TextId textId;
+        SelectionOption(localization::TextId optionTextId, T optionValue) : textId{ optionTextId }, value{ optionValue } {}
+        localization::TextId textId;
         T value;
     };
 
     template <typename T>
-    SelectionOption<T> selectOption(const std::vector<SelectionOption<T>>& options, const TextId menuTitle)
+    SelectionOption<T> selectOption(const std::vector<SelectionOption<T>>& options, const localization::TextId menuTitle)
     {
         const auto size{ options.size() };
         runtime_checks::ensure(size > 0u && size < 10u, runtime_checks::Type::Argument, "Options vector in input::selection::selectOption must be between 1 and 9");
@@ -45,10 +45,10 @@ namespace input::selection
     {
         using UnitOption = SelectionOption<double>;
 
-        inline double selectUnitMultiplier(const std::vector<UnitOption>& options, const TextId menuTitle)
+        inline double selectUnitMultiplier(const std::vector<UnitOption>& options, const localization::TextId menuTitle)
         {
             const auto selectedOption{ selectOption(options, menuTitle) };
-            ConsoleWriter::writeLine(TextId::SelectedUnit, ": ", selectedOption.textId);
+            ConsoleWriter::writeLine(localization::TextId::SelectedUnit, ": ", selectedOption.textId);
             return selectedOption.value;
         }
     } // namespace unit

@@ -15,18 +15,18 @@ namespace SimulationRunConfigBuilder
 		{
 			ConsoleWriter::writeLine();
 			const auto timeMultiplier{ input::selection::unit::selectUnitMultiplier(std::vector<input::selection::unit::UnitOption>{
-				{TextId::Second,	1.0},
-				{TextId::Minute,	60.0},
-				{TextId::Hour,		3600.0},
-				{TextId::Day,		86400.0}},
-				TextId::SelectTimeUnitForTimeStep) };
-			ConsoleWriter::write(TextId::EnterTimeStep, " (", TextId::PositiveNumber, "): ");
+				{localization::TextId::Second,	1.0},
+				{localization::TextId::Minute,	60.0},
+				{localization::TextId::Hour,	3600.0},
+				{localization::TextId::Day,		86400.0}},
+				localization::TextId::SelectTimeUnitForTimeStep) };
+			ConsoleWriter::write(localization::TextId::EnterTimeStep, " (", localization::TextId::PositiveNumber, "): ");
 			return timeMultiplier * input::data::getValue<double>([](const double x) { return x > 0.0; });
 		}
 
 		unsigned int promptForStepCount()
 		{
-			ConsoleWriter::write('\n', TextId::EnterStepCount, ": ");
+			ConsoleWriter::write('\n', localization::TextId::EnterStepCount, ": ");
 			return static_cast<unsigned int>(input::data::getValue<int>([](const int x) {return x > 0; }));
 		}
 	} // anonymous namespace

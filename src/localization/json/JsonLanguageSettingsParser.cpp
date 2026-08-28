@@ -1,12 +1,15 @@
 #include "localization/json/JsonLanguageSettingsParser.hpp"
 
-void JsonLanguageSettingsParser::parse()
+namespace localization::json
 {
-	require(expectChar('{'));
-	require(expectString("language"));
-	require(expectChar(':'));
-	m_languageCode = getString();
-	require(expectChar('}'));
-	skipWhiteMarks();
-	require(m_pos == m_size);
-}
+	void JsonLanguageSettingsParser::parse()
+	{
+		require(expectChar('{'));
+		require(expectString("language"));
+		require(expectChar(':'));
+		m_languageCode = getString();
+		require(expectChar('}'));
+		skipWhiteMarks();
+		require(m_pos == m_size);
+	}
+} // namespace localization::json

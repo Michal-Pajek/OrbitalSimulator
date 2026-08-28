@@ -9,7 +9,7 @@
 #include "input/core/Keyboard.hpp"
 #include "localization/LocalizationManager.hpp"
 
-Menu::Menu(const std::vector<MenuOption>& options, const TextId title, const bool isHorizontal) : m_options{options}, m_title{title}, m_isHorizontal{isHorizontal}
+Menu::Menu(const std::vector<MenuOption>& options, const localization::TextId title, const bool isHorizontal) : m_options{options}, m_title{title}, m_isHorizontal{isHorizontal}
 {
 	eraseNonVisibleOptions();
 	runtime_checks::ensure(validateMenuOptions(m_options), runtime_checks::Type::Argument, "Menu input is incorrect");
@@ -30,10 +30,10 @@ void Menu::execute() const
 	m_options.at(m_keys.at(key)).action();
 }
 
-bool Menu::yesOrNo(const TextId question)
+bool Menu::yesOrNo(const localization::TextId question)
 {
 	ConsoleWriter::write(question);
-	const auto yn{ LocalizationManager::getInstance().getYn() };
+	const auto yn{ localization::LocalizationManager::getInstance().getYn() };
 	ConsoleWriter::writeYesOrNo(yn);
 	char choice{ input::keyboard::getSingleKey() };
 	while (choice != yn.yes && choice != yn.no) {

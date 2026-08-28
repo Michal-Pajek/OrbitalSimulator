@@ -6,13 +6,16 @@
 
 #include "localization/core/LocalizationTypes.hpp"
 
-class JsonLocalizationParser : private JsonParserBase
+namespace localization::json
 {
-public:
-	JsonLocalizationParser(std::string_view data) : JsonParserBase{ data } {}
-	LocalizationMap takeLocalizationData() { return std::move(m_localizationData); }
-	void parse();
-private:
-	void parseTexts();
-	LocalizationMap m_localizationData{};
-};
+	class JsonLocalizationParser : private JsonParserBase
+	{
+	public:
+		JsonLocalizationParser(std::string_view data) : JsonParserBase{ data } {}
+		LocalizationMap takeLocalizationData() { return std::move(m_localizationData); }
+		void parse();
+	private:
+		void parseTexts();
+		LocalizationMap m_localizationData{};
+	};
+} // namespace localization::json

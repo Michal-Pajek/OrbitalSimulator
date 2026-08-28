@@ -10,7 +10,7 @@
 
 #include "common/runtime_checks/RuntimeChecks.hpp"
 
-namespace JsonDataStorage
+namespace localization::json
 {
 	namespace
 	{
@@ -57,4 +57,4 @@ namespace JsonDataStorage
 		parser.parse();
 		return parser.takeLocalizationData();
 	}
-} // namespace JsonDataStorage
+} // namespace localization::json

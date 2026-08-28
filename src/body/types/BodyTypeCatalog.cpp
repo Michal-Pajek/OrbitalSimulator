@@ -8,7 +8,7 @@
 
 namespace body
 {
-#define BODY_TYPE_ARGS(name) TextId::name, #name, BodyTypeId::name
+#define BODY_TYPE_ARGS(name) localization::TextId::name, #name, BodyTypeId::name
 
 	const std::array<BodyType, BODY_TYPE_COUNT> BodyTypeCatalog::bodyTypesArray{
 			BodyType{BODY_TYPE_ARGS(Meteor),		MassInterval{.min{1e-9},	.max{1e8}}},

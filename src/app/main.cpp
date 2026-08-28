@@ -3,7 +3,7 @@
 
 int main()
 {
-	ConsoleEncoding::configureUtf8();
+	platform::console::configureUtf8();
 
 	app::Application app{};
 	app.eventLoop();

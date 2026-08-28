@@ -21,14 +21,14 @@ namespace input::data
 			while (true) {
 				std::cin >> result;
 				if (!recoverFromInputFailure()) {
-					ConsoleWriter::write(TextId::YouEnteredIncorrectValue, ". ", TextId::EnterDifferentValue, ": ");
+					ConsoleWriter::write(localization::TextId::YouEnteredIncorrectValue, ". ", localization::TextId::EnterDifferentValue, ": ");
 					continue;
 				}
 				if (predicate(result)) {
 					discardLineRemainder();
 					return result;
 				}
-				ConsoleWriter::write(TextId::ValueOutOfRange, ". ", TextId::EnterDifferentValue, ": ");
+				ConsoleWriter::write(localization::TextId::ValueOutOfRange, ". ", localization::TextId::EnterDifferentValue, ": ");
 			}
 		}
 	} // namespace detail
@@ -47,29 +47,29 @@ namespace input::data
 	}
 
 	template <typename Predicate>
-	Vector3D getVector3D(const Predicate& predicate)
+	math::Vector3D getVector3D(const Predicate& predicate)
 	{
 		double x, y, z;
 		while (true) {
 			std::cin >> x >> y >> z;
 			if (!detail::recoverFromInputFailure()) {
-				ConsoleWriter::write(TextId::YouEnteredIncorrectValue, ". ", TextId::EnterDifferentValue, ": ");
+				ConsoleWriter::write(localization::TextId::YouEnteredIncorrectValue, ". ", localization::TextId::EnterDifferentValue, ": ");
 				continue;
 			}
 			if (predicate(x, y, z)) {
 				detail::discardLineRemainder();
-				return Vector3D{ x, y, z };
+				return math::Vector3D{ x, y, z };
 			}
-			ConsoleWriter::write(TextId::ValueOutOfRange, ". ", TextId::EnterDifferentValue, ": ");
+			ConsoleWriter::write(localization::TextId::ValueOutOfRange, ". ", localization::TextId::EnterDifferentValue, ": ");
 		}
 	}
 
-	inline Vector3D getVector3D()
+	inline math::Vector3D getVector3D()
 	{
 		return getVector3D([](double, double, double) {return true; });
 	}
 
-	std::size_t getSelectionNumber(const TextId textId, const std::size_t count, bool includeZero = false);
+	std::size_t getSelectionNumber(const localization::TextId textId, const std::size_t count, bool includeZero = false);
 	std::string getSingleWordText();
 	std::string getFileBaseName();
 } // namespace input::data

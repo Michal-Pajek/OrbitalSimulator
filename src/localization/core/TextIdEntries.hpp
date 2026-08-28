@@ -5,7 +5,7 @@
 
 #include "localization/core/TextId.hpp"
 
-namespace TextIdEntries
+namespace localization::text_id_entries
 {
     struct TextIdEntry
     {
@@ -146,4 +146,4 @@ namespace TextIdEntries
         return "invalid_text_id";
     }
 
-} // namespace TextIdEntries
+} // namespace localization::text_id_entries

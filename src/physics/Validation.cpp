@@ -12,7 +12,7 @@ namespace physics
 		return std::isfinite(speed) && speed < C_CONST;
 	}
 
-	bool isSubLightVelocity(const Vector3D& vec)
+	bool isSubLightVelocity(const math::Vector3D& vec)
 	{
 		return isSubLightVelocity(vec.getX(), vec.getY(), vec.getZ());
 	}

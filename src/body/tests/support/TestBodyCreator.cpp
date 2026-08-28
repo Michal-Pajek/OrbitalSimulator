@@ -28,7 +28,7 @@ namespace body::tests
 		return std::midpoint(min, max);
 	}
 
-	Body createTestBody(const double mass, const Vector3D& position, const Vector3D& velocity, const std::string& name)
+	Body createTestBody(const double mass, const math::Vector3D& position, const math::Vector3D& velocity, const std::string& name)
 	{
 		const auto typeId{ getMatchingBodyTypeId(mass) };
 		return Body{ name, typeId, mass, position, velocity };

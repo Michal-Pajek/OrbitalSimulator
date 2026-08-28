@@ -36,13 +36,13 @@ namespace body
 		BodyType& operator=(const BodyType&) = delete;
 		BodyTypeId getId() const { return m_id; }
 		const MassInterval& getMassInterval() const { return m_massInterval; }
-		TextId getTextId() const { return m_textId; }
+		localization::TextId getTextId() const { return m_textId; }
 		std::string_view getSerializationKey() const { return m_serializationKey; }
 	private:
-		BodyType(const TextId textId, std::string_view serializationKey, const BodyTypeId id, const MassInterval& massInterval)
+		BodyType(const localization::TextId textId, std::string_view serializationKey, const BodyTypeId id, const MassInterval& massInterval)
 			: m_textId{ textId }, m_serializationKey{ serializationKey }, m_id{ id }, m_massInterval{ massInterval } {
 		}
-		TextId m_textId;
+		localization::TextId m_textId;
 		std::string_view m_serializationKey;
 		const BodyTypeId m_id;
 		MassInterval m_massInterval;
