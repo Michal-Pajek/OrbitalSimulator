@@ -4,10 +4,13 @@
 
 #include "body/Body.hpp"
 
-struct Scenario;
-
-namespace ScenarioSummary
+namespace scenario
 {
-	void print(std::string_view name, std::span<const body::Body> bodies);
-	void print(const Scenario& scenario);
-} // namespace ScenarioSummary
+	struct Scenario;
+
+	namespace summary
+	{
+		void print(std::string_view name, std::span<const body::Body> bodies);
+		void print(const Scenario& scenario);
+	} // namespace summary
+} // namespace scenario

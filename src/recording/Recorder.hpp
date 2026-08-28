@@ -9,7 +9,10 @@ namespace body
 	class Body;
 } // namespace body
 
-class Simulation;
+namespace simulation
+{
+	class Simulation;
+} // namespace simulation
 
 namespace recording
 {
@@ -19,7 +22,7 @@ namespace recording
 		explicit Recorder(const std::string& fileBaseName);
 		bool beginRecording();
 		void recordInitialState(const std::vector<body::Body>& bodies);
-		void recordStateAfterStep(const Simulation& simulation, const unsigned int stepNo);
+		void recordStateAfterStep(const simulation::Simulation& simulation, const unsigned int stepNo);
 	private:
 		static constexpr int OUTPUT_PRECISION{ 17 };
 		void writeBodyStateToFile(const body::Body& body);

@@ -6,13 +6,13 @@
 #include "scenario/editor/ScenarioEditor.hpp"
 #include "scenario/input/ScenarioInput.hpp"
 
-namespace ScenarioBuilder
+namespace scenario::builder
 {
 	std::optional<Scenario> buildScenario()
 	{
-		auto name{ ScenarioInput::promptForScenarioName() };
-		auto bodies{ ScenarioInput::createBodiesFromInput() };
+		auto name{ input::promptForScenarioName() };
+		auto bodies{ input::createBodiesFromInput() };
 		ScenarioEditor editor{ {std::move(name), std::move(bodies)} };
 		return editor.getReviewedScenario();
 	}
-} // namespace ScenarioBuilder
+} // namespace scenario::builder

@@ -3,7 +3,7 @@
 
 #include "scenario/core/Scenario.hpp"
 
-namespace ScenarioBuilder
+namespace scenario::builder
 {
 	std::optional<Scenario> buildScenario();
-} // namespace ScenarioBuilder
+} // namespace scenario::builder

@@ -9,36 +9,39 @@
 #include "body/Body.hpp"
 #include "body/tests/support/TestBodyCreator.hpp"
 
-namespace
+namespace scenario::tests
 {
-	std::vector<body::Body> createBodies(const std::size_t count)
+	namespace
 	{
-		std::vector<body::Body> bodies{};
-		bodies.reserve(count);
+		std::vector<body::Body> createBodies(const std::size_t count)
+		{
+			std::vector<body::Body> bodies{};
+			bodies.reserve(count);
 
-		for (std::size_t i{}; i < count; ++i) {
-			bodies.push_back(body::tests::createTestBody(1.0));
+			for (std::size_t i{}; i < count; ++i) {
+				bodies.push_back(body::tests::createTestBody(1.0));
+			}
+
+			return bodies;
 		}
+	} // anonymous namespace
 
-		return bodies;
+	TEST(ScenarioTests, ConstructorThrowsForEmptyBodyList)
+	{
+		EXPECT_THROW((Scenario{ "Scenario", std::vector<body::Body>{} }), std::invalid_argument);
 	}
-} // anonymous namespace
 
-TEST(ScenarioTests, ConstructorThrowsForEmptyBodyList)
-{
-	EXPECT_THROW((Scenario{ "Scenario", std::vector<body::Body>{} }), std::invalid_argument);
-}
+	TEST(ScenarioTests, ConstructorAcceptsMaximumBodyCount)
+	{
+		const Scenario scenario{ "Scenario", createBodies(Scenario::MAX_BODY_COUNT) };
 
-TEST(ScenarioTests, ConstructorAcceptsMaximumBodyCount)
-{
-	const Scenario scenario{ "Scenario", createBodies(Scenario::MAX_BODY_COUNT) };
+		EXPECT_EQ(scenario.bodies.size(), Scenario::MAX_BODY_COUNT);
+	}
 
-	EXPECT_EQ(scenario.bodies.size(), Scenario::MAX_BODY_COUNT);
-}
+	TEST(ScenarioTests, ConstructorThrowsWhenMaximumBodyCountIsExceeded)
+	{
+		auto bodies{ createBodies(Scenario::MAX_BODY_COUNT + 1u) };
 
-TEST(ScenarioTests, ConstructorThrowsWhenMaximumBodyCountIsExceeded)
-{
-	auto bodies{ createBodies(Scenario::MAX_BODY_COUNT + 1u) };
-
-	EXPECT_THROW((Scenario{ "Scenario", std::move(bodies) }), std::invalid_argument);
-}
+		EXPECT_THROW((Scenario{ "Scenario", std::move(bodies) }), std::invalid_argument);
+	}
+} // namespace scenario::tests

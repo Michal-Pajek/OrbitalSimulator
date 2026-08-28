@@ -23,7 +23,7 @@ namespace input::data
 
 	std::size_t getSelectionNumber(const localization::TextId textId, const std::size_t count, bool includeZero)
 	{
-		ConsoleWriter::write(textId, ": ");
+		ui::console::write(textId, ": ");
 		return static_cast<std::size_t>(getValue<int>([countInt = static_cast<int>(count), includeZero](const int value) {
 			return value >= (includeZero ? 0 : 1) && value <= countInt;
 			}));

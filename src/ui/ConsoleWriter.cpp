@@ -2,7 +2,7 @@
 
 #include "localization/LocalizationManager.hpp"
 
-namespace ConsoleWriter
+namespace ui::console
 {
 	void writeError(const std::string_view text)
 	{
@@ -33,4 +33,4 @@ namespace ConsoleWriter
 	{
 		write(" [", yn.yes, " / ", yn.no, "]: ");
 	}
-} // namespace ConsoleWriter
+} // namespace ui::console

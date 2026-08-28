@@ -41,7 +41,7 @@ namespace recording
 		}
 	}
 
-	void Recorder::recordStateAfterStep(const Simulation& simulation, const unsigned int stepNo)
+	void Recorder::recordStateAfterStep(const simulation::Simulation& simulation, const unsigned int stepNo)
 	{
 		const auto bodyCount{ simulation.getBodyCount() };
 		const auto time{ simulation.getTime() };

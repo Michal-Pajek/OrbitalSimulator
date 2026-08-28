@@ -1,20 +1,23 @@
 #pragma once
 #include <string>
 
-struct Scenario;
-
-namespace ScenarioSaver
+namespace scenario
 {
-	enum class SaveResult {
-		Saved,
-		FileAlreadyExists
-	};
+	struct Scenario;
 
-	enum class OverwritePolicy {
-		Deny,
-		Allow
-	};
+	namespace saver
+	{
+		enum class SaveResult {
+			Saved,
+			FileAlreadyExists
+		};
 
-	SaveResult save(const Scenario& scenario, const std::string& saveName, OverwritePolicy policy = OverwritePolicy::Deny);
-	std::string getNextAvailableSaveName(const std::string& baseName);
-} // namespace ScenarioSaver
+		enum class OverwritePolicy {
+			Deny,
+			Allow
+		};
+
+		SaveResult save(const Scenario& scenario, const std::string& saveName, OverwritePolicy policy = OverwritePolicy::Deny);
+		std::string getNextAvailableSaveName(const std::string& baseName);
+	} // namespace saver
+} // namespace scenario

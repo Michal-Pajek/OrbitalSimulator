@@ -4,8 +4,8 @@
 
 #include "body/Body.hpp"
 
-namespace ScenarioInput
+namespace scenario::input
 {
 	std::string promptForScenarioName();
 	std::vector<body::Body> createBodiesFromInput();
-} // namespace ScenarioInput
+} // namespace scenario::input

@@ -7,20 +7,20 @@
 #include "localization/core/TextId.hpp"
 #include "ui/ConsoleWriter.hpp"
 
-namespace ScenarioInput
+namespace scenario::input
 {
 	std::string promptForScenarioName()
 	{
-		ConsoleWriter::write(localization::TextId::EnterScenarioName, ": ");
-		return input::data::getFileBaseName();
+		ui::console::write(localization::TextId::EnterScenarioName, ": ");
+		return ::input::data::getFileBaseName();
 	}
 
 	std::vector<body::Body> createBodiesFromInput()
 	{
 		std::vector<body::Body> result{};
-		ConsoleWriter::writeLine();
-		ConsoleWriter::write(localization::TextId::EnterObjectCountNotGreaterThan, ' ', Scenario::MAX_BODY_COUNT, ": ");
-		const auto bodiesCount{ static_cast<unsigned int>(input::data::getValue<int>([](const int x) {return x > 0 && x <= static_cast<int>(Scenario::MAX_BODY_COUNT); })) };
+		ui::console::writeLine();
+		ui::console::write(localization::TextId::EnterObjectCountNotGreaterThan, ' ', Scenario::MAX_BODY_COUNT, ": ");
+		const auto bodiesCount{ static_cast<unsigned int>(::input::data::getValue<int>([](const int x) {return x > 0 && x <= static_cast<int>(Scenario::MAX_BODY_COUNT); })) };
 		result.reserve(bodiesCount);
 		for (unsigned int i{}; i < bodiesCount; ++i) {
 			const body::input::BodyBuilder bodyBuilder{ result };
@@ -29,4 +29,4 @@ namespace ScenarioInput
 
 		return result;
 	}
-} // namespace ScenarioInput
+} // namespace scenario::input

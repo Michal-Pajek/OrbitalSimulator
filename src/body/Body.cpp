@@ -44,7 +44,7 @@ namespace body
 	void Body::printSummary(const bool oneLine) const
 	{
 		const auto sep{ oneLine ? '\t' : '\n' };
-		ConsoleWriter::writeLine(m_name, " (", BodyTypeCatalog::getType(m_typeId).getTextId(), ')', sep, localization::TextId::Mass, " (kg): ", m_mass, sep, localization::TextId::Position, " (m): ", m_position, sep, localization::TextId::Velocity, " (m/s): ", m_velocity);
+		ui::console::writeLine(m_name, " (", BodyTypeCatalog::getType(m_typeId).getTextId(), ')', sep, localization::TextId::Mass, " (kg): ", m_mass, sep, localization::TextId::Position, " (m): ", m_position, sep, localization::TextId::Velocity, " (m/s): ", m_velocity);
 	}
 
 	void Body::setMass(const double mass)

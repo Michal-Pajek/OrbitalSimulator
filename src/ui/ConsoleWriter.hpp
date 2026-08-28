@@ -6,7 +6,7 @@
 #include "localization/core/TextId.hpp"
 #include "localization/LocalizationManager.hpp"
 
-namespace ConsoleWriter
+namespace ui::console
 {
 	void writeError(const std::string_view text);
 	void writeHeadline(const localization::TextId titleId);
@@ -33,4 +33,4 @@ namespace ConsoleWriter
 		(writeSingle(std::forward<Args>(args)), ...);
 		std::cout << '\n';
 	}
-} // namespace ConsoleWriter
+} // namespace ui::console

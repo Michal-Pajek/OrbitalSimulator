@@ -16,7 +16,7 @@
 #include "filesystem/ApplicationPaths.hpp"
 #include "filesystem/FileNameValidation.hpp"
 
-namespace ScenarioSaver
+namespace scenario::saver
 {
 	namespace
 	{
@@ -24,7 +24,7 @@ namespace ScenarioSaver
 
 		fs::path buildFilePath(const std::string& fileBaseName)
 		{
-			return filesystem::paths::scenariosDirectory() / (fileBaseName + std::string{ ScenarioFileFormat::extension });
+			return filesystem::paths::scenariosDirectory() / (fileBaseName + std::string{ file_format::extension });
 		}
 
 		void serializeBody(std::ostream& output, const body::Body& body)
@@ -40,8 +40,8 @@ namespace ScenarioSaver
 		{
 			const auto& bodies{ scenario.bodies };
 			output << std::setprecision(std::numeric_limits<double>::max_digits10);
-			output << ScenarioFileFormat::identifier << ' '
-				<< ScenarioFileFormat::currentVersion << '\n'
+			output << file_format::identifier << ' '
+				<< file_format::currentVersion << '\n'
 				<< scenario.name << '\n'
 				<< bodies.size() << '\n';
 			for (const auto& body : bodies) {
@@ -96,4 +96,4 @@ namespace ScenarioSaver
 			}
 		}
 	}
-} // namespace ScenarioSaver
+} // namespace scenario::saver

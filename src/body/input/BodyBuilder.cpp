@@ -14,7 +14,7 @@ namespace body::input
 	Body BodyBuilder::createBodyFromInput() const
 	{
 		::input::console::clearScreen();
-		ConsoleWriter::writeHeadline(localization::TextId::EnterNewBodyData);
+		ui::console::writeHeadline(localization::TextId::EnterNewBodyData);
 		const auto bodyName{ promptForBodyName() };
 		const auto bodyType{ promptForBodyType() };
 		const auto bodyMass{ promptForBodyMass(bodyType) };
@@ -31,11 +31,11 @@ namespace body::input
 	void BodyBuilder::reviewAndEditBody(Body& body) const
 	{
 		::input::console::clearScreen();
-		ConsoleWriter::writeHeadline(localization::TextId::ConfirmBody);
+		ui::console::writeHeadline(localization::TextId::ConfirmBody);
 		while (true) {
 			body.printSummary();
-			ConsoleWriter::writeLine();
-			if (Menu::yesOrNo(localization::TextId::QuestionDoYouWantToAccept)) {
+			ui::console::writeLine();
+			if (ui::Menu::yesOrNo(localization::TextId::QuestionDoYouWantToAccept)) {
 				return;
 			}
 

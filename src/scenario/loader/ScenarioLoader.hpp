@@ -3,7 +3,7 @@
 
 #include "scenario/core/Scenario.hpp"
 
-namespace ScenarioLoader
+namespace scenario::loader
 {
 	enum class LoadStatus
 	{
@@ -20,4 +20,4 @@ namespace ScenarioLoader
 	};
 
 	LoadResult getScenario();
-} // namespace ScenarioLoader
+} // namespace scenario::loader

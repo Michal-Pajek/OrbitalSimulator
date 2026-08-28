@@ -6,9 +6,9 @@
 #include "simulation/run_config/SimulationRunConfig.hpp"
 #include "scenario/core/Scenario.hpp"
 
-namespace SimulationRunner
+namespace simulation::runner
 {
-	void runAndRecord(recording::Recorder& recorder, const Scenario& scenario, const SimulationRunConfig& config)
+	void runAndRecord(recording::Recorder& recorder, const scenario::Scenario& scenario, const SimulationRunConfig& config)
 	{
 		const auto steps{ config.stepCount };
 		const auto& bodies{ scenario.bodies };
@@ -20,4 +20,4 @@ namespace SimulationRunner
 			recorder.recordStateAfterStep(simulation, ++i);
 		}
 	}
-} // namespace SimulationRunner
+} // namespace simulation::runner

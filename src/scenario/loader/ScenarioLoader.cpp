@@ -25,7 +25,7 @@
 #include "ui/ConsoleWriter.hpp"
 #include "ui/menu/Menu.hpp"
 
-namespace ScenarioLoader
+namespace scenario::loader
 {
 	namespace
 	{
@@ -40,13 +40,13 @@ namespace ScenarioLoader
 		bool removeSaveExtension(std::string& filename)
 		{
 			const auto size{ filename.size() };
-			const auto extensionSize{ ScenarioFileFormat::extension.size() };
+			const auto extensionSize{ file_format::extension.size() };
 			if (size < (extensionSize + 1u)) {
 				return false;
 			}
 			const auto threshold{ size - extensionSize };
 			const auto substr{ filename.substr(threshold) };
-			if (substr != ScenarioFileFormat::extension) {
+			if (substr != file_format::extension) {
 				return false;
 			}
 			filename.erase(threshold);
@@ -72,8 +72,8 @@ namespace ScenarioLoader
 			int version{};
 
 			if (!(headerStream >> identifier >> version) ||
-				identifier != ScenarioFileFormat::identifier ||
-				version != ScenarioFileFormat::currentVersion ||
+				identifier != file_format::identifier ||
+				version != file_format::currentVersion ||
 				!hasOnlyWhitespaceRemaining(headerStream)) {
 				return false;
 			}
@@ -172,19 +172,19 @@ namespace ScenarioLoader
 		{
 			const auto namesCount{ fileNames.size() };
 			for (std::size_t idx{}; idx < namesCount; ++idx) {
-				ConsoleWriter::writeLine(idx + 1u, ". ", fileNames.at(idx));
+				ui::console::writeLine(idx + 1u, ". ", fileNames.at(idx));
 			}
 		}
 
 		fs::path buildSaveFilePath(const std::string& fileBaseName)
 		{
-			return filesystem::paths::scenariosDirectory() / (fileBaseName + std::string{ ScenarioFileFormat::extension });
+			return filesystem::paths::scenariosDirectory() / (fileBaseName + std::string{ file_format::extension });
 		}
 
 		std::optional<fs::path> selectSaveFileFromList(const std::vector<std::string>& fileNames)
 		{
 			printFileNames(fileNames);
-			const auto idx{ input::data::getSelectionNumber(localization::TextId::EnterScenarioNumberOrZeroToCancel, fileNames.size(), true)};
+			const auto idx{ ::input::data::getSelectionNumber(localization::TextId::EnterScenarioNumberOrZeroToCancel, fileNames.size(), true)};
 			std::optional<fs::path> result{};
 			if (idx > 0u) {
 				result = buildSaveFilePath(fileNames.at(idx - 1u));
@@ -196,9 +196,9 @@ namespace ScenarioLoader
 		{
 			const auto count{ fileNames.size() };
 			if (count == 1u) {
-				ConsoleWriter::writeLine(localization::TextId::ThereIsOnlyOneSavedScenario, ": ", fileNames.front());
+				ui::console::writeLine(localization::TextId::ThereIsOnlyOneSavedScenario, ": ", fileNames.front());
 				std::optional<fs::path> result{};
-				if (Menu::yesOrNo(localization::TextId::QuestionDoYouWantToLoadIt)) {
+				if (ui::Menu::yesOrNo(localization::TextId::QuestionDoYouWantToLoadIt)) {
 					result = buildSaveFilePath(fileNames.front());
 				}
 				return result;
@@ -307,4 +307,4 @@ namespace ScenarioLoader
 
 		return { LoadStatus::Loaded, std::move(scenarioOpt) };
 	}
-} // namespace ScenarioLoader
+} // namespace scenario::loader

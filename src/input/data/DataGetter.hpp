@@ -21,14 +21,14 @@ namespace input::data
 			while (true) {
 				std::cin >> result;
 				if (!recoverFromInputFailure()) {
-					ConsoleWriter::write(localization::TextId::YouEnteredIncorrectValue, ". ", localization::TextId::EnterDifferentValue, ": ");
+					ui::console::write(localization::TextId::YouEnteredIncorrectValue, ". ", localization::TextId::EnterDifferentValue, ": ");
 					continue;
 				}
 				if (predicate(result)) {
 					discardLineRemainder();
 					return result;
 				}
-				ConsoleWriter::write(localization::TextId::ValueOutOfRange, ". ", localization::TextId::EnterDifferentValue, ": ");
+				ui::console::write(localization::TextId::ValueOutOfRange, ". ", localization::TextId::EnterDifferentValue, ": ");
 			}
 		}
 	} // namespace detail
@@ -53,14 +53,14 @@ namespace input::data
 		while (true) {
 			std::cin >> x >> y >> z;
 			if (!detail::recoverFromInputFailure()) {
-				ConsoleWriter::write(localization::TextId::YouEnteredIncorrectValue, ". ", localization::TextId::EnterDifferentValue, ": ");
+				ui::console::write(localization::TextId::YouEnteredIncorrectValue, ". ", localization::TextId::EnterDifferentValue, ": ");
 				continue;
 			}
 			if (predicate(x, y, z)) {
 				detail::discardLineRemainder();
 				return math::Vector3D{ x, y, z };
 			}
-			ConsoleWriter::write(localization::TextId::ValueOutOfRange, ". ", localization::TextId::EnterDifferentValue, ": ");
+			ui::console::write(localization::TextId::ValueOutOfRange, ". ", localization::TextId::EnterDifferentValue, ": ");
 		}
 	}
 

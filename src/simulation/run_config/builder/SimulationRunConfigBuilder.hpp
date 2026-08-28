@@ -1,7 +1,7 @@
 #pragma once
 #include "simulation/run_config/SimulationRunConfig.hpp"
 
-namespace SimulationRunConfigBuilder
+namespace simulation::run_config
 {
 	SimulationRunConfig build();
-} // namespace SimulationRunConfigBuilder
+} // namespace simulation::run_config

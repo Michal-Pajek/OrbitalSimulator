@@ -5,21 +5,21 @@
 #include "localization/core/TextId.hpp"
 #include "ui/ConsoleWriter.hpp"
 
-namespace ScenarioSummary
+namespace scenario::summary
 {
 	void print(const std::string_view name, const std::span<const body::Body> bodies)
 	{
-		ConsoleWriter::writeHeadline(localization::TextId::CurrentScenarioSummary);
-		ConsoleWriter::writeLine(localization::TextId::ScenarioName, ":\t", name);
-		ConsoleWriter::writeLine(localization::TextId::Bodies, ':');
+		ui::console::writeHeadline(localization::TextId::CurrentScenarioSummary);
+		ui::console::writeLine(localization::TextId::ScenarioName, ":\t", name);
+		ui::console::writeLine(localization::TextId::Bodies, ':');
 		for (const auto& body : bodies) {
 			body.printSummary(true);
 		}
-		ConsoleWriter::writeLine();
+		ui::console::writeLine();
 	}
 
 	void print(const Scenario& scenario)
 	{
 		print(scenario.name, scenario.bodies);
 	}
-} // namespace ScenarioSummary
+} // namespace scenario::summary

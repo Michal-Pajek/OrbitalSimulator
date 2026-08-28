@@ -26,14 +26,14 @@ namespace input::selection
 
         std::optional<SelectionOption<T>> result{};
         auto key{ '1' };
-        std::vector<MenuOption> menuOptions{};
+        std::vector<ui::MenuOption> menuOptions{};
         menuOptions.reserve(size);
 
         for (const auto& option : options) {
             menuOptions.emplace_back(key++, option.textId, [&result, option]() { result = option; });
         }
 
-        const Menu menu{ menuOptions, menuTitle };
+        const ui::Menu menu{ menuOptions, menuTitle };
         menu.execute();
 
         runtime_checks::ensure(result.has_value(), runtime_checks::Type::Logic, "input::selection::selectOption: menu finished without selecting an option");
@@ -48,7 +48,7 @@ namespace input::selection
         inline double selectUnitMultiplier(const std::vector<UnitOption>& options, const localization::TextId menuTitle)
         {
             const auto selectedOption{ selectOption(options, menuTitle) };
-            ConsoleWriter::writeLine(localization::TextId::SelectedUnit, ": ", selectedOption.textId);
+            ui::console::writeLine(localization::TextId::SelectedUnit, ": ", selectedOption.textId);
             return selectedOption.value;
         }
     } // namespace unit
