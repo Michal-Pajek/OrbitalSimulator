@@ -29,6 +29,4 @@ namespace body
 		math::Vector3D m_position;
 		math::Vector3D m_velocity;
 	};
-
-	math::Vector3D getGravityForceBetween(const Body& a, const Body& b);
 } // namespace body

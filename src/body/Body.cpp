@@ -7,7 +7,6 @@
 
 #include "common/runtime_checks/RuntimeChecks.hpp"
 #include "localization/core/TextId.hpp"
-#include "physics/Constants.hpp"
 #include "physics/Validation.hpp"
 #include "ui/ConsoleWriter.hpp"
 
@@ -66,13 +65,5 @@ namespace body
 	{
 		validateVelocityVector(velocity);
 		m_velocity = velocity;
-	}
-
-	math::Vector3D getGravityForceBetween(const Body& a, const Body& b)
-	{
-		const auto positionDiff{ b.getPosition() - a.getPosition() };
-		const auto distance{ positionDiff.getLength() };
-		runtime_checks::ensure(distance > 0.0, runtime_checks::Type::Domain, "Distance between two bodies is zero");
-		return physics::G_CONST * a.getMass() * b.getMass() * positionDiff / (distance * distance * distance);
 	}
 } // namespace body

@@ -11,6 +11,7 @@ target_link_libraries(simulation_core
     PUBLIC body
     PUBLIC math
     PRIVATE physics
+    PRIVATE physics_gravity
     PRIVATE runtime_checks
 )
 

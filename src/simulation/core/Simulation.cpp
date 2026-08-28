@@ -1,6 +1,7 @@
 #include "simulation/core/Simulation.hpp"
 
 #include "common/runtime_checks/RuntimeChecks.hpp"
+#include "physics/gravity/Gravity.hpp"
 
 namespace simulation
 {
@@ -68,7 +69,7 @@ namespace simulation
 			auto& stepStateA{ m_bodyStepStates[i] };
 			for (size_t j{ i + 1 }; j < n; ++j) {
 				auto& stepStateB{ m_bodyStepStates[j] };
-				const auto forceVec{ getGravityForceBetween(stepStateA.getBody(), stepStateB.getBody()) };
+				const auto forceVec{ physics::getGravityForceBetween(stepStateA.getBody(), stepStateB.getBody()) };
 				stepStateA.increaseGravityForce(forceVec);
 				stepStateB.increaseGravityForce(-forceVec);
 			}
