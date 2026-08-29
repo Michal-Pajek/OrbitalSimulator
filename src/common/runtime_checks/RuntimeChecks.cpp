@@ -20,7 +20,7 @@ namespace runtime_checks
 			case Type::Runtime:
 				throw std::runtime_error{ message };
 			default:
-				throw std::logic_error{ "Unknown RuntimeChecks::Type" };
+				throw std::logic_error{ "Unknown runtime_checks::Type" };
 			}
 		}
 	} // anonymous namespace
