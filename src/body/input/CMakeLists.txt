@@ -14,6 +14,7 @@ target_link_libraries(body_input
     PUBLIC body_types
     PUBLIC input_selection
     PUBLIC math
+    PRIVATE body_summary
     PRIVATE input_core
     PRIVATE input_data
     PRIVATE localization_core

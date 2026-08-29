@@ -15,7 +15,6 @@ namespace body
 		const math::Vector3D& getPosition() const { return m_position; }
 		const math::Vector3D& getVelocity() const { return m_velocity; }
 		BodyTypeId getTypeId() const { return m_typeId; }
-		void printSummary(const bool oneLine = false) const;
 		void setMass(const double mass);
 		void setName(const std::string& name) { m_name = name; }
 		void setPosition(const math::Vector3D& position) { m_position = position; }

@@ -11,11 +11,10 @@ target_include_directories(body PUBLIC
 target_link_libraries(body
     PUBLIC body_types
     PUBLIC math
-    PRIVATE localization_core
     PRIVATE physics
     PRIVATE runtime_checks
-    PRIVATE ui
 )
 
+add_subdirectory(summary)
 add_subdirectory(input)
 add_subdirectory(tests)

@@ -7,6 +7,7 @@
 
 #include "body/input/BodyBuilder.hpp"
 #include "body/input/BodyEditor.hpp"
+#include "body/summary/BodySummary.hpp"
 #include "common/runtime_checks/RuntimeChecks.hpp"
 #include "input/core/Console.hpp"
 #include "input/core/Keyboard.hpp"
@@ -135,7 +136,7 @@ namespace scenario
 
 		for (const auto& body : bodies) {
 			ui::console::write('\t', counter++, ":\t");
-			body.printSummary(true);
+			::body::summary::print(body, true);
 		}
 	}
 

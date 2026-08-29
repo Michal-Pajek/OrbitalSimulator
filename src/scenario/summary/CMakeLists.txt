@@ -8,6 +8,7 @@ target_include_directories(scenario_summary PUBLIC
 
 target_link_libraries(scenario_summary
     PUBLIC body
+    PRIVATE body_summary
     PRIVATE localization_core
     PRIVATE scenario_core
     PRIVATE ui

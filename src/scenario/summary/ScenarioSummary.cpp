@@ -2,6 +2,7 @@
 
 #include "scenario/core/Scenario.hpp"
 
+#include "body/summary/BodySummary.hpp"
 #include "localization/core/TextId.hpp"
 #include "ui/ConsoleWriter.hpp"
 
@@ -13,7 +14,7 @@ namespace scenario::summary
 		ui::console::writeLine(localization::TextId::ScenarioName, ":\t", name);
 		ui::console::writeLine(localization::TextId::Bodies, ':');
 		for (const auto& body : bodies) {
-			body.printSummary(true);
+			::body::summary::print(body, true);
 		}
 		ui::console::writeLine();
 	}

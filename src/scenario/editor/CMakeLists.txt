@@ -9,6 +9,7 @@ target_include_directories(scenario_editor PUBLIC
 target_link_libraries(scenario_editor
     PUBLIC scenario_core
     PRIVATE body_input
+    PRIVATE body_summary
     PRIVATE input_core
     PRIVATE input_data
     PRIVATE localization_core

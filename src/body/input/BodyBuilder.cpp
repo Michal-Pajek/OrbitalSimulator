@@ -3,6 +3,7 @@
 #include <utility>
 
 #include "body/input/BodyEditor.hpp"
+#include "body/summary/BodySummary.hpp"
 
 #include "input/core/Console.hpp"
 #include "localization/core/TextId.hpp"
@@ -33,7 +34,7 @@ namespace body::input
 		::input::console::clearScreen();
 		ui::console::writeHeadline(localization::TextId::ConfirmBody);
 		while (true) {
-			body.printSummary();
+			summary::print(body);
 			ui::console::writeLine();
 			if (ui::Menu::yesOrNo(localization::TextId::QuestionDoYouWantToAccept)) {
 				return;
